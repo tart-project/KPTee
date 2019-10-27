@@ -1,0 +1,22 @@
+{
+  "name": "kptee",
+  "version": "1.0.0",
+  "description": "**継続的にプロジェクトを改善** したい<br>\r **エンジニア** 向けの、<br>\r **KPTee** というプロダクトは、<br>\r **仕事やプロジェクトの改善を加速するツール** です。<br>\r これは **手軽に使用** ができ、<br>\r **ホワイトボードで行うKPT** とは違って、<br>\r **記録と遠隔地から同時に行える機能** が備わっている。<br>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/tart0304/kptee.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/tart0304/kptee/issues"
+  },
+  "homepage": "https://gitlab.com/tart0304/kptee#readme",
+  "dependencies": {
+    "vue": "^2.6.10"
+  }
+}
