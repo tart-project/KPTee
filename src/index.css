@@ -1,0 +1,46 @@
+.drag-and-drop {
+    cursor: move;
+    position: absolute;
+    z-index: 1000;
+}
+
+.drag {
+    z-index: 1001;
+}
+
+TEXTAREA.card{
+    background-color:#d4d4d4;
+    width:200px;
+    height:100px;
+}
+
+body {
+    background-image: url("kpteeBackImage.jpg");
+    background-size: cover;
+  }
+
+
+  
+#fab {/*円の部分*/
+    display: block;
+    width: 80px;/*幅*/
+    height: 80px;/*高さ*/
+    background: #dc143c;/*背景色*/
+    text-align: center;/*中央寄せ*/
+    border-radius: 50%;/*角丸く*/
+    transition: .3s;/*滑らかな動きに*/
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);/*影*/
+    position:absolute;
+ top:560px;
+left: 950px;
+}
+
+#fab:hover {/*ホバー時の影*/
+  box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+}
+
+#fab font{/*中央のアイコン*/
+  color: white;
+  line-height: 56px;/*＝幅と高さ*/
+  font-size: 49px;/*サイズ*/
+}

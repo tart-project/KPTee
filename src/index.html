@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <title>KPTee</title>
-</head>
-<body>
 
-<!--ここにソースを書く-->
+  <head>
+    <title>KPTee</title>
+    <meta charset="utf-8">
+  </head>
 
-<script src="../node_modules/vue/dist/vue.js"></script>
-<script src="index.js"></script>
-</body>
+  <body>
+
+    <!-- カード生成場所 -->
+    <div class="createCardArea"></div>
+
+    <!--　カード作成ボタン -->
+    <a type="button" onclick="createCard()" id="fab" href="#">
+      <font size="7">+</font></i>
+    </a>
+
+    <!-- 各種読み込み -->
+
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+  </body>
+
 </html>
