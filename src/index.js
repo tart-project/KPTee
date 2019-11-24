@@ -2,6 +2,13 @@
 var cardsInfo;
 var clickedLeftPosition;
 var clickedTopPosition;
+/*山田さんのCSSによって変更する*/
+var defaultCardInfo = {
+    "cardNo": "",
+    "topPosition": "550px",
+    "leftPosition": "900px",
+    "text": ""
+};
 
 //随時関数：初期カード設定
 (function () {
@@ -10,15 +17,20 @@ var clickedTopPosition;
 })()
 
 // カード作成関数
-function createCard() {
+function createCard(createCardInfo = {}) {
+    if (JSON.stringify(createCardInfo) === "{}") {
+        createCardInfo = defaultCardInfo
+    }
+
     // カード生成divタグを生成
     var createNewDivTagForCard = document.createElement("div");
     createNewDivTagForCard.setAttribute("class", "drag-and-drop");
-    createNewDivTagForCard.setAttribute("id", "red-box");
+    createNewDivTagForCard.setAttribute("style", "top: " + createCardInfo.topPosition + ";" + " left: " + createCardInfo.leftPosition);
 
     // カード情報生成
     var newCard = document.createElement("TEXTAREA");
     newCard.setAttribute("class", "card");
+    newCard.innerHTML = createCardInfo.text
 
     // divタグ内にカード要素追加
     createNewDivTagForCard.appendChild(newCard);
