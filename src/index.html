@@ -4,22 +4,21 @@
 <head>
   <title>KPTee</title>
   <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 
 <body>
   <!-- カード生成場所 -->
-  <div id="createCardArea"></div>
+  <div id="createdCardArea"></div>
   <!-- カード作成ボタン -->
-  <a type="button" onclick="createCard()" id="fab" href="#">
-    <font size="7">+</font></i>
-  </a>
+  <button type="button" onclick="createCard()" id="createCardButton">
+    <font>+</font></i>
+  </button>
 
   <!-- 各種読み込み -->
 
   <script src="../node_modules/vue/dist/vue.js"></script>
   <script src="index.js"></script>
-  <link rel="stylesheet" type="text/css" href="index.css">
-
 </body>
 
 </html>

@@ -1,16 +1,16 @@
 //グローバル変数設定
-var cardsInfo;
-var clickedLeftPosition;
-var clickedTopPosition;
+let cardsInfo;
+let clickedLeftPosition;
+let clickedTopPosition;
 /*山田さんのCSSによって変更する*/
-var defaultCardInfo = {
+let defaultCardInfo = {
     "cardNo": "",
     "topPosition": "550px",
     "leftPosition": "900px",
     "text": ""
 };
 
-//随時関数：初期カード設定
+//即時関数：初期カード設定
 (function () {
     //要素の取得
     cardsInfo = document.getElementsByClassName("drag-and-drop");
@@ -23,12 +23,12 @@ function createCard(createCardInfo = {}) {
     }
 
     // カード生成divタグを生成
-    var createNewDivTagForCard = document.createElement("div");
+    let createNewDivTagForCard = document.createElement("div");
     createNewDivTagForCard.setAttribute("class", "drag-and-drop");
     createNewDivTagForCard.setAttribute("style", "top: " + createCardInfo.topPosition + ";" + " left: " + createCardInfo.leftPosition);
 
     // カード情報生成
-    var newCard = document.createElement("TEXTAREA");
+    let newCard = document.createElement("textarea");
     newCard.setAttribute("class", "card");
     newCard.innerHTML = createCardInfo.text
 
@@ -36,7 +36,7 @@ function createCard(createCardInfo = {}) {
     createNewDivTagForCard.appendChild(newCard);
 
     // カードエリア情報を取得
-    var cardArea = document.getElementsByTagName("div").item(0);
+    let cardArea = document.getElementsByTagName("div").item(0);
 
     // カードエリアにカードを追加
     cardArea.appendChild(createNewDivTagForCard)
@@ -55,9 +55,9 @@ function clickedMouse(e) {
 
     //タッチイベントとマウスのイベントの差異を吸収
     if (e.type === "mousedown") {
-        var event = e;
+        let event = e;
     } else {
-        var event = e.changedTouches[0];
+        let event = e.changedTouches[0];
     }
 
     //要素内の相対座標を取得
@@ -73,13 +73,13 @@ function clickedMouse(e) {
 function moveCursor(e) {
 
     //ドラッグしている要素を取得
-    var drag = document.getElementsByClassName("drag")[0];
+    let drag = document.getElementsByClassName("drag")[0];
 
     //同様にマウスとタッチの差異を吸収
     if (e.type === "mousemove") {
-        var event = e;
+        let event = e;
     } else {
-        var event = e.changedTouches[0];
+        let event = e.changedTouches[0];
     }
 
     //フリックしたときに画面を動かさないようにデフォルト動作を抑制
@@ -98,14 +98,18 @@ function moveCursor(e) {
 
 //マウスボタンが上がったら発火
 function releasedMouse(e) {
-    var drag = document.getElementsByClassName("drag")[0];
+    let drag = document.getElementsByClassName("drag")[0];
 
-    //ムーブイベントハンドラの消去
-    document.body.removeEventListener("mousemove", moveCursor, false);
-    drag.removeEventListener("mouseup", releasedMouse, false);
-    document.body.removeEventListener("touchmove", moveCursor, false);
-    drag.removeEventListener("touchend", releasedMouse, false);
+    // 対象外の要素にも反応してしまうためエラー回避
+    if (drag != undefined) {
 
-    //クラス名 .drag も消す
-    drag.classList.remove("drag");
+        //ムーブイベントハンドラの消去
+        document.body.removeEventListener("mousemove", moveCursor, false);
+        drag.removeEventListener("mouseup", releasedMouse, false);
+        document.body.removeEventListener("touchmove", moveCursor, false);
+        drag.removeEventListener("touchend", releasedMouse, false);
+
+        //クラス名 .drag も消す
+        drag.classList.remove("drag");
+    }
 }

@@ -8,7 +8,7 @@
     z-index: 1001;
 }
 
-TEXTAREA.card{
+textarea.card{
     background-color:#d4d4d4;
     width:200px;
     height:100px;
@@ -21,7 +21,7 @@ body {
 
 
   
-#fab {/*円の部分*/
+#createCardButton {/*円の部分*/
     display: block;
     width: 80px;/*幅*/
     height: 80px;/*高さ*/
@@ -35,12 +35,12 @@ body {
 left: 950px;
 }
 
-#fab:hover {/*ホバー時の影*/
+#createCardButton:hover {/*ホバー時の影*/
   box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
 }
 
-#fab font{/*中央のアイコン*/
+#createCardButton font{/*中央のアイコン*/
   color: white;
   line-height: 56px;/*＝幅と高さ*/
-  font-size: 49px;/*サイズ*/
+  font-size: 70px; 
 }
