@@ -3,7 +3,7 @@ let cardsInfo;
 let clickedLeftPosition;
 let clickedTopPosition;
 /*山田さんのCSSによって変更する*/
-let defaultCardInfo = {
+const defaultCardInfo = {
     "cardNo": "",
     "topPosition": "550px",
     "leftPosition": "900px",
@@ -17,97 +17,98 @@ let defaultCardInfo = {
 })()
 
 // カード作成関数
-function createCard(createCardInfo = {}) {
-    if (JSON.stringify(createCardInfo) === "{}") {
-        createCardInfo = defaultCardInfo
+function createCard(creatingCardInfo = {}) {
+    if (creatingCardInfo.cardNo === undefined) {
+        creatingCardInfo = defaultCardInfo
     }
 
     // カード生成divタグを生成
-    let createNewDivTagForCard = document.createElement("div");
-    createNewDivTagForCard.setAttribute("class", "drag-and-drop");
-    createNewDivTagForCard.setAttribute("style", "top: " + createCardInfo.topPosition + ";" + " left: " + createCardInfo.leftPosition);
+    const newDivTagForCard = document.createElement("div");
+    newDivTagForCard.setAttribute("class", "drag-and-drop");
+    newDivTagForCard.setAttribute("style", "top: " + creatingCardInfo.topPosition + ";" + " left: " + creatingCardInfo.leftPosition);
 
     // カード情報生成
-    let newCard = document.createElement("textarea");
-    newCard.setAttribute("class", "card");
-    newCard.innerHTML = createCardInfo.text
+    const card = document.createElement("textarea");
+    card.setAttribute("class", "card");
+    card.innerHTML = creatingCardInfo.text
 
     // divタグ内にカード要素追加
-    createNewDivTagForCard.appendChild(newCard);
+    newDivTagForCard.appendChild(card);
 
     // カードエリア情報を取得
-    let cardArea = document.getElementsByTagName("div").item(0);
+    const cardArea = document.getElementsByTagName("div").item(0);
 
     // カードエリアにカードを追加
-    cardArea.appendChild(createNewDivTagForCard)
+    cardArea.appendChild(newDivTagForCard)
 
     // ドラックアンドドロップ機能追加
-    cardsInfo[cardsInfo.length - 1].addEventListener("mousedown", clickedMouse, false);
-    cardsInfo[cardsInfo.length - 1].addEventListener("touchstart", clickedMouse, false);
+    cardsInfo[cardsInfo.length - 1].addEventListener("mousedown", glabCard, false);
+    cardsInfo[cardsInfo.length - 1].addEventListener("touchstart", glabCard, false);
 }
 
 
 // マウスがクリックされた場合実行
-function clickedMouse(e) {
+function glabCard(e) {
+    let cursorEvent = e
 
     //クラス名に .drag を追加
     this.classList.add("drag");
 
-    //タッチイベントとマウスのイベントの差異を吸収
-    if (e.type === "mousedown") {
-        let event = e;
-    } else {
-        let event = e.changedTouches[0];
+    //タッチイベントとマウスイベントは差異があるためイベントの差異を吸収
+    if (e.type != "mousedown") {
+        // イベントがタッチイベントだった場合
+        cursorEvent = e.changedTouches[0];
     }
 
     //要素内の相対座標を取得
-    clickedLeftPosition = event.pageX - this.offsetLeft;
-    clickedTopPosition = event.pageY - this.offsetTop;
+    clickedLeftPosition = cursorEvent.pageX - this.offsetLeft;
+    clickedTopPosition = cursorEvent.pageY - this.offsetTop;
 
     //ムーブイベントにコールバック
-    document.body.addEventListener("mousemove", moveCursor, false);
-    document.body.addEventListener("touchmove", moveCursor, false);
+    document.body.addEventListener("mousemove", dragCard, false);
+    document.body.addEventListener("touchmove", dragCard, false);
 }
 
 //マウスカーソルが動いた場合実行
-function moveCursor(e) {
+function dragCard(e) {
+    let cursorEvent = e
 
     //ドラッグしている要素を取得
     let drag = document.getElementsByClassName("drag")[0];
 
     //同様にマウスとタッチの差異を吸収
-    if (e.type === "mousemove") {
-        let event = e;
-    } else {
-        let event = e.changedTouches[0];
+    if (e.type != "mousemove") {
+        // イベントがタッチイベントだった場合
+        cursorEvent = e.changedTouches[0];
     }
 
     //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-    e.preventDefault();
+    cursorEvent.preventDefault();
 
     //マウスが動いた場所に要素を動かす
-    drag.style.top = event.pageY - clickedTopPosition + "px";
-    drag.style.left = event.pageX - clickedLeftPosition + "px";
+    drag.style.top = cursorEvent.pageY - clickedTopPosition + "px";
+    drag.style.left = cursorEvent.pageX - clickedLeftPosition + "px";
 
     //マウスボタンが離されたとき、またはカーソルが外れたとき発火
-    drag.addEventListener("mouseup", releasedMouse, false);
-    document.body.addEventListener("mouseleave", releasedMouse, false);
-    drag.addEventListener("touchend", releasedMouse, false);
-    document.body.addEventListener("touchleave", releasedMouse, false);
+    drag.addEventListener("mouseup", dropCard, false);
+    document.body.addEventListener("mouseleave", dropCard, false);
+    drag.addEventListener("touchend", dropCard, false);
+    document.body.addEventListener("touchleave", dropCard, false);
 }
 
 //マウスボタンが上がったら発火
-function releasedMouse(e) {
+function dropCard(e) {
+
     let drag = document.getElementsByClassName("drag")[0];
 
     // 対象外の要素にも反応してしまうためエラー回避
     if (drag != undefined) {
 
         //ムーブイベントハンドラの消去
-        document.body.removeEventListener("mousemove", moveCursor, false);
-        drag.removeEventListener("mouseup", releasedMouse, false);
-        document.body.removeEventListener("touchmove", moveCursor, false);
-        drag.removeEventListener("touchend", releasedMouse, false);
+        document.body.removeEventListener("mousemove", dragCard, false);
+        drag.removeEventListener("mouseup", dropCard, false);
+        document.body.removeEventListener("touchmove", dragCard, false);
+        drag.removeEventListener("touchend", dropCard, false);
 
         //クラス名 .drag も消す
         drag.classList.remove("drag");
