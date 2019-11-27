@@ -1,5 +1,5 @@
 //グローバル変数設定
-let cardsInfo;
+let draggableCardsInfo;
 let clickedLeftPosition;
 let clickedTopPosition;
 /*山田さんのCSSによって変更する*/
@@ -12,8 +12,8 @@ const defaultCardInfo = {
 
 //即時関数：初期カード設定
 (function () {
-    //要素の取得
-    cardsInfo = document.getElementsByClassName("drag-and-drop");
+    //ドラックアンドドロップ対象要素の取得
+    draggableCardsInfo = document.getElementsByClassName("draggableDivTag");
 })()
 
 // カード作成関数
@@ -24,10 +24,10 @@ function createCard(creatingCardInfo = {}) {
 
     // カード生成divタグを生成
     const newDivTagForCard = document.createElement("div");
-    newDivTagForCard.setAttribute("class", "drag-and-drop");
+    newDivTagForCard.setAttribute("class", "draggableDivTag");
     newDivTagForCard.setAttribute("style", "top: " + creatingCardInfo.topPosition + ";" + " left: " + creatingCardInfo.leftPosition);
 
-    // カード情報生成
+    // カード生成
     const card = document.createElement("textarea");
     card.setAttribute("class", "card");
     card.innerHTML = creatingCardInfo.text
@@ -36,14 +36,14 @@ function createCard(creatingCardInfo = {}) {
     newDivTagForCard.appendChild(card);
 
     // カードエリア情報を取得
-    const cardArea = document.getElementsByTagName("div").item(0);
+    const locationForDraggable = document.getElementsByTagName("div").item(0);
 
     // カードエリアにカードを追加
-    cardArea.appendChild(newDivTagForCard)
+    locationForDraggable.appendChild(newDivTagForCard)
 
     // ドラックアンドドロップ機能追加
-    cardsInfo[cardsInfo.length - 1].addEventListener("mousedown", glabCard, false);
-    cardsInfo[cardsInfo.length - 1].addEventListener("touchstart", glabCard, false);
+    draggableCardsInfo[draggableCardsInfo.length - 1].addEventListener("mousedown", glabCard, false);
+    draggableCardsInfo[draggableCardsInfo.length - 1].addEventListener("touchstart", glabCard, false);
 }
 
 
@@ -52,7 +52,7 @@ function glabCard(e) {
     let cursorEvent = e
 
     //クラス名に .drag を追加
-    this.classList.add("drag");
+    this.classList.add("dragging");
 
     //タッチイベントとマウスイベントは差異があるためイベントの差異を吸収
     if (e.type != "mousedown") {
@@ -73,10 +73,10 @@ function glabCard(e) {
 function dragCard(e) {
     let cursorEvent = e
 
-    //ドラッグしている要素を取得
-    let drag = document.getElementsByClassName("drag")[0];
+    //ドラッグ中の要素を取得
+    let drag = document.getElementsByClassName("dragging")[0];
 
-    //同様にマウスとタッチの差異を吸収
+    //マウスとタッチの差異を吸収
     if (e.type != "mousemove") {
         // イベントがタッチイベントだった場合
         cursorEvent = e.changedTouches[0];
@@ -99,7 +99,7 @@ function dragCard(e) {
 //マウスボタンが上がったら発火
 function dropCard(e) {
 
-    let drag = document.getElementsByClassName("drag")[0];
+    let drag = document.getElementsByClassName("dragging")[0];
 
     // 対象外の要素にも反応してしまうためエラー回避
     if (drag != undefined) {
@@ -111,6 +111,6 @@ function dropCard(e) {
         drag.removeEventListener("touchend", dropCard, false);
 
         //クラス名 .drag も消す
-        drag.classList.remove("drag");
+        drag.classList.remove("dragging");
     }
 }

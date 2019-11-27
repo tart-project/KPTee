@@ -1,4 +1,4 @@
-.drag-and-drop {
+.draggableDivTag {
     cursor: move;
     position: absolute;
     z-index: 1000;
@@ -15,13 +15,13 @@ textarea.card{
 }
 
 body {
-    background-image: url("kptee-backImage.jpg");
+    background-image: url("background-image.jpg");
     background-size: cover;
   }
 
 
   
-#createCardButton {/*円の部分*/
+#cardCreationButton {/*円の部分*/
     display: block;
     width: 80px;/*幅*/
     height: 80px;/*高さ*/
@@ -33,14 +33,12 @@ body {
     position:absolute;
  top:560px;
 left: 950px;
+color: white;
+line-height: 56px;/*＝幅と高さ*/
+font-size: 70px; 
 }
 
-#createCardButton:hover {/*ホバー時の影*/
+#cardCreationButton:hover {/*ホバー時の影*/
   box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
 }
 
-#createCardButton font{/*中央のアイコン*/
-  color: white;
-  line-height: 56px;/*＝幅と高さ*/
-  font-size: 70px; 
-}
