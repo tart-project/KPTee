@@ -110,7 +110,7 @@ function dropCard(e) {
         document.body.removeEventListener("touchmove", dragCard, false);
         drag.removeEventListener("touchend", dropCard, false);
 
-        //クラス名 .drag も消す
+        //クラス名 .dragging も消す
         drag.classList.remove("dragging");
     }
 }
