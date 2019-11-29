@@ -12,7 +12,7 @@ const defaultCardInfo = {
 
 //即時関数：初期カード設定
 (function () {
-    //ドラックアンドドロップ対象要素の取得
+    //ドラッグアンドドロップ対象要素の取得
     draggableCardsInfo = document.getElementsByClassName("draggableDivTag");
 })()
 
@@ -41,7 +41,7 @@ function createCard(creatingCardInfo = {}) {
     // カードエリアにカードを追加
     locationForDraggable.appendChild(newDivTagForCard)
 
-    // ドラックアンドドロップ機能追加
+    // ドラッグアンドドロップ機能追加
     draggableCardsInfo[draggableCardsInfo.length - 1].addEventListener("mousedown", glabCard, false);
     draggableCardsInfo[draggableCardsInfo.length - 1].addEventListener("touchstart", glabCard, false);
 }
@@ -51,7 +51,7 @@ function createCard(creatingCardInfo = {}) {
 function glabCard(e) {
     let cursorEvent = e
 
-    //クラス名に .drag を追加
+    //クラス名に .dragging を追加
     this.classList.add("dragging");
 
     //タッチイベントとマウスイベントは差異があるためイベントの差異を吸収
