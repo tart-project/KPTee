@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <title>KPTee</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
+
 <body>
+  <!-- カード生成場所 -->
+  <div id="locationForDraggable"></div>
+  <!-- カード作成ボタン -->
+  <button type="button" onclick="createCard()" id="cardCreationButton">
+    +
+  </button>
+  <!-- エクスポートボタン -->
+  <a id="linkTagToGetCardsFile" type="button" onclick="downloadCardsInfoFile()">
+    <button type="button" id="linkTagTogetcardsFileButton">
+      エクスポート
+    </button>
+  </a>
+  <!-- インポートボタン -->
+  <form name="formTagForImport">
+    <input name="importFileButton" type="file" onclick="importCardsInfo()" />
+  </form>
 
-<!--ここにソースを書く-->
+  <!-- 各種読み込み -->
 
-<script src="../node_modules/vue/dist/vue.js"></script>
-<script src="index.js"></script>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script src="index.js"></script>
 </body>
+
 </html>
