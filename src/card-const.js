@@ -7,7 +7,7 @@ export const cardColors = {
 
 /*山田さんのCSSによって変更する*/
 export const defaultCardInfo = {
-    "cardNo": "",
+    "cardId": "",
     "topPosition": "550px",
     "leftPosition": "900px",
     "color": cardColors.default,

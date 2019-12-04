@@ -1,13 +1,14 @@
-import {cardColors} from './card-const'
-import {v4} from 'uuid'
+import { cardColors, defaultCardInfo } from './card-const'
+import { v4 } from 'uuid'
 
 //グローバル変数設定
 let clickedTopPosition;
 let clickedLeftPosition;
 
-export default class Card{
-    constructor(cardInfo){
-        const cardId = v4()
+export default class Card {
+    constructor(cardInfo) {
+        let cardId = v4()
+        this.cardId = cardId
 
         // カードdiv生成
         const cardDiv = document.createElement("div");
@@ -20,22 +21,21 @@ export default class Card{
         textarea.setAttribute("class", "textarea");
         textarea.setAttribute("style", " background-color: " + cardInfo.color)
         textarea.innerHTML = cardInfo.text
-    
+
         // カードカラー変更用ボタン生成
         const changeColorButton = document.createElement("button");
         changeColorButton.setAttribute("class", "changeColorButton")
         changeColorButton.setAttribute("onclick", "changeCardColor(this)")
         changeColorButton.innerHTML = "+";
-    
+
         // カードdivに要素を追加
         cardDiv.appendChild(textarea);
         cardDiv.appendChild(document.createElement("br"));
         cardDiv.appendChild(changeColorButton);
-    
+
         // カードを表示
         const locationForDraggable = document.getElementById("cardCreationArea");
         locationForDraggable.appendChild(cardDiv)
-
 
         // ドラッグアンドドロップ機能追加
         cardDiv.addEventListener("mousedown", glabCard, false);
@@ -57,9 +57,11 @@ function glabCard(e) {
     clickedLeftPosition = cursorEvent.pageX - this.offsetLeft;
     clickedTopPosition = cursorEvent.pageY - this.offsetTop;
 
+    // ドラッグイベントの追加
     this.addEventListener("mousemove", dragCard, false);
     this.addEventListener("touchmove", dragCard, false);
 
+    // ドロップイベントの追加
     this.addEventListener("mouseup", dropCard, false);
     this.addEventListener("mouseleave", dropCard, false);
     this.addEventListener("touchend", dropCard, false);
@@ -88,7 +90,7 @@ function dragCard(e) {
 function dropCard(e) {
     // 対象外の要素にも反応してしまうためエラー回避
     if (this != undefined) {
-        //イベントリスナーの消去
+        // イベントの消去
         this.removeEventListener("mousemove", dragCard, false);
         this.removeEventListener("mouseup", dropCard, false);
         this.removeEventListener("touchmove", dragCard, false);
@@ -97,24 +99,42 @@ function dropCard(e) {
 }
 
 export function changeCardColor(clickedElementInfo) {
-    const clickedCardId = clickedElementInfo.parentNode.id;
+    const clickedcardId = clickedElementInfo.parentNode.id;
 
-    // 色の変更
-    switch (document.getElementById(clickedCardId).children[0].style.backgroundColor) {
+    // カードカラーの変更
+    switch (document.getElementById(clickedcardId).children[0].style.backgroundColor) {
         case cardColors.default:
-            document.getElementById(clickedCardId).children[0].style.backgroundColor = cardColors.keep;
+            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.keep;
             break;
 
         case cardColors.keep:
-            document.getElementById(clickedCardId).children[0].style.backgroundColor = cardColors.problem;
+            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.problem;
             break;
 
         case cardColors.problem:
-            document.getElementById(clickedCardId).children[0].style.backgroundColor = cardColors.try;
+            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.try;
             break;
 
         case cardColors.try:
-            document.getElementById(clickedCardId).children[0].style.backgroundColor = cardColors.default;
+            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.default;
             break;
     }
+}
+
+
+export function getCardInfo(cardId) {
+
+    // カード情報取得
+    let cardDivInfo = document.getElementById(cardId)
+    let textAreaDivInfo = document.getElementById(cardId).getElementsByClassName("textarea").item(0)
+
+    // カード情報生成
+    let cardInfo = defaultCardInfo
+    cardInfo.cardId = cardId
+    cardInfo.topPosition = cardDivInfo.style.top
+    cardInfo.leftPosition = cardDivInfo.style.left
+    cardInfo.color = textAreaDivInfo.style.backgroundColor
+    cardInfo.text = textAreaDivInfo.value
+
+    return cardInfo
 }
