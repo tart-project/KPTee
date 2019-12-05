@@ -19,7 +19,7 @@ export default class Card {
         // テキストエリア生成
         const textarea = document.createElement("textarea");
         textarea.setAttribute("class", "textarea");
-        textarea.setAttribute("style", " background-color: " + cardInfo.color)
+        textarea.setAttribute("style", `background-color: ${cardInfo.color}; width: ${cardInfo.width}; height: ${cardInfo.height}`)
         textarea.innerHTML = cardInfo.text
 
         // カードカラー変更用ボタン生成
@@ -40,6 +40,24 @@ export default class Card {
         // ドラッグアンドドロップ機能追加
         cardDiv.addEventListener("mousedown", glabCard, false);
         cardDiv.addEventListener("touchstart", glabCard, false);
+    }
+
+    getInfo() {
+        // カード情報取得
+        const cardDivInfo = document.getElementById(this.cardId)
+        const textAreaDivInfo = document.getElementById(this.cardId).getElementsByClassName("textarea").item(0)
+
+        // カード情報生成
+        const cardInfo = defaultCardInfo
+        cardInfo.cardId = this.cardId
+        cardInfo.topPosition = cardDivInfo.style.top
+        cardInfo.leftPosition = cardDivInfo.style.left
+        cardInfo.color = textAreaDivInfo.style.backgroundColor
+        cardInfo.text = textAreaDivInfo.value
+        cardInfo.height = textAreaDivInfo.style.height
+        cardInfo.width = textAreaDivInfo.style.width
+
+        return cardInfo
     }
 }
 
@@ -99,42 +117,24 @@ function dropCard(e) {
 }
 
 export function changeCardColor(clickedElementInfo) {
-    const clickedcardId = clickedElementInfo.parentNode.id;
+    const clickedCardInfo = document.getElementById(clickedElementInfo.parentNode.id).getElementsByClassName("textarea").item(0)
 
     // カードカラーの変更
-    switch (document.getElementById(clickedcardId).children[0].style.backgroundColor) {
+    switch (clickedCardInfo.style.backgroundColor) {
         case cardColors.default:
-            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.keep;
+            clickedCardInfo.style.backgroundColor = cardColors.keep;
             break;
 
         case cardColors.keep:
-            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.problem;
+            clickedCardInfo.style.backgroundColor = cardColors.problem;
             break;
 
         case cardColors.problem:
-            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.try;
+            clickedCardInfo.style.backgroundColor = cardColors.try;
             break;
 
         case cardColors.try:
-            document.getElementById(clickedcardId).children[0].style.backgroundColor = cardColors.default;
+            clickedCardInfo.style.backgroundColor = cardColors.default;
             break;
     }
-}
-
-
-export function getCardInfo(cardId) {
-
-    // カード情報取得
-    let cardDivInfo = document.getElementById(cardId)
-    let textAreaDivInfo = document.getElementById(cardId).getElementsByClassName("textarea").item(0)
-
-    // カード情報生成
-    let cardInfo = defaultCardInfo
-    cardInfo.cardId = cardId
-    cardInfo.topPosition = cardDivInfo.style.top
-    cardInfo.leftPosition = cardDivInfo.style.left
-    cardInfo.color = textAreaDivInfo.style.backgroundColor
-    cardInfo.text = textAreaDivInfo.value
-
-    return cardInfo
 }

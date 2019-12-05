@@ -11,5 +11,7 @@ export const defaultCardInfo = {
     "topPosition": "550px",
     "leftPosition": "900px",
     "color": cardColors.default,
-    "text": ""
+    "text": "",
+    "width": "",
+    "height": ""
 };

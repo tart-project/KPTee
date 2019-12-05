@@ -1,27 +1,27 @@
-import Card, { getCardInfo } from './card'
+import Card from './card'
 import { importCardsInfo } from './index'
 
 // インポートボタンにイベントをセット
 (function () {
-    let importLocationInfo = document.forms.formTagForImport;
+    const importLocationInfo = document.forms.formTagForImport;
 
     // ファイルが読み込まれたら発火
     importLocationInfo.importFileButton.addEventListener("change", importCardsInfo, false)
 }());
 
-// カード情報→ファイル情報
+// エクスポートファイル作成
 export function createFileFromCards(cardsList) {
-    let exportingCardsInfo = [];
+    const exportingCardsInfo = [];
 
     for (var i in cardsList) {
         // 参照渡し回避のため、新規オブジェクト生成
-        const newCardObject = Object.assign({}, getCardInfo(cardsList[i].cardId))
+        const newCardObject = Object.assign({}, cardsList[i].getInfo())
         exportingCardsInfo.push(newCardObject)
     }
     return exportingCardsInfo
 }
 
-// エクスポートされたファイルをダルんろーど
+// エクスポートファイルをダウンロード
 export function downloadFile(exportedFileInfo) {
 
     // 各種設定
@@ -36,6 +36,7 @@ export function downloadFile(exportedFileInfo) {
     linkTag.setAttribute("download", fileTitle);
 }
 
+// インポート情報→カード作成
 export function createCardsFromFile(importedFile) {
 
     // 戻り値用カードリスト
