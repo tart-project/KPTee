@@ -1,21 +1,12 @@
 import Card from './card'
-import { importCardsInfo } from './index'
-
-// インポートボタンにイベントをセット
-(function () {
-    const importLocationInfo = document.forms.formTagForImport;
-
-    // ファイルが読み込まれたら発火
-    importLocationInfo.importFileButton.addEventListener("change", importCardsInfo, false)
-}());
 
 // エクスポートファイル作成
-export function createFileFromCards(cardsList) {
+export function createInfoFromCards(cardList) {
     const exportingCardsInfo = [];
 
-    for (var i in cardsList) {
+    for (const card of cardList) {
         // 参照渡し回避のため、新規オブジェクト生成
-        const newCardObject = Object.assign({}, cardsList[i].getInfo())
+        const newCardObject = Object.assign({}, card.getInfo())
         exportingCardsInfo.push(newCardObject)
     }
     return exportingCardsInfo
@@ -40,10 +31,10 @@ export function downloadFile(exportedFileInfo) {
 export function createCardsFromFile(importedFile) {
 
     // 戻り値用カードリスト
-    const tempCardsList = [];
+    const importingCardList = [];
 
     //FileReaderのインスタンスを作成する
-    let fileReader = new FileReader();
+    const fileReader = new FileReader();
 
     //読み込んだファイルの中身を取得する
     fileReader.readAsText(importedFile);
@@ -55,9 +46,9 @@ export function createCardsFromFile(importedFile) {
         const importedCardsInfo = JSON.parse(fileReader.result);
 
         // インポート情報を元にカードを生成
-        for (var i in importedCardsInfo) {
-            tempCardsList.push(new Card(importedCardsInfo[i]))
+        for (const card of importedCardsInfo) {
+            importingCardList.push(new Card(card))
         }
     })
-    return tempCardsList
+    return importingCardList
 }

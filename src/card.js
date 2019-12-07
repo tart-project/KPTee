@@ -7,12 +7,11 @@ let clickedLeftPosition;
 
 export default class Card {
     constructor(cardInfo) {
-        let cardId = v4()
-        this.cardId = cardId
+        this.cardId = v4()
 
         // カードdiv生成
         const cardDiv = document.createElement("div");
-        cardDiv.setAttribute("id", cardId)
+        cardDiv.setAttribute("id", this.cardId)
         cardDiv.setAttribute("class", "cardDiv");
         cardDiv.setAttribute("style", `top: ${cardInfo.topPosition}; left: ${cardInfo.leftPosition}`);
 
@@ -44,18 +43,18 @@ export default class Card {
 
     getInfo() {
         // カード情報取得
-        const cardDivInfo = document.getElementById(this.cardId)
-        const textAreaDivInfo = document.getElementById(this.cardId).getElementsByClassName("textarea").item(0)
+        const cardDiv = document.getElementById(this.cardId)
+        const textarea = document.getElementById(this.cardId).getElementsByClassName("textarea").item(0)
 
         // カード情報生成
         const cardInfo = defaultCardInfo
         cardInfo.cardId = this.cardId
-        cardInfo.topPosition = cardDivInfo.style.top
-        cardInfo.leftPosition = cardDivInfo.style.left
-        cardInfo.color = textAreaDivInfo.style.backgroundColor
-        cardInfo.text = textAreaDivInfo.value
-        cardInfo.height = textAreaDivInfo.style.height
-        cardInfo.width = textAreaDivInfo.style.width
+        cardInfo.topPosition = cardDiv.style.top
+        cardInfo.leftPosition = cardDiv.style.left
+        cardInfo.color = textarea.style.backgroundColor
+        cardInfo.text = textarea.value
+        cardInfo.height = textarea.style.height
+        cardInfo.width = textarea.style.width
 
         return cardInfo
     }
@@ -106,9 +105,9 @@ function dragCard(e) {
 
 // マウスボタンが上がったら発火
 function dropCard(e) {
-    // 対象外の要素にも反応してしまうためエラー回避
     if (this != undefined) {
-        // イベントの消去
+    // 対象外の要素にも反応してしまうためエラー回避
+
         this.removeEventListener("mousemove", dragCard, false);
         this.removeEventListener("mouseup", dropCard, false);
         this.removeEventListener("touchmove", dragCard, false);
@@ -117,24 +116,24 @@ function dropCard(e) {
 }
 
 export function changeCardColor(clickedElementInfo) {
-    const clickedCardInfo = document.getElementById(clickedElementInfo.parentNode.id).getElementsByClassName("textarea").item(0)
+    const clickedCardTextarea = document.getElementById(clickedElementInfo.parentNode.id).getElementsByClassName("textarea").item(0)
 
     // カードカラーの変更
-    switch (clickedCardInfo.style.backgroundColor) {
+    switch (clickedCardTextarea.style.backgroundColor) {
         case cardColors.default:
-            clickedCardInfo.style.backgroundColor = cardColors.keep;
+            clickedCardTextarea.style.backgroundColor = cardColors.keep;
             break;
 
         case cardColors.keep:
-            clickedCardInfo.style.backgroundColor = cardColors.problem;
+            clickedCardTextarea.style.backgroundColor = cardColors.problem;
             break;
 
         case cardColors.problem:
-            clickedCardInfo.style.backgroundColor = cardColors.try;
+            clickedCardTextarea.style.backgroundColor = cardColors.try;
             break;
 
         case cardColors.try:
-            clickedCardInfo.style.backgroundColor = cardColors.default;
+            clickedCardTextarea.style.backgroundColor = cardColors.default;
             break;
     }
 }

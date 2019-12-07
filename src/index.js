@@ -1,6 +1,6 @@
 import Card, { changeCardColor } from './card'
 import { defaultCardInfo } from './card-const'
-import { createCardsFromFile, createFileFromCards, downloadFile } from './file-handler'
+import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -9,7 +9,15 @@ window.importCardsInfo = importCardsInfo
 window.exportCardsInfo = exportCardsInfo
 
 // グローバル変数設定
-const cardsList = [];
+const cardList = [];
+
+// インポートボタンにイベントをセット
+(function () {
+    const importLocationInfo = document.forms.formTagForImport;
+
+    // ファイルが読み込まれたら発火
+    importLocationInfo.importFileButton.addEventListener("change", importCardsInfo, false)
+}());
 
 // カード作成関数
 function createCard() {
@@ -18,7 +26,7 @@ function createCard() {
     const card = new Card(defaultCardInfo)
 
     // カードリストにidを追加
-    cardsList.push(card)
+    cardList.push(card)
 }
 
 // インポート関数
@@ -29,7 +37,7 @@ export function importCardsInfo(e) {
         const importedCards = createCardsFromFile(e.target.files[0])
 
         // カードリストにidを追加
-        cardsList.concat(importedCards)
+        cardList.concat(importedCards)
     }
 }
 
@@ -37,8 +45,8 @@ export function importCardsInfo(e) {
 function exportCardsInfo() {
 
     // カード情報一覧からファイル作成
-    const exportedFile = createFileFromCards(cardsList)
+    const exportedInfo = createInfoFromCards(cardList)
 
     //ファイルをダウンロード
-    downloadFile(exportedFile)
+    downloadFile(exportedInfo)
 }
