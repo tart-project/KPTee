@@ -28,7 +28,7 @@ export function downloadFile(exportedFileInfo) {
 }
 
 // インポート情報→カード作成
-export function createCardsFromFile(importedFile) {
+export function createCardsFromFile(importedFile, fun) {
 
     // 戻り値用カードリスト
     const importingCardList = [];
@@ -49,6 +49,6 @@ export function createCardsFromFile(importedFile) {
         for (const card of importedCardsInfo) {
             importingCardList.push(new Card(card))
         }
+        fun(importingCardList)
     })
-    return importingCardList
 }

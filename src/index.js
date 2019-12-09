@@ -34,10 +34,11 @@ export function importCardsInfo(e) {
 
     if (e) {
         // ファイルが読み込まれた場合→ファイル情報からカードを生成
-        const importedCards = createCardsFromFile(e.target.files[0])
+        createCardsFromFile(e.target.files[0], function (importedCard) {
 
-        // カードリストにidを追加
-        cardList.concat(importedCards)
+             // カードリストにidを追加
+            cardList = cardList.concat(importedCard)
+        })
     }
 }
 
