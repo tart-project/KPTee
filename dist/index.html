@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <title>KPTee</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="index.css">
-</head>
-<body>
-  <!-- カード生成場所 -->
-  <div id="cardCreationArea"></div>
-  <!-- カード作成ボタン -->
-  <button type="button" onclick="createCard()" id="cardCreationButton">
-    +
-  </button>
-  <!-- エクスポートボタン -->
-  <a id="linkTagToGetCardsFile" type="button" onclick="downloadCardsInfoFile()">
-    <button type="button" id="linkTagTogetcardsFileButton">
-      エクスポート
+  <head>
+    <title>KPTee</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="index.css">
+  </head>
+
+  <body>
+    <!-- カード生成場所 -->
+    <div id="cardCreationArea"></div>
+    <!-- カード作成ボタン -->
+    <button type="button" onclick="createCard()" id="cardCreationButton">
+      +
     </button>
-  </a>
-  <!-- インポートボタン -->
-  <form name="formTagForImport">
-    <input name="importFileButton" type="file" onclick="importCardsInfo()" />
-  </form>
-<script src="main.js"></script>
-</body>
+    <!-- エクスポートボタン -->
+    <a id="linkTagToGetCardsFile" type="button" onclick="exportCardsInfo()">
+      <button type="button" id="linkTagTogetcardsFileButton">
+        エクスポート
+      </button>
+    </a>
+    <!-- インポートボタン -->
+    <form id="formTagForImport">
+      <input id="importFileButton" type="file" onclick="importCardsInfo()" />
+    </form>
+    <script src="main.js"></script>
+  </body>
 </html>
