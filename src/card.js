@@ -6,7 +6,7 @@ let clickedTopPosition;
 let clickedLeftPosition;
 
 export default class Card {
-    constructor(cardInfo) {
+    constructor(cardInfo=defaultCardInfo) {
         this.cardId = v4()
 
         // カードdiv生成

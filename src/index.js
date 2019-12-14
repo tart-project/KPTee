@@ -1,5 +1,4 @@
 import Card, { changeCardColor } from './card'
-import { defaultCardInfo } from './card-const'
 import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
 
 // html上の関数と紐づけ
@@ -23,7 +22,7 @@ const cardList = [];
 function createCard() {
 
     // カードの生成
-    const card = new Card(defaultCardInfo)
+    const card = new Card()
 
     // カードリストにidを追加
     cardList.push(card)
