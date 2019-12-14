@@ -76,7 +76,33 @@ body {
 .changeColorButton:hover {
     opacity:0.8;
 }
+
 .changeColorButton:active {
+    -webkit-transform: translate(0,2px);
+    -moz-transform: translate(0,2px);
+    transform: translate(0,2px);
+    border-bottom:none;
+}
+
+.deleteCardButton{
+    position:relative;
+    bottom: 35px;
+    left: 10px;
+    border-radius: 50%;                 /* 角丸指定 */
+    text-align:  center; 
+    color: white;
+    border-color:white;
+    border-style: solid;
+    border-width: 2px;
+    font-size: 10px;
+    font-weight: 900; 
+}
+    
+.deleteCardButton:hover {
+    opacity:0.8;
+}
+
+.deleteCardButton:active {
     -webkit-transform: translate(0,2px);
     -moz-transform: translate(0,2px);
     transform: translate(0,2px);

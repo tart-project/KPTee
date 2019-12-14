@@ -6,9 +6,9 @@ export function createInfoFromCards(cards) {
 
     for (const card of cards) {
         // 参照渡し回避のため、新規オブジェクト生成
-        // TODO: 参照渡しの解決
-        const newCard = Object.assign({}, card.getInfo())
-        info.push(newCard)
+        // TODO: ディープ参照渡しの解決
+        const newCard = JSON.stringify(card.getInfo())
+        info.push(JSON.parse(newCard))
     }
     return info
 }
@@ -31,9 +31,6 @@ export function downloadFile(exportedFileInfo) {
 // インポート情報→カード作成
 export function createCardsFromFile(file, fun) {
 
-    // 戻り値用カードリスト
-    const cards = [];
-
     //FileReaderのインスタンスを作成する
     const fileReader = new FileReader();
 
@@ -48,8 +45,7 @@ export function createCardsFromFile(file, fun) {
 
         // インポート情報を元にカードを生成
         for (const card of importedCardsInfo) {
-            cards.push(new Card(card))
+            fun(new Card(card))
         }
-        fun(cards)
     })
 }

@@ -1,4 +1,4 @@
-import { cardColors, defaultCardInfo } from './card-const'
+import { colors, defaultCardInfo } from './card-const'
 import { v4 } from 'uuid'
 
 //グローバル変数設定
@@ -6,7 +6,7 @@ let clickedTopPosition;
 let clickedLeftPosition;
 
 export default class Card {
-    constructor(cardInfo=defaultCardInfo) {
+    constructor(cardInfo = defaultCardInfo) {
         this.cardId = v4()
 
         // カードdiv生成
@@ -25,12 +25,20 @@ export default class Card {
         const changeColorButton = document.createElement("button");
         changeColorButton.setAttribute("class", "changeColorButton")
         changeColorButton.setAttribute("onclick", "changeCardColor(this)")
+        changeColorButton.setAttribute("style", `background-color: ${cardInfo.changeColorButton.color};`)
         changeColorButton.innerHTML = "+";
+
+        // カード削除用ボタン生成
+        const deleteCardButton = document.createElement("button");
+        deleteCardButton.setAttribute("class", "deleteCardButton")
+        deleteCardButton.setAttribute("onclick", "deleteCard(this)")
+        deleteCardButton.innerHTML = "×";
 
         // カードdivに要素を追加
         cardDiv.appendChild(textarea);
         cardDiv.appendChild(document.createElement("br"));
         cardDiv.appendChild(changeColorButton);
+        cardDiv.appendChild(deleteCardButton);
 
         // カードを表示
         const locationForDraggable = document.getElementById("cardCreationArea");
@@ -45,9 +53,11 @@ export default class Card {
         // カード情報取得
         const cardDiv = document.getElementById(this.cardId)
         const textarea = document.getElementById(this.cardId).getElementsByClassName("textarea").item(0)
+        const changeColorButtonDivInfo = document.getElementById(this.cardId).getElementsByClassName("changeColorButton").item(0)
 
         // カード情報生成
-        const cardInfo = defaultCardInfo
+        // TODO: ディープ参照渡しの解決
+        const cardInfo = JSON.parse(JSON.stringify(defaultCardInfo))
         cardInfo.cardId = this.cardId
         cardInfo.topPosition = cardDiv.style.top
         cardInfo.leftPosition = cardDiv.style.left
@@ -55,8 +65,44 @@ export default class Card {
         cardInfo.text = textarea.value
         cardInfo.height = textarea.style.height
         cardInfo.width = textarea.style.width
+        cardInfo.changeColorButton.color = changeColorButtonDivInfo.style.backgroundColor
 
         return cardInfo
+    }
+
+    // カード削除
+    delete() {
+        document.getElementById(this.cardId).remove();
+    }
+
+    // カラー変更
+    changeColor() {
+        // 対象情報を取得
+        const clickedCardInfo = document.getElementById(this.cardId).getElementsByClassName("textarea").item(0)
+        const clickedButtonInfo = document.getElementById(this.cardId).getElementsByClassName("changeColorButton").item(0)
+
+        // カードカラーの変更
+        switch (clickedCardInfo.style.backgroundColor) {
+            case colors.default:
+                clickedCardInfo.style.backgroundColor = colors.keep;
+                clickedButtonInfo.style.backgroundColor = colors.problem;
+                break;
+
+            case colors.keep:
+                clickedCardInfo.style.backgroundColor = colors.problem;
+                clickedButtonInfo.style.backgroundColor = colors.try;
+                break;
+
+            case colors.problem:
+                clickedCardInfo.style.backgroundColor = colors.try;
+                clickedButtonInfo.style.backgroundColor = colors.default;
+                break;
+
+            case colors.try:
+                clickedCardInfo.style.backgroundColor = colors.default;
+                clickedButtonInfo.style.backgroundColor = colors.keep;
+                break;
+        }
     }
 }
 
@@ -106,34 +152,10 @@ function dragCard(e) {
 // マウスボタンが上がったら発火
 function dropCard(e) {
     if (this != undefined) {
-    // 対象外の要素にも反応してしまうためエラー回避
-
+        // 対象外の要素にも反応してしまうためエラー回避
         this.removeEventListener("mousemove", dragCard, false);
         this.removeEventListener("mouseup", dropCard, false);
         this.removeEventListener("touchmove", dragCard, false);
         this.removeEventListener("touchend", dropCard, false);
-    }
-}
-
-export function changeCardColor(clickedElementInfo) {
-    const clickedCardTextarea = document.getElementById(clickedElementInfo.parentNode.id).getElementsByClassName("textarea").item(0)
-
-    // カードカラーの変更
-    switch (clickedCardTextarea.style.backgroundColor) {
-        case cardColors.default:
-            clickedCardTextarea.style.backgroundColor = cardColors.keep;
-            break;
-
-        case cardColors.keep:
-            clickedCardTextarea.style.backgroundColor = cardColors.problem;
-            break;
-
-        case cardColors.problem:
-            clickedCardTextarea.style.backgroundColor = cardColors.try;
-            break;
-
-        case cardColors.try:
-            clickedCardTextarea.style.backgroundColor = cardColors.default;
-            break;
     }
 }
