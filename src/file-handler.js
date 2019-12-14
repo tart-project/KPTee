@@ -1,15 +1,16 @@
 import Card from './card'
 
 // エクスポートファイル作成
-export function createInfoFromCards(cardList) {
-    const exportingCardsInfo = [];
+export function createInfoFromCards(cards) {
+    const info = [];
 
-    for (const card of cardList) {
+    for (const card of cards) {
         // 参照渡し回避のため、新規オブジェクト生成
-        const newCardObject = Object.assign({}, card.getInfo())
-        exportingCardsInfo.push(newCardObject)
+        // TODO: 参照渡しの解決
+        const newCard = Object.assign({}, card.getInfo())
+        info.push(newCard)
     }
-    return exportingCardsInfo
+    return info
 }
 
 // エクスポートファイルをダウンロード
@@ -17,7 +18,7 @@ export function downloadFile(exportedFileInfo) {
 
     // 各種設定
     const stringCardsInfo = JSON.stringify(exportedFileInfo);
-    const fileTitle = "KPTeeCards.json";
+    const fileTitle = "kptee-cards.json";
     const linkTag = document.getElementById("linkTagToGetCardsFile");
     const blobObject = new Blob([stringCardsInfo], { type: "text/plain" });
 
@@ -28,16 +29,16 @@ export function downloadFile(exportedFileInfo) {
 }
 
 // インポート情報→カード作成
-export function createCardsFromFile(importedFile, fun) {
+export function createCardsFromFile(file, fun) {
 
     // 戻り値用カードリスト
-    const importingCardList = [];
+    const cards = [];
 
     //FileReaderのインスタンスを作成する
     const fileReader = new FileReader();
 
     //読み込んだファイルの中身を取得する
-    fileReader.readAsText(importedFile);
+    fileReader.readAsText(file);
 
     //ファイルの中身を取得後に処理を行う
     fileReader.addEventListener("load", function () {
@@ -47,8 +48,8 @@ export function createCardsFromFile(importedFile, fun) {
 
         // インポート情報を元にカードを生成
         for (const card of importedCardsInfo) {
-            importingCardList.push(new Card(card))
+            cards.push(new Card(card))
         }
-        fun(importingCardList)
+        fun(cards)
     })
 }
