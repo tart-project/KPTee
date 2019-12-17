@@ -13,10 +13,10 @@ const cardList = [];
 
 // インポートボタンにイベントをセット
 (function () {
-    const importLocationInfo = document.forms.formTagForImport;
+    const importLocation = document.forms.formTagForImport;
 
     // ファイルが読み込まれたら発火
-    importLocationInfo.importFileButton.addEventListener("change", importCardsInfo, false)
+    importLocation.importFileButton.addEventListener("change", importCardsInfo, false)
 }());
 
 // カード作成関数
@@ -24,8 +24,6 @@ function createCard() {
 
     // カードの生成
     const card = new Card()
-
-    console.log(cardList)
 
     // カードリストにidを追加
     cardList.push(card)
@@ -60,10 +58,10 @@ function changeCardColor(clieckedButton) {
     const clieckedCardId = clieckedButton.parentNode.id
 
     // 対象カード照合
-    const targetCard = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
+    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
 
     // カードカラーの変更
-    cardList[targetCard].changeColor()
+    cardList[targetCardIndex].changeColor()
 }
 
 // カード削除関数
@@ -73,12 +71,12 @@ function deleteCard(clieckedButton) {
     const clieckedCardId = clieckedButton.parentNode.id
 
     // 対象カード照合
-    const targetCard = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
+    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
 
     // カード削除
-    cardList[targetCard].delete()
+    cardList[targetCardIndex].delete()
 
     // カードID削除
-    cardList.splice(targetCard, 1)
+    cardList.splice(targetCardIndex, 1)
 
 }
