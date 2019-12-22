@@ -1,4 +1,4 @@
-import Card, { changeCardColor } from './card'
+import Card from './card'
 import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
 
 // html上の関数と紐づけ
@@ -6,16 +6,17 @@ window.createCard = createCard
 window.changeCardColor = changeCardColor
 window.importCardsInfo = importCardsInfo
 window.exportCardsInfo = exportCardsInfo
+window.deleteCard = deleteCard
 
 // グローバル変数設定
 const cardList = [];
 
 // インポートボタンにイベントをセット
 (function () {
-    const importLocationInfo = document.forms.formTagForImport;
+    const importLocation = document.forms.formTagForImport;
 
     // ファイルが読み込まれたら発火
-    importLocationInfo.importFileButton.addEventListener("change", importCardsInfo, false)
+    importLocation.importFileButton.addEventListener("change", importCardsInfo, false)
 }());
 
 // カード作成関数
@@ -35,8 +36,8 @@ export function importCardsInfo(e) {
         // ファイルが読み込まれた場合→ファイル情報からカードを生成
         createCardsFromFile(e.target.files[0], function (importedCard) {
 
-             // カードリストにidを追加
-            cardList = cardList.concat(importedCard)
+            // カードリストにidを追加
+            cardList.push(importedCard)
         })
     }
 }
@@ -49,4 +50,33 @@ function exportCardsInfo() {
 
     //ファイルをダウンロード
     downloadFile(exportedInfo)
+}
+
+function changeCardColor(clieckedButton) {
+
+    // 対象カードID取得
+    const clieckedCardId = clieckedButton.parentNode.id
+
+    // 対象カード照合
+    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
+
+    // カードカラーの変更
+    cardList[targetCardIndex].changeColor()
+}
+
+// カード削除関数
+function deleteCard(clieckedButton) {
+
+    // 対象カードID取得
+    const clieckedCardId = clieckedButton.parentNode.id
+
+    // 対象カード照合
+    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
+
+    // カード削除
+    cardList[targetCardIndex].delete()
+
+    // カードID削除
+    cardList.splice(targetCardIndex, 1)
+
 }

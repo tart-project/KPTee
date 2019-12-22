@@ -1,4 +1,4 @@
-export const cardColors = {
+export const colors = {
     "default": "rgb(231, 231, 231)",
     "keep": "rgb(135, 206, 250)",
     "problem": "rgb(244, 164, 96)",
@@ -10,8 +10,9 @@ export const defaultCardInfo = {
     "cardId": "",
     "topPosition": "550px",
     "leftPosition": "900px",
-    "color": cardColors.default,
+    "color": colors.default,
     "text": "",
     "width": "",
-    "height": ""
+    "height": "",
+    "changeColorButton": {"color": colors.keep}
 };
