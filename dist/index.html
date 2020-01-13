@@ -5,25 +5,58 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="shortcut icon" href="logo.ico">
+    <div class="HeaderContener">
+      <div class="tools">
+        <!-- エクスポートボタン -->
+        <a id="linkTagToGetCardsFile" type="button" onclick="exportCardsInfo()" style="text-decoration: none;">
+          <image src="export.png" id="linkTagTogetcardsFileButton" class="toolIcon">
+        </a>
+
+        <!-- インポートボタン -->
+        <label for="importFileButton">
+          <img src="import.png" class="toolIcon"/>
+        </label>
+
+        <form id="formTagForImport">        
+          <input  id="importFileButton" type="file" onclick="importCardsInfo()"  style=display:none>
+        </form>
+      </div>
+    </div> 
+ 
   </head>
 
   <body>
-    <!-- カード生成場所 -->
-    <div id="cardCreationArea"></div>
-    <!-- カード作成ボタン -->
-    <button type="button" onclick="createCard()" id="cardCreationButton">
-      +
-    </button>
-    <!-- エクスポートボタン -->
-    <a id="linkTagToGetCardsFile" type="button" onclick="exportCardsInfo()">
-      <button type="button" id="linkTagTogetcardsFileButton">
-        エクスポート
-      </button>
-    </a>
-    <!-- インポートボタン -->
-    <form id="formTagForImport">
-      <input id="importFileButton" type="file" onclick="importCardsInfo()" />
-    </form>
+    <div class="KPTeeContener">
+      <!-- カード生成場所 -->
+      <div id="cardCreationArea"></div>
+
+      <div class="leftBox">
+          <div class="keepAreaBox">
+                  <div class="titleAreaBox" style="height: 10%; background-color:#2e75b6;">
+                      Keep
+                  </div>
+          </div>
+          <div class="problemAreaBox">
+                  <div class="titleAreaBox" style="height: 10%; background-color:#ed7d31">
+                      Problem
+                  </div>
+          </div>
+      </div>
+      <div class="centerLineBox">
+              <div class="centerBox">
+                 <img src="circle.png" class="centerCircle">
+                 <!-- カード作成ボタン -->
+                 <button type="button" onclick="createCard()" id="cardCreationButton"></button>
+              </div>
+      </div>
+      <div class="rightBox">
+          <div class="tryAreaBox">
+              <div class="titleAreaBox" style="height: 5%; background-color:#60943c;">
+                  Try
+              </div>
+          </div>
+      </div>
+    </div>
     <script src="main.js"></script>
   </body>
 </html>

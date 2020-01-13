@@ -16,20 +16,18 @@
 
 .textarea{
     border:none;
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
 
 }
 
-body {
-    background-image: url("background-image.jpg");
-    background-size: cover;
-}
-
-
-  
 #cardCreationButton {/*円の部分*/
+
+    position: absolute;
     display: block;
+    margin-top: -202px;
+    margin-left: -242px;
+    z-index: 10;
     width: 80px;
     height: 80px;
     text-align: center;
@@ -108,3 +106,122 @@ body {
     transform: translate(0,2px);
     border-bottom:none;
 }
+
+/*ヘッダコンテナ*/
+.HeaderContener {
+    display: block;
+    width: 1465px;/*1465*/
+    height: 30px;/*735*/
+}
+
+/*ロゴ画像*/
+.logo {
+    display: block;
+    margin: -10px;
+    width: 15%;
+    height: auto;
+}
+
+/*ツール欄*/
+.tools {
+    display: inline-block;
+    height: 50px;
+}
+
+/*ツールアイコン*/
+.toolIcon {
+    margin: 0px 0px 50px 0%;
+    width: 5%;
+    height: auto;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.2);
+}
+
+/*アイコンの画像ホバー用*/
+.toolIcon:hover {
+    background-color: rgb(245, 240, 240);
+  }
+
+/*KPTエリアコンテナ*/
+.KPTeeContener {
+    display: block;
+    border: 1px gray solid;
+    width: 1475px;/*1465*/
+    height: 675px;/*735*/
+    font-size: 0;
+}
+
+/*左半分コンテナ*/
+.leftBox {
+    display: inline-block;
+    vertical-align: top;
+    width: 49.75%;
+    height: 100%;
+}
+
+/*右半分コンテナ*/
+.rightBox {
+    display: inline-block;
+    vertical-align: top;
+    width: 49.75%;
+    height: 100%;
+}
+
+/*中央線コンテナ*/
+.centerLineBox {
+    display: inline-block;
+    vertical-align: top;
+    width: 0.5%;
+    height: 100%;
+    background-color: gray;
+}
+
+/*Keepエリア*/
+.keepAreaBox {
+    display: block;
+    width: 100%;
+    height: 50%;
+	background-color: #47a4c957;
+}
+
+/*Tryエリア*/
+.tryAreaBox {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(95, 204, 137, 0.274);
+}
+/*Problemエリア*/
+.problemAreaBox {
+    display: block;
+    width: 100%;
+    height: 50%;
+    background-color: rgba(235, 207, 113, 0.24);
+}
+
+/*タイトルエリア*/
+.titleAreaBox {
+    font-weight:bold;
+    text-align:center;
+    display: block;
+    width: 100%;
+    font-size: 25px;
+    color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.4);
+}
+
+/*中央エリア*/
+.centerBox {
+    display: block;
+}
+
+/*中央エリア*/
+.centerCircle{
+    position: absolute;
+    display: block;
+    width: 150px;
+    height: auto;
+    margin-top: 290px;
+    margin-left: -65px;
+    z-index: 5;
+}
+
