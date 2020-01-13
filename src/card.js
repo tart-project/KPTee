@@ -26,7 +26,6 @@ export default class Card {
         changeColorButton.setAttribute("class", "changeColorButton")
         changeColorButton.setAttribute("onclick", "changeCardColor(this)")
         changeColorButton.setAttribute("style", `background-color: ${cardInfo.changeColorButton.color};`)
-        changeColorButton.innerHTML = "+";
 
         // カード削除用ボタン生成
         const deleteCardButton = document.createElement("button");
