@@ -1,22 +1,18 @@
-# Inception Deck
+KPTee
+==
 
-## Elevator Pitch
-**継続的にプロジェクトを改善** したい<br>
-**エンジニア** 向けの、<br>
-**KPTee** というプロダクトは、<br>
-**仕事やプロジェクトの改善を加速するツール** です。<br>
-これは **手軽に使用** ができ、<br>
-**ホワイトボードで行うKPT** とは違って、<br>
-**記録と遠隔地から同時に行える機能** が備わっている。<br>
+KPT is retrospective framework.  
+KPTee is a front-end application for KPT.
 
-## ToDo & NotToDo
-### ToDo
-- セットアップが５分でできる
-- ホワイトボード一枚分の記録を残せる
-- 色分けできる
+## Get start 
+https://tart-project.github.io/KPTee/
 
-### NotToDo
-- 複数のボードを作る
-- DBを使う
-- 認証
-- 同時にタスクが出せる
+## Use local 
+1. `git clone https://github.com/tart-project/KPTee.git`
+1. `cd kptee`
+1. `npm install`
+1. `npm run build`
+1. click `dist/index.html`
+
+## License
+[MIT](https://opensource.org/licenses/mit-license.php)
