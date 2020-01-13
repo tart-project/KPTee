@@ -85,7 +85,7 @@ img.cardCreationButtonImg {
     font-weight: 900; 
 }
 /*ヘッダコンテナ*/
-.headerContener {
+.headerContainer {
     display: block;
     width: 1475px;/*1465*/
     height: 65px;/*735*/
@@ -118,7 +118,7 @@ img.cardCreationButtonImg {
   }
 
 /*KPTエリアコンテナ*/
-.kpteeContener {
+.kpteeContainer {
     display: block;
     border: 1px gray solid;
     width: 1475px;/*1465*/
