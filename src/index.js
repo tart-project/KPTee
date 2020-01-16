@@ -7,6 +7,10 @@ window.changeCardColor = changeCardColor
 window.importCardsInfo = importCardsInfo
 window.exportCardsInfo = exportCardsInfo
 window.deleteCard = deleteCard
+window.onbeforeunload = function(e) {
+    // IE、firefoxのみ下記のメッセージが表示
+    return "エクスポートを実行しカード情報の保存をしてください。";
+};
 
 // グローバル変数設定
 const cardList = [];
