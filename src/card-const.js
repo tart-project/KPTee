@@ -5,7 +5,6 @@ export const colors = {
     "try": "rgb(152, 251, 152)"
 };
 
-/*山田さんのCSSによって変更する*/
 export const defaultCardInfo = {
     "cardId": "",
     "topPosition": "300px",

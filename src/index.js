@@ -1,5 +1,6 @@
 import Card from './card'
 import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
+import { cardArchive } from './card-handler'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -73,10 +74,21 @@ function deleteCard(clieckedButton) {
     // 対象カード照合
     const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
 
+    // 削除対象カードをアーカイブ
+    cardArchive(cardList[targetCardIndex])
+
     // カード削除
     cardList[targetCardIndex].delete()
 
     // カードID削除
     cardList.splice(targetCardIndex, 1)
+}
 
+function restoreCard(restoreCardInfo) {
+
+    // カードの生成
+    const card = new Card(restoreCardInfo)
+
+    // カードリストにidを追加
+    cardList.push(card)
 }
