@@ -8,8 +8,7 @@ window.importCardsInfo = importCardsInfo
 window.exportCardsInfo = exportCardsInfo
 window.deleteCard = deleteCard
 window.onbeforeunload = function(e) {
-    // IE、firefoxのみ下記のメッセージが表示
-    return "エクスポートを実行しカード情報を保存してください。";
+    return "";
 };
 
 // グローバル変数設定
