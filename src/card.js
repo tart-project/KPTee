@@ -45,7 +45,6 @@ export default class Card {
 
         // ドラッグアンドドロップ機能追加
         cardDiv.addEventListener("mousedown", glabCard, false);
-        cardDiv.addEventListener("touchstart", glabCard, false);
     }
 
     getInfo() {
@@ -121,27 +120,15 @@ function glabCard(e) {
 
     // ドラッグイベントの追加
     this.addEventListener("mousemove", dragCard, false);
-    this.addEventListener("touchmove", dragCard, false);
 
     // ドロップイベントの追加
     this.addEventListener("mouseup", dropCard, false);
     this.addEventListener("mouseleave", dropCard, false);
-    this.addEventListener("touchend", dropCard, false);
-    this.addEventListener("touchleave", dropCard, false);
 }
 
 //マウスカーソルが動いた場合実行
 function dragCard(e) {
     const cursorEvent = e
-
-    // マウスとタッチの差異を吸収
-    if (e.type != "mousemove") {
-        // イベントがタッチイベントだった場合
-        cursorEvent = e.changedTouches[0];
-    }
-
-    // フリックしたときに画面を動かさないようにデフォルト動作を抑制
-    cursorEvent.preventDefault();
 
     // マウスが動いた場所に要素を動かす
     this.style.top = `${cursorEvent.pageY - clickedTopPosition}px`;
@@ -154,7 +141,5 @@ function dropCard(e) {
         // 対象外の要素にも反応してしまうためエラー回避
         this.removeEventListener("mousemove", dragCard, false);
         this.removeEventListener("mouseup", dropCard, false);
-        this.removeEventListener("touchmove", dragCard, false);
-        this.removeEventListener("touchend", dropCard, false);
     }
 }
