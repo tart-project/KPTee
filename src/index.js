@@ -7,6 +7,9 @@ window.changeCardColor = changeCardColor
 window.importCardsInfo = importCardsInfo
 window.exportCardsInfo = exportCardsInfo
 window.deleteCard = deleteCard
+window.onbeforeunload = function(e) {
+    return "";
+};
 
 // グローバル変数設定
 const cardList = [];
@@ -78,5 +81,4 @@ function deleteCard(clieckedButton) {
 
     // カードID削除
     cardList.splice(targetCardIndex, 1)
-
 }
