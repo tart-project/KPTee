@@ -7,19 +7,18 @@
     cursor: move;
     position: absolute;
     z-index: 1000;
-    display:inline
-}
-
-.drag {
-    z-index: 1001;
+    display:inline;
+    touch-action: none;
+  user-select: none;
 }
 
 .textarea{
     border:none;
     height: 100px;
     width: 100px;
-    border-radius: 2%;
-    box-shadow: 1px 1px 4px gray;
+    border-radius: 5%;
+    box-shadow: 1px 1px 0px gray;
+    resize: none;
 }
 
 #cardCreationButton {/*円の部分*/
