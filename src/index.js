@@ -1,6 +1,6 @@
 import Card from './card'
 import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
-import { cardArchive } from './card-handler'
+import { cardArchiveList, archiveCard, restoreCardFromArchive } from './card-handler'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -8,6 +8,7 @@ window.changeCardColor = changeCardColor
 window.importCardsInfo = importCardsInfo
 window.exportCardsInfo = exportCardsInfo
 window.deleteCard = deleteCard
+window.restoreCard = restoreCard
 
 // グローバル変数設定
 const cardList = [];
@@ -75,7 +76,7 @@ function deleteCard(clieckedButton) {
     const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
 
     // 削除対象カードをアーカイブ
-    cardArchive(cardList[targetCardIndex])
+    archiveCard(cardList[targetCardIndex].getInfo())
 
     // カード削除
     cardList[targetCardIndex].delete()
@@ -84,11 +85,13 @@ function deleteCard(clieckedButton) {
     cardList.splice(targetCardIndex, 1)
 }
 
-function restoreCard(restoreCardInfo) {
+// Function to restore deleted cards
+function restoreCard() {
+    if (cardArchiveList.length != 0) {
 
-    // カードの生成
-    const card = new Card(restoreCardInfo)
+        // if there is a restored card
+        const restoredCardInfo = restoreCardFromArchive()
 
-    // カードリストにidを追加
-    cardList.push(card)
+        cardList.push(restoredCardInfo)
+    }
 }
