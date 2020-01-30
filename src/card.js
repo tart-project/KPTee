@@ -53,20 +53,20 @@ export default class Card {
                         event.target.style.transform = `translate(${changedPosition.x}px, ${changedPosition.y}px)`
                     }
                 }
-            }).on("dragend", event => {
+            }).on("dragend", () => {
                 // 現在の位置情報を追加
-                var cardDivPosirionInfo = document.getElementById(this.cardId).getBoundingClientRect();
+                const cardDivRectInfo = document.getElementById(this.cardId).getBoundingClientRect();
 
                 // 画面左上からの絶対位置+スクロールの補正分を反映
-                var currentTop = cardDivPosirionInfo.top + window.pageYOffset;
-                var currentLeft = cardDivPosirionInfo.left + window.pageXOffset;
+                var currentTop = cardDivRectInfo.top + window.pageYOffset;
+                var currentLeft = cardDivRectInfo.left + window.pageXOffset;
                 cardDiv.style.left = `${currentLeft}px`
                 cardDiv.style.top = `${currentTop}px`
 
                 // 移動距離の初期化
                 changedPosition.x = 0
                 changedPosition.y = 0
-                event.target.style.transform = `translate(${0}px, ${0}px)`
+                cardDiv.style.transform = "translate(0px, 0px)"
             })
 
         // テキストエリアにリサイズ機能追加
@@ -82,12 +82,10 @@ export default class Card {
                     })
                 ]
             })
-            .on('resizemove', function (event) {
-                var target = event.target
-
+            .on('resizemove', event => {
                 // update the element's style
-                target.style.width = event.rect.width + 'px'
-                target.style.height = event.rect.height + 'px'
+                textarea.style.width = event.rect.width + 'px'
+                textarea.style.height = event.rect.height + 'px'
             })
     }
 
