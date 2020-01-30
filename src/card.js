@@ -50,7 +50,7 @@ export default class Card {
                         // マウスの移動分を変化量に加算(evemt.dx,dy)
                         changedPosition.x += event.dx
                         changedPosition.y += event.dy
-                        event.target.style.transform = `translate(${changedPosition.x}px, ${changedPosition.y}px)`
+                        cardDiv.style.transform = `translate(${changedPosition.x}px, ${changedPosition.y}px)`
                     }
                 }
             }).on("dragend", () => {
@@ -58,8 +58,8 @@ export default class Card {
                 const cardDivRectInfo = document.getElementById(this.cardId).getBoundingClientRect();
 
                 // 画面左上からの絶対位置+スクロールの補正分を反映
-                var currentTop = cardDivRectInfo.top + window.pageYOffset;
-                var currentLeft = cardDivRectInfo.left + window.pageXOffset;
+                const currentTop = cardDivRectInfo.top + window.pageYOffset;
+                const currentLeft = cardDivRectInfo.left + window.pageXOffset;
                 cardDiv.style.left = `${currentLeft}px`
                 cardDiv.style.top = `${currentTop}px`
 
@@ -72,7 +72,7 @@ export default class Card {
         // テキストエリアにリサイズ機能追加
         interact(textarea)
             .resizable({
-                // resize from all edges and corners
+                // resize from right or bottom edges and corners
                 edges: { right: true, bottom: true },
                 modifiers: [
                     // minimum size
@@ -84,8 +84,8 @@ export default class Card {
             })
             .on('resizemove', event => {
                 // update the element's style
-                textarea.style.width = event.rect.width + 'px'
-                textarea.style.height = event.rect.height + 'px'
+                textarea.style.width = `${event.rect.width}px`
+                textarea.style.height = `${event.rect.height}px`
             })
     }
 
