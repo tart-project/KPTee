@@ -8,8 +8,8 @@ export const colors = {
 /*山田さんのCSSによって変更する*/
 export const defaultCardInfo = {
     "cardId": "",
-    "topPosition": "300px",
-    "leftPosition": "650px",
+    "topPosition": "360px",
+    "leftPosition": "700px",
     "color": colors.default,
     "text": "",
     "width": "",
