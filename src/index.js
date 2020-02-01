@@ -1,70 +1,60 @@
-import Card from './card'
-import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
+import Whiteboard from './whiteboard'
+import User from './user'
 
 // html上の関数と紐づけ
 window.createCard = createCard
 window.changeCardColor = changeCardColor
-window.importCardsInfo = importCardsInfo
-window.exportCardsInfo = exportCardsInfo
+window.importCards = importCards
+window.exportCards = exportCards
 window.deleteCard = deleteCard
-window.onbeforeunload = function(e) {
-    return "";
-};
+window.onbeforeunload = () => { return "" };
 
-// グローバル変数設定
-const cardList = [];
+const whiteboard = new Whiteboard
+const user = new User
 
 // インポートボタンにイベントをセット
 (function () {
     const importLocation = document.forms.formTagForImport;
-
     // ファイルが読み込まれたら発火
-    importLocation.importFileButton.addEventListener("change", importCardsInfo, false)
+    importLocation.importFileButton.addEventListener("change", importCards, false)
 }());
 
 // カード作成関数
 function createCard() {
-
-    // カードの生成
-    const card = new Card()
-
-    // カードリストにidを追加
-    cardList.push(card)
+    user.createCard(whiteboard)
 }
 
 // インポート関数
-export function importCardsInfo(e) {
+function importCards(e) {
 
     if (e) {
         // ファイルが読み込まれた場合→ファイル情報からカードを生成
-        createCardsFromFile(e.target.files[0], function (importedCard) {
+        whiteboard.createCardsFromFile(e.target.files[0], importedCard => {
 
             // カードリストにidを追加
-            cardList.push(importedCard)
+            whiteboard.cardList.push(importedCard)
         })
     }
 }
 
 // エクスポート関数
-function exportCardsInfo() {
+function exportCards() {
 
     // カード情報一覧からファイル作成
-    const exportedInfo = createInfoFromCards(cardList)
+    const exportedFile = whiteboard.createFileFromCards(whiteboard.cardList)
 
     //ファイルをダウンロード
-    downloadFile(exportedInfo)
+    whiteboard.downloadFile(exportedFile)
 }
 
+// カードカラー変更関数
 function changeCardColor(clieckedButton) {
 
     // 対象カードID取得
     const clieckedCardId = clieckedButton.parentNode.id
 
-    // 対象カード照合
-    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
-
     // カードカラーの変更
-    cardList[targetCardIndex].changeColor()
+    user.changeColor(clieckedCardId)
 }
 
 // カード削除関数
@@ -73,12 +63,12 @@ function deleteCard(clieckedButton) {
     // 対象カードID取得
     const clieckedCardId = clieckedButton.parentNode.id
 
+    // htmlからカード削除
+    user.deleteCard(clieckedCardId)
+
     // 対象カード照合
-    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
+    const targetCardIndex = whiteboard.cardList.findIndex((cardId) => cardId === clieckedCardId)
 
-    // カード削除
-    cardList[targetCardIndex].delete()
-
-    // カードID削除
-    cardList.splice(targetCardIndex, 1)
+    // カードリストからカードID削除
+    whiteboard.cardList.splice(targetCardIndex, 1)
 }

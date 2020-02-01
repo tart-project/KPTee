@@ -15,7 +15,7 @@
     <img src="logo.png" class="logo">
     <div class="tools">
       <!-- エクスポートボタン -->
-      <a id="linkTagToGetCardsFile" type="button" onclick="exportCardsInfo()" style="text-decoration: none;">
+      <a id="linkTagToGetCardsFile" type="button" onclick="exportCards()">
         <image src="export.png" id="linkTagTogetcardsFileButton" class="toolIcon">
       </a>
 
@@ -25,7 +25,7 @@
       </label>
 
       <form id="formTagForImport">
-        <input id="importFileButton" type="file" onclick="importCardsInfo()" style=display:none>
+        <input id="importFileButton" type="file" onclick="importCards()" >
       </form>
     </div>
   </div>
@@ -36,12 +36,12 @@
 
     <div class="leftBox">
       <div class="keepAreaBox">
-        <div class="titleAreaBox" style="height: 10%; background-color:#2e75b6;">
+        <div class="titleAreaBox" id="keepTitle">
           Keep
         </div>
       </div>
       <div class="problemAreaBox">
-        <div class="titleAreaBox" style="height: 10%; background-color:#ed7d31">
+        <div class="titleAreaBox" id="problemTitle">
           Problem
         </div>
       </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="rightBox">
       <div class="tryAreaBox">
-        <div class="titleAreaBox" style="height: 5%; background-color:#60943c;">
+        <div class="titleAreaBox" id="tryTitle">
           Try
         </div>
       </div>
