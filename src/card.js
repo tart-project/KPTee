@@ -1,13 +1,10 @@
 import { colors, defaultCardInfo } from './card-const'
 import { v4 } from 'uuid'
-
-//グローバル変数設定
-let clickedTopPosition;
-let clickedLeftPosition;
+import interact from 'interactjs'
 
 export default class Card {
     constructor(cardInfo = defaultCardInfo) {
-        this.cardId = v4()
+        this.cardId = `id-${v4()}`
 
         // カードdiv生成
         const cardDiv = document.createElement("div");
@@ -43,12 +40,57 @@ export default class Card {
         const locationForDraggable = document.getElementById("cardCreationArea");
         locationForDraggable.appendChild(cardDiv)
 
-        // ドラッグアンドドロップ機能追加
-        cardDiv.addEventListener("mousedown", glabCard, false);
+        const changedPosition = { x: 0, y: 0 }
+
+        // カードにドラッグ&ドロップ機能追加
+        interact(cardDiv)
+            .draggable({
+                listeners: {
+                    move(event) {
+                        // マウスの移動分を変化量に加算(evemt.dx,dy)
+                        changedPosition.x += event.dx
+                        changedPosition.y += event.dy
+                        cardDiv.style.transform = `translate(${changedPosition.x}px, ${changedPosition.y}px)`
+                    }
+                }
+            }).on("dragend", () => {
+                // 現在の位置情報を追加
+                const cardDivRectInfo = document.getElementById(this.cardId).getBoundingClientRect();
+
+                // 画面左上からの絶対位置+スクロールの補正分を反映
+                const currentTop = cardDivRectInfo.top + window.pageYOffset;
+                const currentLeft = cardDivRectInfo.left + window.pageXOffset;
+                cardDiv.style.left = `${currentLeft}px`
+                cardDiv.style.top = `${currentTop}px`
+
+                // 移動距離の初期化
+                changedPosition.x = 0
+                changedPosition.y = 0
+                cardDiv.style.transform = "translate(0px, 0px)"
+            })
+
+        // テキストエリアにリサイズ機能追加
+        interact(textarea)
+            .resizable({
+                // resize from right or bottom edges and corners
+                edges: { right: true, bottom: true },
+                modifiers: [
+                    // minimum size
+                    interact.modifiers.restrictSize({
+                        // TODO: 初期サイズと合わせる
+                        min: { width: 100, height: 50 }
+                    })
+                ]
+            })
+            .on('resizemove', event => {
+                // update the element's style
+                textarea.style.width = `${event.rect.width}px`
+                textarea.style.height = `${event.rect.height}px`
+            })
     }
 
+    // カード情報取得
     getInfo() {
-        // カード情報取得
         const cardDiv = document.getElementById(this.cardId)
         const textarea = document.getElementById(this.cardId).getElementsByClassName("textarea").item(0)
         const changeColorButton = document.getElementById(this.cardId).getElementsByClassName("changeColorButton").item(0)
@@ -101,45 +143,5 @@ export default class Card {
                 clickedButton.style.backgroundColor = colors.keep;
                 break;
         }
-    }
-}
-
-// マウスがクリックされた場合実行
-function glabCard(e) {
-    const cursorEvent = e
-
-    //タッチイベントとマウスイベントは差異があるためイベントの差異を吸収
-    if (e.type != "mousedown") {
-        // イベントがタッチイベントだった場合
-        cursorEvent = e.changedTouches[0];
-    }
-
-    // 要素内の相対座標を取得
-    clickedLeftPosition = cursorEvent.pageX - this.offsetLeft;
-    clickedTopPosition = cursorEvent.pageY - this.offsetTop;
-
-    // ドラッグイベントの追加
-    this.addEventListener("mousemove", dragCard, false);
-
-    // ドロップイベントの追加
-    this.addEventListener("mouseup", dropCard, false);
-    this.addEventListener("mouseleave", dropCard, false);
-}
-
-//マウスカーソルが動いた場合実行
-function dragCard(e) {
-    const cursorEvent = e
-
-    // マウスが動いた場所に要素を動かす
-    this.style.top = `${cursorEvent.pageY - clickedTopPosition}px`;
-    this.style.left = `${cursorEvent.pageX - clickedLeftPosition}px`;
-}
-
-// マウスボタンが上がったら発火
-function dropCard(e) {
-    if (this != undefined) {
-        // 対象外の要素にも反応してしまうためエラー回避
-        this.removeEventListener("mousemove", dragCard, false);
-        this.removeEventListener("mouseup", dropCard, false);
     }
 }
