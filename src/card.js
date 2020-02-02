@@ -5,7 +5,17 @@ import interact from 'interactjs'
 export default class Card {
     constructor(cardInfo = defaultCardInfo) {
         this.cardId = `id-${v4()}`
+        this.color = cardInfo.color
+        this.height = cardInfo.height
+        this.width = cardInfo.width
+        this.top = cardInfo.topPosition
+        this.left = cardInfo.leftPosition
+        this.changeColorButton.color = cardInfo.changeColorButton.color
+        
+        const cardDiv = document.getElementById(this.cardId);
+        const textarea = cardDiv.getElementsByClassName("textarea")
 
+        /*
         // カードdiv生成
         const cardDiv = document.createElement("div");
         cardDiv.setAttribute("id", this.cardId)
@@ -39,6 +49,7 @@ export default class Card {
         // カードを表示
         const locationForDraggable = document.getElementById("cardCreationArea");
         locationForDraggable.appendChild(cardDiv)
+        */
 
         const changedPosition = { x: 0, y: 0 }
 

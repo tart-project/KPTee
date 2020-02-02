@@ -1,5 +1,6 @@
 import Card from './card'
 import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
+import Vue from 'vue'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -12,14 +13,19 @@ window.onbeforeunload = function(e) {
 };
 
 // グローバル変数設定
-const cardList = [];
+let vue
 
 // インポートボタンにイベントをセット
 (function () {
     const importLocation = document.forms.formTagForImport;
-
     // ファイルが読み込まれたら発火
     importLocation.importFileButton.addEventListener("change", importCardsInfo, false)
+    vue = new Vue({
+        el: '#app',
+        data: {
+            cardList: []
+        }
+    })
 }());
 
 // カード作成関数
@@ -29,7 +35,8 @@ function createCard() {
     const card = new Card()
 
     // カードリストにidを追加
-    cardList.push(card)
+    vue.cardList.push(card)
+    console.log(vue.cardList)
 }
 
 // インポート関数
@@ -40,7 +47,7 @@ export function importCardsInfo(e) {
         createCardsFromFile(e.target.files[0], function (importedCard) {
 
             // カードリストにidを追加
-            cardList.push(importedCard)
+            vue.cardList.push(importedCard)
         })
     }
 }
@@ -49,7 +56,7 @@ export function importCardsInfo(e) {
 function exportCardsInfo() {
 
     // カード情報一覧からファイル作成
-    const exportedInfo = createInfoFromCards(cardList)
+    const exportedInfo = createInfoFromCards(vue.cardList)
 
     //ファイルをダウンロード
     downloadFile(exportedInfo)
@@ -61,10 +68,10 @@ function changeCardColor(clieckedButton) {
     const clieckedCardId = clieckedButton.parentNode.id
 
     // 対象カード照合
-    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
+    const targetCardIndex = vue.cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
 
     // カードカラーの変更
-    cardList[targetCardIndex].changeColor()
+    vue.cardList[targetCardIndex].changeColor()
 }
 
 // カード削除関数
@@ -74,11 +81,11 @@ function deleteCard(clieckedButton) {
     const clieckedCardId = clieckedButton.parentNode.id
 
     // 対象カード照合
-    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
+    const targetCardIndex = vue.cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
 
     // カード削除
-    cardList[targetCardIndex].delete()
+    vue.cardList[targetCardIndex].delete()
 
     // カードID削除
-    cardList.splice(targetCardIndex, 1)
+    vue.cardList.splice(targetCardIndex, 1)
 }
