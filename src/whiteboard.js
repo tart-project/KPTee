@@ -7,6 +7,10 @@ export default class Whiteboard {
         this.cardList = []
     }
 
+    exportCards() {
+        this.downloadFile(this.createFileFromCards(this.cardList))
+    }
+
     // エクスポートファイル作成
     createFileFromCards(cards) {
         const exportingFile = [];
@@ -24,10 +28,9 @@ export default class Whiteboard {
     downloadFile(exportedFile) {
 
         // 各種設定
-        const stringCards = JSON.stringify(exportedFile);
         const fileTitle = "kptee-cards.json";
         const linkTag = document.getElementById("linkTagToGetCardsFile");
-        const blobObject = new Blob([stringCards], { type: "text/plain" });
+        const blobObject = new Blob([JSON.stringify(exportedFile)], { type: "text/plain" });
 
         //ダウンロード用URL生成
         const blobObjectUrl = window.URL.createObjectURL(blobObject);
@@ -36,13 +39,13 @@ export default class Whiteboard {
     }
 
     // インポート情報→カード作成
-    createCardsFromFile(file, fun) {
+    importCards(e) {
 
         //FileReaderのインスタンスを作成する
         const fileReader = new FileReader();
 
         //読み込んだファイルの中身を取得する
-        fileReader.readAsText(file);
+        fileReader.readAsText(e.target.files[0]);
 
         //ファイルの中身を取得後に処理を行う
         fileReader.addEventListener("load", () => {
@@ -52,7 +55,7 @@ export default class Whiteboard {
 
             // インポート情報を元にカードを生成
             for (const card of importedCards) {
-                fun(new Card(card))
+                this.cardList.push(new Card(card))
             }
         })
     }

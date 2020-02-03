@@ -16,8 +16,11 @@ export default class User {
     }
 
     // カード削除
-    deleteCard(cardId) {
-        document.getElementById(cardId).remove();
+    deleteCard(clieckedCardId, whiteboard) {
+        document.getElementById(clieckedCardId).remove();
+
+        // カードリストからカードID削除
+        whiteboard.cardList.splice(whiteboard.cardList.findIndex(({cardId}) => cardId === clieckedCardId), 1)
     }
 
     // カラー変更

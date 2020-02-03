@@ -26,49 +26,24 @@ function createCard() {
 
 // インポート関数
 function importCards(e) {
-
-    if (e) {
-        // ファイルが読み込まれた場合→ファイル情報からカードを生成
-        whiteboard.createCardsFromFile(e.target.files[0], importedCard => {
-
-            // カードリストにidを追加
-            whiteboard.cardList.push(importedCard)
-        })
-    }
+    whiteboard.importCards(e)
 }
 
 // エクスポート関数
 function exportCards() {
-
-    // カード情報一覧からファイル作成
-    const exportedFile = whiteboard.createFileFromCards(whiteboard.cardList)
-
-    //ファイルをダウンロード
-    whiteboard.downloadFile(exportedFile)
+    whiteboard.exportCards()
 }
 
 // カードカラー変更関数
 function changeCardColor(clieckedButton) {
 
-    // 対象カードID取得
-    const clieckedCardId = clieckedButton.parentNode.id
-
-    // カードカラーの変更
-    user.changeColor(clieckedCardId)
+    // クリックされたカードIDを渡す
+    user.changeColor(clieckedButton.parentNode.id)
 }
 
 // カード削除関数
 function deleteCard(clieckedButton) {
 
-    // 対象カードID取得
-    const clieckedCardId = clieckedButton.parentNode.id
-
-    // htmlからカード削除
-    user.deleteCard(clieckedCardId)
-
-    // 対象カード照合
-    const targetCardIndex = whiteboard.cardList.findIndex((cardId) => cardId === clieckedCardId)
-
-    // カードリストからカードID削除
-    whiteboard.cardList.splice(targetCardIndex, 1)
+    // クリックされたカードIDを渡す
+    user.deleteCard(clieckedButton.parentNode.id, whiteboard)
 }
