@@ -1,5 +1,6 @@
 import Whiteboard from './whiteboard'
 import User from './user'
+import Vue from 'vue'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -11,17 +12,35 @@ window.onbeforeunload = () => { return "" };
 
 const whiteboard = new Whiteboard
 const user = new User
+// グローバル変数設定
+let vue
 
 // インポートボタンにイベントをセット
 (function () {
     const importLocation = document.forms.formTagForImport;
     // ファイルが読み込まれたら発火
     importLocation.importFileButton.addEventListener("change", importCards, false)
+
+    vue = new Vue({
+        el: '#app',
+        data: {
+            cardList: whiteboard.cardList
+        },
+        methods: {
+            testtest: function () {
+                console.log(this.$el)
+            }
+        }
+    })
 }());
+
 
 // カード作成関数
 function createCard() {
     user.createCard(whiteboard)
+
+   console.log(document.getElementById(whiteboard.cardList[0].cardId))
+   vue.testtest()
 }
 
 // インポート関数
@@ -39,6 +58,8 @@ function changeCardColor(clieckedButton) {
 
     // クリックされたカードIDを渡す
     user.changeColor(clieckedButton.parentNode.id)
+    console.log(document.getElementById(whiteboard.cardList[0].cardId))
+
 }
 
 // カード削除関数
@@ -46,4 +67,6 @@ function deleteCard(clieckedButton) {
 
     // クリックされたカードIDを渡す
     user.deleteCard(clieckedButton.parentNode.id, whiteboard)
+       console.log(document.getElementById(whiteboard.cardList[0].cardId))
+
 }

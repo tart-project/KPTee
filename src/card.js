@@ -5,9 +5,17 @@ import interact from 'interactjs'
 export default class Card {
     constructor(card = defaultCard) {
         this.cardId = `id-${v4()}`
+        this.color = card.color
+        this.height = card.height
+        this.width = card.width
+        this.top = card.topPosition
+        this.left = card.leftPosition
+        this.text = card.text
+        this.changeColorButtonColor = card.changeColorButton.color
 
-        // カードdiv生成
-        const cardDiv = document.createElement("div");
+
+
+        /*
         cardDiv.setAttribute("id", this.cardId)
         cardDiv.setAttribute("class", "cardDiv");
         cardDiv.setAttribute("style", `top: ${card.topPosition}; left: ${card.leftPosition}`);
@@ -39,11 +47,12 @@ export default class Card {
         // カードを表示
         const locationForDraggable = document.getElementById("cardCreationArea");
         locationForDraggable.appendChild(cardDiv)
+        
 
         const changedPosition = { x: 0, y: 0 }
 
         // カードにドラッグ&ドロップ機能追加
-        interact(cardDiv)
+        interact(this.cardId)
             .draggable({
                 listeners: {
                     move(event) {
@@ -86,7 +95,9 @@ export default class Card {
                 // update the element's style
                 textarea.style.width = `${event.rect.width}px`
                 textarea.style.height = `${event.rect.height}px`
-            })
+            })  
+            */
+      
     }
 
     // カード情報取得

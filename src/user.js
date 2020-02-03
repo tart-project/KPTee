@@ -10,7 +10,6 @@ export default class User {
     createCard(whiteboard) {
         // カードの生成
         const card = new Card()
-
         // カードリストにidを追加
         whiteboard.cardList.push(card)
     }
