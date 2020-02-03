@@ -33,6 +33,7 @@
     <div id="cardCreationArea"　v-for="card in cardList">
         <div class="cardDiv" v-bind:id="card.cardId" v-bind:style="{top: card.top, left: card.left}">
           <textarea v-bind:style="{backgroundColor: card.color, width: card.width, height: card.height}" class="textarea">{{card.text}}</textarea>
+          <br>
           <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonColor}"></button>
           <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
         </div>

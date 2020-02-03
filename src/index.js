@@ -38,9 +38,6 @@ let vue
 // カード作成関数
 function createCard() {
     user.createCard(whiteboard)
-
-   console.log(document.getElementById(whiteboard.cardList[0].cardId))
-   vue.testtest()
 }
 
 // インポート関数
@@ -58,8 +55,6 @@ function changeCardColor(clieckedButton) {
 
     // クリックされたカードIDを渡す
     user.changeColor(clieckedButton.parentNode.id)
-    console.log(document.getElementById(whiteboard.cardList[0].cardId))
-
 }
 
 // カード削除関数
@@ -67,6 +62,4 @@ function deleteCard(clieckedButton) {
 
     // クリックされたカードIDを渡す
     user.deleteCard(clieckedButton.parentNode.id, whiteboard)
-       console.log(document.getElementById(whiteboard.cardList[0].cardId))
-
 }
