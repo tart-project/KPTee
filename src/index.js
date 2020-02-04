@@ -25,7 +25,7 @@ let vue
     vue = new Vue({
         el: '#app',
         data: {
-            cardList: whiteboard.cardList,
+            cardList: whiteboard.cardList
         }
     })
 
