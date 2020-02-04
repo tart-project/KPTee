@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <div class="headerContainer">
+  <header class="headerContainer">
     <img src="logo.png" class="logo">
     <div class="tools">
       <!-- エクスポートボタン -->
@@ -26,15 +26,15 @@
         <input id="importFileButton" type="file" onclick="importCards()" >
       </form>
     </div>
-  </div>
+  </header>
 
   <div id="app" class="kpteeContainer">
     <!-- カード生成場所 -->
     <div id="cardCreationArea"　v-for="card in cardList">
-        <div class="cardDiv" v-bind:id="card.cardId" v-bind:style="{top: card.top, left: card.left}">
-          <textarea v-bind:style="{backgroundColor: card.color, width: card.width, height: card.height}" class="textarea">{{card.text}}</textarea>
+        <div class="cardDiv" v-bind:id="card.cardId" v-bind:style="card.cardDivStyleObj">
+          <textarea v-bind:style="card.textareaStyleObj" class="textarea">{{card.text}}</textarea>
           <br>
-          <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonColor}"></button>
+          <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="card.changeColorButtonStyleObj"></button>
           <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
         </div>
     </div>

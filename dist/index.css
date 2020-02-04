@@ -30,7 +30,7 @@
     height: 80px;
     border-radius: 50%;
     transition: .3s;
-    box-shadow: 1px 1px 4px gray;
+    box-shadow: 1px 1px 0px gray;
     position:absolute;
     top: 365px;
     left: 705px;
@@ -57,7 +57,7 @@ img.cardCreationButtonImg {
     height: 17px;
     position:relative;
     bottom: 24px;
-    left: 2px;
+    left: 4px;
     border-radius: 50%;            
     border-color:white;
     border-style: solid;
@@ -109,7 +109,7 @@ img.cardCreationButtonImg {
 .toolIcon {
     width: 6%;
     height: auto;
-    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.2);
+    box-shadow: 1px 1px 0px gray;
 }
 
 /*アイコンの画像ホバー用*/
@@ -194,7 +194,7 @@ img.cardCreationButtonImg {
     width: 100%;
     font-size: 25px;
     color: white;
-    box-shadow: 1px 1px 4px gray;
+    box-shadow: 1px 1px 0px gray;
 }
 
 #keepTitle {

@@ -1,6 +1,7 @@
 import Whiteboard from './whiteboard'
 import User from './user'
 import Vue from 'vue'
+import { runInteractjs } from './convenientTools'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -24,14 +25,12 @@ let vue
     vue = new Vue({
         el: '#app',
         data: {
-            cardList: whiteboard.cardList
-        },
-        methods: {
-            testtest: function () {
-                console.log(this.$el)
-            }
+            cardList: whiteboard.cardList,
         }
     })
+
+    runInteractjs()
+
 }());
 
 

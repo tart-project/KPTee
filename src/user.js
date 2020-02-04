@@ -4,7 +4,7 @@ import { v4 } from 'uuid'
 
 export default class User {
     constructor() {
-        this.UserId = `id-${v4()}`
+        this.userId = `id-${v4()}`
     }
 
     createCard(whiteboard) {
