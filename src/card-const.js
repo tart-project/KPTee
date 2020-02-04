@@ -6,17 +6,11 @@ export const colors = {
 };
 export const defaultCard = {
     "cardId": "",
-    "cardDivStyleObj": {
-        "top": "360px",
-        "left": "700px"
-    },
+    "top": "360px",
+    "left": "700px",
+    "backgroundColor": colors.default,
     "text": "",
-    "textareaStyleObj": {
-        "backgroundColor": colors.default,
-        "width": "",
-        "height": ""
-    },
-    "changeColorButtonStyleObj": {
-        "backgroundColor": colors.keep
-    }
+    "width": "",
+    "height": "",
+    "changeColorButton": {"backgroundColor": colors.keep}
 };
