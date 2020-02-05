@@ -4,28 +4,13 @@ import Card from './card'
 export default class Whiteboard {
     constructor() {
         this.whiteboardId = `id-${v4()}`
-        this.cardList = []
-    }
-
-    exportCards() {
-        this.downloadFile(this.createFileFromCards(this.cardList))
-    }
-
-    // エクスポートファイル作成
-    createFileFromCards(cards) {
-        const exportingFile = [];
-
-        for (const card of cards) {
-            // 参照渡し回避のため、新規オブジェクト生成
-            // TODO: ディープ参照渡しの解決
-            const newCard = JSON.stringify(card.get())
-            exportingFile.push(JSON.parse(newCard))
-        }
-        return exportingFile
+        this.cards = []
     }
 
     // エクスポートファイルをダウンロード
-    downloadFile(exportedFile) {
+    downloadCardsFile() {
+
+        const exportedFile = this.createFileFromCards(this.cards)
 
         // 各種設定
         const fileTitle = "kptee-cards.json";
@@ -37,6 +22,19 @@ export default class Whiteboard {
         linkTag.setAttribute("href", blobObjectUrl);
         linkTag.setAttribute("download", fileTitle);
     }
+
+        // エクスポートファイル作成
+        createFileFromCards(cards) {
+            const exportingFile = [];
+    
+            for (const card of cards) {
+                // 参照渡し回避のため、新規オブジェクト生成
+                // TODO: ディープ参照渡しの解決
+                const newCard = JSON.stringify(card.get())
+                exportingFile.push(JSON.parse(newCard))
+            }
+            return exportingFile
+        }
 
     // インポート情報→カード作成
     importCards(e) {
@@ -55,7 +53,7 @@ export default class Whiteboard {
 
             // インポート情報を元にカードを生成
             for (const card of importedCards) {
-                this.cardList.push(new Card(card))
+                this.cards.push(new Card(card))
             }
         })
     }

@@ -18,7 +18,6 @@ export default class Card {
     }
 
     // カード情報取得
-    // メソッド名getだけ、thisを使って下の
     get() {
         const cardDiv = document.getElementById(this.cardId)
         const textarea = cardDiv.getElementsByClassName("textarea").item(0)

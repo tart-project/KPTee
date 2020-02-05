@@ -16,19 +16,19 @@ const user = new User
 // グローバル変数設定
 let vue
 
-// インポートボタンにイベントをセット
 (function () {
-    const importLocation = document.forms.formTagForImport;
-    // ファイルが読み込まれたら発火
-    importLocation.importFileButton.addEventListener("change", importCards, false)
+    // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
+    document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
 
+    // vue設定
     vue = new Vue({
         el: '#app',
         data: {
-            cardList: whiteboard.cardList
+            cards: whiteboard.cards
         }
     })
 
+    // interactjs起動
     runInteractjs()
 
 }());
@@ -41,24 +41,25 @@ function createCard() {
 
 // インポート関数
 function importCards(e) {
-    whiteboard.importCards(e)
+    if (e) {
+        // ファイルが読み込まれた場合
+        whiteboard.importCards(e)
+    }
 }
 
 // エクスポート関数
 function exportCards() {
-    whiteboard.exportCards()
+    whiteboard.downloadCardsFile()
 }
 
 // カードカラー変更関数
 function changeCardColor(clieckedButton) {
-
     // クリックされたカードIDを渡す
     user.changeColor(clieckedButton.parentNode.id)
 }
 
 // カード削除関数
 function deleteCard(clieckedButton) {
-
     // クリックされたカードIDを渡す
     user.deleteCard(clieckedButton.parentNode.id, whiteboard)
 }

@@ -8,18 +8,14 @@ export default class User {
     }
 
     createCard(whiteboard) {
-        // カードの生成
-        const card = new Card()
-        // カードリストにidを追加
-        whiteboard.cardList.push(card)
+        // カード作成→whiteboardに格納
+        whiteboard.cards.push(new Card())
     }
 
     // カード削除
     deleteCard(clieckedCardId, whiteboard) {
-        document.getElementById(clieckedCardId).remove();
-
         // カードリストからカードID削除
-        whiteboard.cardList.splice(whiteboard.cardList.findIndex(({cardId}) => cardId === clieckedCardId), 1)
+        whiteboard.cards.splice(whiteboard.cards.findIndex(({cardId}) => cardId === clieckedCardId), 1)
     }
 
     // カラー変更
