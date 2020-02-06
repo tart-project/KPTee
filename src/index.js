@@ -7,16 +7,15 @@ window.changeCardColor = changeCardColor
 window.importCards = importCards
 window.exportCards = exportCards
 window.deleteCard = deleteCard
+// 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
 const whiteboard = new Whiteboard
 const user = new User
 
-// インポートボタンにイベントをセット
 (function () {
-    const importLocation = document.forms.formTagForImport;
-    // ファイルが読み込まれたら発火
-    importLocation.importFileButton.addEventListener("change", importCards, false)
+    // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
+    document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
 }());
 
 // カード作成関数
@@ -30,15 +29,15 @@ function importCards(e) {
 }
 
 // エクスポート関数
-function exportCards() {
-    whiteboard.exportCards()
+function exportCards(clieckedButton) {
+    whiteboard.downloadFile(clieckedButton)
 }
 
 // カードカラー変更関数
 function changeCardColor(clieckedButton) {
 
     // クリックされたカードIDを渡す
-    user.changeColor(clieckedButton.parentNode.id)
+    user.changeCardColor(clieckedButton.parentNode.id)
 }
 
 // カード削除関数

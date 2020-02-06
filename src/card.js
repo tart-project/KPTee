@@ -4,11 +4,11 @@ import interact from 'interactjs'
 
 export default class Card {
     constructor(card = defaultCard) {
-        this.cardId = `id-${v4()}`
+        this.id = `id-${v4()}`
 
         // カードdiv生成
         const cardDiv = document.createElement("div");
-        cardDiv.setAttribute("id", this.cardId)
+        cardDiv.setAttribute("id", this.id)
         cardDiv.setAttribute("class", "cardDiv");
         cardDiv.setAttribute("style", `top: ${card.topPosition}; left: ${card.leftPosition}`);
 
@@ -55,7 +55,7 @@ export default class Card {
                 }
             }).on("dragend", () => {
                 // 現在の位置情報を追加
-                const cardDivRectInfo = document.getElementById(this.cardId).getBoundingClientRect();
+                const cardDivRectInfo = document.getElementById(this.id).getBoundingClientRect();
 
                 // 画面左上からの絶対位置+スクロールの補正分を反映
                 const currentTop = cardDivRectInfo.top + window.pageYOffset;
@@ -91,14 +91,14 @@ export default class Card {
 
     // カード情報取得
     getCard() {
-        const cardDiv = document.getElementById(this.cardId)
-        const textarea = document.getElementById(this.cardId).getElementsByClassName("textarea").item(0)
-        const changeColorButton = document.getElementById(this.cardId).getElementsByClassName("changeColorButton").item(0)
+        const cardDiv = document.getElementById(this.id)
+        const textarea = cardDiv.getElementsByClassName("textarea").item(0)
+        const changeColorButton = cardDiv.getElementsByClassName("changeColorButton").item(0)
 
         // カード情報生成
         // TODO: ディープ参照渡しの解決
         const card = JSON.parse(JSON.stringify(defaultCard))
-        card.cardId = this.cardId
+        card.id = this.id
         card.topPosition = cardDiv.style.top
         card.leftPosition = cardDiv.style.left
         card.color = textarea.style.backgroundColor

@@ -4,7 +4,7 @@ import { v4 } from 'uuid'
 
 export default class User {
     constructor() {
-        this.UserId = `id-${v4()}`
+        this.id = `id-${v4()}`
     }
 
     createCard(whiteboard) {
@@ -20,14 +20,14 @@ export default class User {
         document.getElementById(clieckedCardId).remove();
 
         // カードリストからカードID削除
-        whiteboard.cards.splice(whiteboard.cards.findIndex(({cardId}) => cardId === clieckedCardId), 1)
+        whiteboard.cards.splice(whiteboard.cards.findIndex(({id}) => id === clieckedCardId), 1)
     }
 
     // カラー変更
-    changeColor(cardId) {
+    changeCardColor(clieckedCardId) {
         // 対象情報を取得
-        const clickedCard = document.getElementById(cardId).getElementsByClassName("textarea").item(0)
-        const clickedButton = document.getElementById(cardId).getElementsByClassName("changeColorButton").item(0)
+        const clickedCard = document.getElementById(clieckedCardId).getElementsByClassName("textarea").item(0)
+        const clickedButton = document.getElementById(clieckedCardId).getElementsByClassName("changeColorButton").item(0)
 
         // カードカラーの変更
         switch (clickedCard.style.backgroundColor) {

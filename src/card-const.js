@@ -6,7 +6,7 @@ export const colors = {
 };
 
 export const defaultCard = {
-    "cardId": "",
+    "id": "",
     "topPosition": "360px",
     "leftPosition": "700px",
     "color": colors.default,

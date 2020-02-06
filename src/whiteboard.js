@@ -3,39 +3,37 @@ import Card from './card'
 
 export default class Whiteboard {
     constructor() {
-        this.whiteboardId = `id-${v4()}`
+        this.id = `id-${v4()}`
         this.cards = []
     }
 
-    exportCards() {
-        this.downloadFile(this.createFileFromCards(this.cards))
-    }
-
-    // エクスポートファイル作成
-    createFileFromCards(cards) {
-        const exportingFile = [];
-
-        for (const card of cards) {
-            // 参照渡し回避のため、新規オブジェクト生成
-            // TODO: ディープ参照渡しの解決
-            const newCard = JSON.stringify(card.getCard())
-            exportingFile.push(JSON.parse(newCard))
-        }
-        return exportingFile
-    }
-
     // エクスポートファイルをダウンロード
-    downloadFile(exportedFile) {
+    downloadFile(clieckedButton) {
+
+        const cardsInfo = this.createCardsInfo(this.cards)
 
         // 各種設定
         const fileTitle = "kptee-cards.json";
-        const exportCardsButton = document.getElementById("exportCardsButton");
-        const blobObject = new Blob([JSON.stringify(exportedFile)], { type: "text/plain" });
+        const exportCardsButton = clieckedButton;
+        const blobObject = new Blob([JSON.stringify(cardsInfo)], { type: "text/plain" });
 
         //ダウンロード用URL生成
         const blobObjectUrl = window.URL.createObjectURL(blobObject);
         exportCardsButton.setAttribute("href", blobObjectUrl);
         exportCardsButton.setAttribute("download", fileTitle);
+    }
+
+    // エクスポート情報作成
+    createCardsInfo(cards) {
+        const cardsInfo = [];
+
+        for (const card of cards) {
+            // 参照渡し回避のため、新規オブジェクト生成
+            // TODO: ディープ参照渡しの解決
+            const newCard = JSON.stringify(card.getCard())
+            cardsInfo.push(JSON.parse(newCard))
+        }
+        return cardsInfo
     }
 
     // インポート情報→カード作成
