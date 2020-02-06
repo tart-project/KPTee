@@ -12,7 +12,7 @@ export default class User {
         const card = new Card()
 
         // カードリストにidを追加
-        whiteboard.cardList.push(card)
+        whiteboard.cards.push(card)
     }
 
     // カード削除
@@ -20,7 +20,7 @@ export default class User {
         document.getElementById(clieckedCardId).remove();
 
         // カードリストからカードID削除
-        whiteboard.cardList.splice(whiteboard.cardList.findIndex(({cardId}) => cardId === clieckedCardId), 1)
+        whiteboard.cards.splice(whiteboard.cards.findIndex(({cardId}) => cardId === clieckedCardId), 1)
     }
 
     // カラー変更

@@ -4,11 +4,11 @@ import Card from './card'
 export default class Whiteboard {
     constructor() {
         this.whiteboardId = `id-${v4()}`
-        this.cardList = []
+        this.cards = []
     }
 
     exportCards() {
-        this.downloadFile(this.createFileFromCards(this.cardList))
+        this.downloadFile(this.createFileFromCards(this.cards))
     }
 
     // エクスポートファイル作成
@@ -29,13 +29,13 @@ export default class Whiteboard {
 
         // 各種設定
         const fileTitle = "kptee-cards.json";
-        const linkTag = document.getElementById("linkTagToGetCardsFile");
+        const exportCardsButton = document.getElementById("exportCardsButton");
         const blobObject = new Blob([JSON.stringify(exportedFile)], { type: "text/plain" });
 
         //ダウンロード用URL生成
         const blobObjectUrl = window.URL.createObjectURL(blobObject);
-        linkTag.setAttribute("href", blobObjectUrl);
-        linkTag.setAttribute("download", fileTitle);
+        exportCardsButton.setAttribute("href", blobObjectUrl);
+        exportCardsButton.setAttribute("download", fileTitle);
     }
 
     // インポート情報→カード作成
@@ -55,7 +55,7 @@ export default class Whiteboard {
 
             // インポート情報を元にカードを生成
             for (const card of importedCards) {
-                this.cardList.push(new Card(card))
+                this.cards.push(new Card(card))
             }
         })
     }
