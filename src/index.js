@@ -36,7 +36,6 @@ let vue
 // カード作成関数
 function createCard() {
     user.createCard(whiteboard)
-    console.log(whiteboard.cards)
 }
 
 // インポート関数

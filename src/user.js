@@ -21,7 +21,6 @@ export default class User {
     // カラー変更
     changeCardColor(clieckedCardId, whiteboard) {
         const targetIndex = whiteboard.cards.findIndex(({id}) => id === clieckedCardId)
-        console.log(whiteboard.cards)
     
         // カードカラーの変更
         switch (whiteboard.cards[targetIndex].backgroundColor) {
