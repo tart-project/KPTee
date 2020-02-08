@@ -9,6 +9,7 @@ window.changeCardColor = changeCardColor
 window.importCards = importCards
 window.exportCards = exportCards
 window.deleteCard = deleteCard
+// 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
 const whiteboard = new Whiteboard
@@ -29,14 +30,14 @@ let vue
     })
 
     // interactjs起動
-    runInteractjs()
+    runInteractjs(whiteboard)
 
 }());
-
 
 // カード作成関数
 function createCard() {
     user.createCard(whiteboard)
+    console.log(whiteboard.cards)
 }
 
 // インポート関数
@@ -48,14 +49,14 @@ function importCards(e) {
 }
 
 // エクスポート関数
-function exportCards() {
-    whiteboard.downloadCardsFile()
+function exportCards(clieckedButton) {
+    whiteboard.downloadFile(clieckedButton)
 }
 
 // カードカラー変更関数
 function changeCardColor(clieckedButton) {
     // クリックされたカードIDを渡す
-    user.changeColor(clieckedButton.parentNode.id)
+    user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
 }
 
 // カード削除関数

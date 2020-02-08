@@ -5,12 +5,12 @@ export const colors = {
     "try": "rgb(152, 251, 152)"
 };
 export const defaultCard = {
-    "cardId": "",
+    "id": "",
     "top": "360px",
     "left": "700px",
     "backgroundColor": colors.default,
     "text": "",
-    "width": "",
-    "height": "",
+    "width": "160px",
+    "height": "70px",
     "changeColorButton": {"backgroundColor": colors.keep}
 };

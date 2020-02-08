@@ -14,8 +14,6 @@
 
 .textarea{
     border:none;
-    height: 70px;
-    width: 160px;
     font-family: Arial, sans-serif;
     border-radius: 5%;
     box-shadow: 1px 1px 0px gray;
@@ -118,7 +116,7 @@ img.cardCreationButtonImg {
 }
 
 /*エクスポートボタン*/
-#linkTagToGetCardsFile {
+#exportCardsButton {
     text-decoration: none;
 }
 
@@ -227,3 +225,8 @@ img.cardCreationButtonImg {
     left: 675px;
     z-index: 5;
 }
+
+/*vueがコンパイルされるまでhtmlを非表示*/
+[v-cloak] {
+    display: none;
+  }

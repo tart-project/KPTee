@@ -4,7 +4,7 @@ import { v4 } from 'uuid'
 
 export default class User {
     constructor() {
-        this.userId = `id-${v4()}`
+        this.id = `id-${v4()}`
     }
 
     createCard(whiteboard) {
@@ -15,40 +15,35 @@ export default class User {
     // カード削除
     deleteCard(clieckedCardId, whiteboard) {
         // カードリストからカードID削除
-        whiteboard.cards.splice(whiteboard.cards.findIndex(({cardId}) => cardId === clieckedCardId), 1)
+        whiteboard.cards.splice(whiteboard.cards.findIndex(({id}) => id === clieckedCardId), 1)
     }
 
     // カラー変更
-    changeColor(cardId) {
-        // 対象情報を取得
-        const clickedCard = document.getElementById(cardId).getElementsByClassName("textarea").item(0)
-        const clickedButton = document.getElementById(cardId).getElementsByClassName("changeColorButton").item(0)
-
+    changeCardColor(clieckedCardId, whiteboard) {
+        const targetIndex = whiteboard.cards.findIndex(({id}) => id === clieckedCardId)
+        console.log(whiteboard.cards)
+    
         // カードカラーの変更
-        switch (clickedCard.style.backgroundColor) {
+        switch (whiteboard.cards[targetIndex].backgroundColor) {
             case colors.default:
-                clickedCard.style.backgroundColor = colors.keep;
-                clickedButton.style.backgroundColor = colors.problem;
+                whiteboard.cards[targetIndex].backgroundColor = colors.keep;
+                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.problem;
                 break;
 
             case colors.keep:
-                clickedCard.style.backgroundColor = colors.problem;
-                clickedButton.style.backgroundColor = colors.try;
+                whiteboard.cards[targetIndex].backgroundColor = colors.problem;
+                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.try;
                 break;
 
             case colors.problem:
-                clickedCard.style.backgroundColor = colors.try;
-                clickedButton.style.backgroundColor = colors.default;
+                whiteboard.cards[targetIndex].backgroundColor = colors.try;
+                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.default;
                 break;
 
             case colors.try:
-                clickedCard.style.backgroundColor = colors.default;
-                clickedButton.style.backgroundColor = colors.keep;
+                whiteboard.cards[targetIndex].backgroundColor = colors.default;
+                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.keep;
                 break;
         }
     }
 }
-
-
-
-

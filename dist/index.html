@@ -13,8 +13,8 @@
     <img src="logo.png" class="logo">
     <div class="tools">
       <!-- エクスポートボタン -->
-      <a id="linkTagToGetCardsFile" type="button" onclick="exportCards()">
-        <image src="export.png" id="linkTagTogetcardsFileButton" class="toolIcon">
+      <a id="exportCardsButton" type="button" onclick="exportCards(this)">
+        <image src="export.png" class="toolIcon">
       </a>
 
       <!-- インポートボタン -->
@@ -28,10 +28,10 @@
     </div>
   </div>
 
-  <div id="app" class="kpteeContainer">
+  <div id="app" class="kpteeContainer" v-cloak>
     <!-- カード生成場所 -->
-        <div class="cardDiv" v-for="card in cards" :key="card.cardId"  v-bind:id="card.cardId" v-bind:style="{top: card.top, left: card.left}">
-          <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea">{{card.text}}</textarea>
+        <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}" >
+          <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{card.text}}</textarea>
           <br>
           <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
           <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
