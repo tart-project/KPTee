@@ -1,7 +1,7 @@
 import Whiteboard from './whiteboard'
 import User from './user'
 import Vue from 'vue'
-import { runInteractjs } from './convenientTools'
+import { runInteractjs } from './interactjs'
 
 // html上の関数と紐づけ
 window.createCard = createCard
