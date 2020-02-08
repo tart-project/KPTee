@@ -14,7 +14,6 @@ window.onbeforeunload = () => { return "" };
 
 const whiteboard = new Whiteboard
 const user = new User
-// グローバル変数設定
 let vue
 
 (function () {
