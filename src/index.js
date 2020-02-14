@@ -1,97 +1,73 @@
-import Card from './card'
-import { createCardsFromFile, createInfoFromCards, downloadFile } from './file-handler'
-import { cardArchiveList, archiveCard, restoreCardFromArchive } from './card-handler'
+import Whiteboard from './whiteboard'
+import User from './user'
+import Vue from 'vue'
+import { runInteractjs } from './interactjs'
+import GarbageCan from './garbage-can'
+
 
 // html上の関数と紐づけ
 window.createCard = createCard
 window.changeCardColor = changeCardColor
-window.importCardsInfo = importCardsInfo
-window.exportCardsInfo = exportCardsInfo
+window.importCards = importCards
+window.exportCards = exportCards
 window.deleteCard = deleteCard
 window.restoreCard = restoreCard
+// 画面遷移前に確認ダイアログを表示
+window.onbeforeunload = () => { return "" };
 
-// グローバル変数設定
-const cardList = [];
+const whiteboard = new Whiteboard
+const user = new User
+const garbageCan = new GarbageCan
+let vue
 
-// インポートボタンにイベントをセット
 (function () {
-    const importLocation = document.forms.formTagForImport;
+    // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
+    document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
 
-    // ファイルが読み込まれたら発火
-    importLocation.importFileButton.addEventListener("change", importCardsInfo, false)
+    // vue設定
+    vue = new Vue({
+        el: '#app',
+        data: {
+            cards: whiteboard.cards
+        }
+    })
+
+    // interactjs起動
+    runInteractjs(whiteboard)
+
 }());
 
 // カード作成関数
 function createCard() {
-
-    // カードの生成
-    const card = new Card()
-
-    // カードリストにidを追加
-    cardList.push(card)
+    user.createCard(whiteboard)
 }
 
 // インポート関数
-export function importCardsInfo(e) {
-
+function importCards(e) {
     if (e) {
-        // ファイルが読み込まれた場合→ファイル情報からカードを生成
-        createCardsFromFile(e.target.files[0], function (importedCard) {
-
-            // カードリストにidを追加
-            cardList.push(importedCard)
-        })
+        // ファイルが読み込まれた場合
+        whiteboard.importCards(e)
     }
 }
 
 // エクスポート関数
-function exportCardsInfo() {
-
-    // カード情報一覧からファイル作成
-    const exportedInfo = createInfoFromCards(cardList)
-
-    //ファイルをダウンロード
-    downloadFile(exportedInfo)
+function exportCards(clieckedButton) {
+    whiteboard.downloadFile(clieckedButton)
 }
 
+// カードカラー変更関数
 function changeCardColor(clieckedButton) {
-
-    // 対象カードID取得
-    const clieckedCardId = clieckedButton.parentNode.id
-
-    // 対象カード照合
-    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
-
-    // カードカラーの変更
-    cardList[targetCardIndex].changeColor()
+    // クリックされたカードIDを渡す
+    user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
 }
 
 // カード削除関数
 function deleteCard(clieckedButton) {
-
-    // 対象カードID取得
-    const clieckedCardId = clieckedButton.parentNode.id
-
-    // 対象カード照合
-    const targetCardIndex = cardList.findIndex(({ cardId }) => cardId === clieckedCardId)
-
-    // 削除対象カードをアーカイブ
-    archiveCard(cardList[targetCardIndex].getInfo())
-
-    // カード削除
-    cardList[targetCardIndex].delete()
-
-    // カードID削除
-    cardList.splice(targetCardIndex, 1)
+    // クリックされたカードIDを渡す
+    user.deleteCard(clieckedButton.parentNode.id, whiteboard, garbageCan )
 }
 
-// Function to restore deleted cards
+
 function restoreCard() {
-    if (cardArchiveList.length != 0) {
-
-        // if there is a restored card
-        const restoredCardInfo = restoreCardFromArchive()
-
-        cardList.push(restoredCardInfo)
-    }
+    user.restoreCard(whiteboard, garbageCan)
 }
