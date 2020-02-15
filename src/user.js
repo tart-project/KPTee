@@ -20,29 +20,30 @@ export default class User {
 
     // カラー変更
     changeCardColor(clieckedCardId, whiteboard) {
-        const targetIndex = whiteboard.cards.findIndex(({id}) => id === clieckedCardId)
+        const target = whiteboard.cards.find(({id}) => id === clieckedCardId)
     
         // カードカラーの変更
-        switch (whiteboard.cards[targetIndex].backgroundColor) {
+        switch (target.backgroundColor) {
             case colors.default:
-                whiteboard.cards[targetIndex].backgroundColor = colors.keep;
-                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.problem;
+                target.backgroundColor = colors.keep;
+                target.changeColorButtonBackgroundColor = colors.problem;
                 break;
 
             case colors.keep:
-                whiteboard.cards[targetIndex].backgroundColor = colors.problem;
-                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.try;
+                target.backgroundColor = colors.problem;
+                target.changeColorButtonBackgroundColor = colors.try;
                 break;
 
             case colors.problem:
-                whiteboard.cards[targetIndex].backgroundColor = colors.try;
-                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.default;
+                target.backgroundColor = colors.try;
+                target.changeColorButtonBackgroundColor = colors.default;
                 break;
 
             case colors.try:
-                whiteboard.cards[targetIndex].backgroundColor = colors.default;
-                whiteboard.cards[targetIndex].changeColorButtonBackgroundColor = colors.keep;
+                target.backgroundColor = colors.default;
+                target.changeColorButtonBackgroundColor = colors.keep;
                 break;
         }
+        console.log(whiteboard)
     }
 }
