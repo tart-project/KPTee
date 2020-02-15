@@ -44,6 +44,5 @@ export default class User {
                 target.changeColorButtonBackgroundColor = colors.keep;
                 break;
         }
-        console.log(whiteboard)
     }
 }
