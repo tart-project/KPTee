@@ -30,12 +30,12 @@ export default class Whiteboard {
         for (const card of cards) {
             // 参照渡し回避のため、新規オブジェクト生成
             // TODO: ディープ参照渡しの解決
-            const newCard = JSON.stringify(card.getCard())
+            const newCard = JSON.stringify(card.get())
             cardsInfo.push(JSON.parse(newCard))
         }
         return cardsInfo
     }
-
+    
     // インポート情報→カード作成
     importCards(e) {
 

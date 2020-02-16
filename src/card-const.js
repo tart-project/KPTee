@@ -4,14 +4,13 @@ export const colors = {
     "problem": "rgb(244, 164, 96)",
     "try": "rgb(152, 251, 152)"
 };
-
 export const defaultCard = {
     "id": "",
-    "topPosition": "360px",
-    "leftPosition": "700px",
-    "color": colors.default,
+    "top": "360px",
+    "left": "700px",
+    "backgroundColor": colors.default,
     "text": "",
-    "width": "",
-    "height": "",
-    "changeColorButton": {"color": colors.keep}
+    "width": "160px",
+    "height": "70px",
+    "changeColorButton": {"backgroundColor": colors.keep}
 };

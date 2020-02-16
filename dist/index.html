@@ -9,9 +9,7 @@
 </head>
 
 <body>
-
   <div class="headerContainer">
-
     <img src="logo.png" class="logo">
     <div class="tools">
       <!-- エクスポートボタン -->
@@ -30,10 +28,14 @@
     </div>
   </div>
 
-  <div class="kpteeContainer">
+  <div id="app" class="kpteeContainer" v-cloak>
     <!-- カード生成場所 -->
-    <div id="cardCreationArea"></div>
-
+        <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}" >
+          <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{card.text}}</textarea>
+          <br>
+          <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
+          <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+        </div>
     <div class="leftBox">
       <div class="keepAreaBox">
         <div class="titleAreaBox" id="keepTitle">
@@ -49,7 +51,6 @@
     <div class="centerLineBox">
       <div class="centerBox">
         <img src="circle.png" class="centerCircle">
-        <!-- カード作成ボタン -->
         <button type="button" onclick="createCard()" id="cardCreationButton">
           <img src="create-card-icon.png" class="cardCreationButtonImg">
         </button>

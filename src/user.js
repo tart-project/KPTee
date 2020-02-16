@@ -8,52 +8,41 @@ export default class User {
     }
 
     createCard(whiteboard) {
-        // カードの生成
-        const card = new Card()
-
-        // カードリストにidを追加
-        whiteboard.cards.push(card)
+        // カード作成→whiteboardに格納
+        whiteboard.cards.push(new Card())
     }
 
     // カード削除
     deleteCard(clieckedCardId, whiteboard) {
-        document.getElementById(clieckedCardId).remove();
-
         // カードリストからカードID削除
         whiteboard.cards.splice(whiteboard.cards.findIndex(({id}) => id === clieckedCardId), 1)
     }
 
     // カラー変更
-    changeCardColor(clieckedCardId) {
-        // 対象情報を取得
-        const clickedCard = document.getElementById(clieckedCardId).getElementsByClassName("textarea").item(0)
-        const clickedButton = document.getElementById(clieckedCardId).getElementsByClassName("changeColorButton").item(0)
-
+    changeCardColor(clieckedCardId, whiteboard) {
+        const target = whiteboard.cards.find(({id}) => id === clieckedCardId)
+    
         // カードカラーの変更
-        switch (clickedCard.style.backgroundColor) {
+        switch (target.backgroundColor) {
             case colors.default:
-                clickedCard.style.backgroundColor = colors.keep;
-                clickedButton.style.backgroundColor = colors.problem;
+                target.backgroundColor = colors.keep;
+                target.changeColorButtonBackgroundColor = colors.problem;
                 break;
 
             case colors.keep:
-                clickedCard.style.backgroundColor = colors.problem;
-                clickedButton.style.backgroundColor = colors.try;
+                target.backgroundColor = colors.problem;
+                target.changeColorButtonBackgroundColor = colors.try;
                 break;
 
             case colors.problem:
-                clickedCard.style.backgroundColor = colors.try;
-                clickedButton.style.backgroundColor = colors.default;
+                target.backgroundColor = colors.try;
+                target.changeColorButtonBackgroundColor = colors.default;
                 break;
 
             case colors.try:
-                clickedCard.style.backgroundColor = colors.default;
-                clickedButton.style.backgroundColor = colors.keep;
+                target.backgroundColor = colors.default;
+                target.changeColorButtonBackgroundColor = colors.keep;
                 break;
         }
     }
 }
-
-
-
-
