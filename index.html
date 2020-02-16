@@ -9,62 +9,69 @@
 </head>
 
 <body>
+  
+  <div class="kpteeContainer" >
 
-  <div class="headerContainer">
+    <div id="app" v-cloak>
+      <!-- カード生成場所 -->
+      <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
+        v-bind:style="{top: card.top, left: card.left}">
+        <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
+          class="textarea" v-model="card.text">{{card.text}}</textarea>
+        <br>
+        <button class="changeColorButton" onclick="changeCardColor(this)"
+          v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
+        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+      </div>
+    </div>
 
-    <img src="logo.png" class="logo">
-    <div class="tools">
-      <!-- エクスポートボタン -->
-      <a id="linkTagToGetCardsFile" type="button" onclick="exportCardsInfo()" style="text-decoration: none;">
-        <image src="export.png" id="linkTagTogetcardsFileButton" class="toolIcon">
-      </a>
-
+    <div class="toolsBox">
       <!-- インポートボタン -->
       <label for="importFileButton">
-        <img src="import.png" class="toolIcon" />
+        <img src="import-icon.png" class="toolIcon" title="Import" />
       </label>
 
       <form id="formTagForImport">
-        <input id="importFileButton" type="file" onclick="importCardsInfo()" style=display:none>
+        <input id="importFileButton" type="file" onclick="importCards(this)">
       </form>
-    </div>
-  </div>
 
-  <div class="kpteeContainer">
-    <!-- カード生成場所 -->
-    <div id="cardCreationArea"></div>
+      <!-- エクスポートボタン -->
+      <a id="exportCardsButton" type="button" onclick="exportCards(this)">
+        <image src="export-icon.png" class="toolIcon" title="Export">
+      </a>
+    </div>
 
     <div class="leftBox">
-      <div class="keepAreaBox">
-        <div class="titleAreaBox" style="height: 10%; background-color:#2e75b6;">
+      <div class="keepAreaBox alert-primary">
+        <div class="titleAreaBox" id="keepTitle">
           Keep
         </div>
       </div>
-      <div class="problemAreaBox">
-        <div class="titleAreaBox" style="height: 10%; background-color:#ed7d31">
+      <div class="problemAreaBox alert-warning">
+        <div class="titleAreaBox" id="problemTitle">
           Problem
         </div>
       </div>
     </div>
     <div class="centerLineBox">
       <div class="centerBox">
-        <img src="circle.png" class="centerCircle">
-        <!-- カード作成ボタン -->
         <button type="button" onclick="createCard()" id="cardCreationButton">
           <img src="create-card-icon.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>
     <div class="rightBox">
-      <div class="tryAreaBox">
-        <div class="titleAreaBox" style="height: 5%; background-color:#60943c;">
+      <div class="tryAreaBox alert-success">
+        <div class="titleAreaBox" id="tryTitle">
           Try
         </div>
       </div>
     </div>
   </div>
+  <img src="logo.png" class="logo">
 
   <script src="main.js"></script>
+
 </body>
 
 </html>
