@@ -4,48 +4,47 @@
 <head>
   <title>KPTee</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="index.css">
   <link rel="shortcut icon" href="logo.ico">
   <!-- BootstrapのCSS読み込み -->
-  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
-<body>
-  <div class="headerContainer">
-    <img src="logo.png" class="logo">
-    <div class="tools">
-      <!-- エクスポートボタン -->
-      <a id="exportCardsButton" type="button" onclick="exportCards(this)">
-        <image src="export.png" class="toolIcon">
-      </a>
-
-      <!-- インポートボタン -->
-      <label for="importFileButton">
-        <img src="import.png" class="toolIcon" />
-      </label>
-
-      <form id="formTagForImport">
-        <input id="importFileButton" type="file" onclick="importCards()" >
-      </form>
-    </div>
-  </div>
+<body>  
 
   <div id="app" class="kpteeContainer" v-cloak>
+
     <!-- カード生成場所 -->
-        <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}" >
-          <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{card.text}}</textarea>
-          <br>
-          <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-          <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
-        </div>
+    <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}" >
+      <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{card.text}}</textarea>
+      <br>
+      <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
+      <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+    </div>
+
+    <div class="toolsBox">  
+        <!-- インポートボタン -->
+        <label for="importFileButton">
+          <img src="import-icon.png" class="toolIcon" title="Import"/>
+        </label>
+
+        <form id="formTagForImport">
+          <input id="importFileButton" type="file" onclick="importCards()" >
+        </form>
+
+        <!-- エクスポートボタン -->
+        <a id="exportCardsButton" type="button" onclick="exportCards(this)">
+          <image src="export-icon.png" class="toolIcon"  title="Export">
+        </a>
+
+  </div>
     <div class="leftBox">
-      <div class="keepAreaBox">
-        <div class="titleAreaBox" id="keepTitle">
+      <div class="keepAreaBox alert-primary">
+        <div class="titleAreaBox " id="keepTitle">
           Keep
         </div>
       </div>
-      <div class="problemAreaBox">
+      <div class="problemAreaBox alert-warning">
         <div class="titleAreaBox" id="problemTitle">
           Problem
         </div>
@@ -53,29 +52,20 @@
     </div>
     <div class="centerLineBox">
       <div class="centerBox">
-        <img src="circle.png" class="centerCircle">
         <button type="button" onclick="createCard()" id="cardCreationButton">
-          <img src="create-card-icon.png" class="cardCreationButtonImg">
+          <img src="create-card-icon-bootstrap.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>
     <div class="rightBox">
-      <div class="tryAreaBox">
+      <div class="tryAreaBox alert-success">
         <div class="titleAreaBox" id="tryTitle">
           Try
         </div>
       </div>
     </div>
   </div>
-
-  <p class="text-primary">.text-primary</p>
-  <p class="text-muted">...</p>
-
-  <div class="bg-primary">
-    <div>
-        カードのレイアウトを表示
-    </div>
-  </div>
+  <img src="logo.png" class="logo">
 
   <script src="main.js"></script>
   <script src="../node_modules/jquery/dist/jquery.slim.min.js"></script>

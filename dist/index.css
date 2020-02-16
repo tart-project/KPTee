@@ -1,6 +1,6 @@
 /*フォーカス時に青枠で強調されるのを回避*/
 *:focus {
-    outline: none;
+    outline: none !important;
 }
 
 .cardDiv {
@@ -16,6 +16,7 @@
     border:none;
     font-family: Arial, sans-serif;
     border-radius: 2%;
+    font-size: 10px;
     padding: 10px;
     box-shadow: 1px 1px 0px gray;
     resize: none;
@@ -29,26 +30,24 @@
     height: 80px;
     border-radius: 50%;
     transition: .3s;
-    box-shadow: 1px 1px 0px gray;
     position:absolute;
-    top: 365px;
-    left: 705px;
+    top: 293px;
+    left: 715px;
     color: white;
     line-height: 56px;
     font-size: 70px; 
-    border-color:white;
-    border-style: solid;
-    border-width: 2px;
+    border-width: 0px;
     padding: 0;
-    background-color: #818181;
+    background-color: rgba(45,45,45, 0.0);;
 }
 
 img.cardCreationButtonImg {
-    widows: 40px;
-    height:40px;
+    opacity: 1;
+    widows: 75px;
+    height:75px;
     position:absolute;
-    top: 20px;
-    left: 20px;
+    top: 8px;
+    left: 8px;
 }
 
 .changeColorButton{
@@ -85,35 +84,20 @@ img.cardCreationButtonImg {
 }
 /*ヘッダコンテナ*/
 .headerContainer {
+    background-color: #727171;
     display: block;
     width: 1475px;/*1465*/
-    height: 65px;/*735*/
+    height: 50px;/*735*/
 }
 
 /*ロゴ画像*/
 .logo {
+    position: absolute;
     margin: -15px;
-    width: 15%;
-    text-align: left;
-}
-
-/*ツール欄*/
-.tools {
-    height: 50px;
-    margin-top: -45px;
-    text-align: right;
-}
-
-/*ツールアイコン*/
-.toolIcon {
-    width: 6%;
-    height: auto;
-    box-shadow: 1px 1px 0px gray;
-}
-
-/*アイコンの画像ホバー用*/
-.toolIcon:hover {
-    background-color: rgb(245, 240, 240);
+    width: 12%;
+    bottom: 0;
+    right: 0;
+    opacity: 0.5;
 }
 
 /*エクスポートボタン*/
@@ -134,11 +118,36 @@ img.cardCreationButtonImg {
     font-size: 0;
 }
 
+/*ツール欄*/
+.toolsBox {
+    display: inline-block;
+    width: 3%;
+    height: 100%;
+    font-size: 0;
+    background-color:var(--secondary);
+    border-right: 2px solid gray;
+    padding-top: 10px;
+}
+
+/*ツールアイコン*/
+.toolIcon {
+    display: block;
+    margin-top: 5px;
+    margin-left: 8px;
+    width: 30px;
+    height: auto;
+}
+
+/*アイコンの画像ホバー用*/
+.toolIcon:hover {
+    background-color: rgb(245, 240, 240);
+}
+
 /*左半分コンテナ*/
 .leftBox {
     display: inline-block;
     vertical-align: top;
-    width: 49.75%;
+    width: 48.25%;
     height: 100%;
 }
 
@@ -146,7 +155,7 @@ img.cardCreationButtonImg {
 .rightBox {
     display: inline-block;
     vertical-align: top;
-    width: 49.75%;
+    width: 48.25%;
     height: 100%;
 }
 
@@ -156,7 +165,7 @@ img.cardCreationButtonImg {
     vertical-align: top;
     width: 0.5%;
     height: 100%;
-    background-color: gray;
+    background-color:var(--secondary);
 }
 
 /*Keepエリア*/
@@ -164,7 +173,6 @@ img.cardCreationButtonImg {
     display: block;
     width: 100%;
     height: 50%;
-    background-color: #47a4c957;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -173,7 +181,6 @@ img.cardCreationButtonImg {
     display: block;
     width: 100%;
     height: 100%;
-    background-color: rgba(95, 204, 137, 0.274);
     font-family: Arial, Helvetica, sans-serif;
 }
 /*Problemエリア*/
@@ -181,7 +188,6 @@ img.cardCreationButtonImg {
     display: block;
     width: 100%;
     height: 50%;
-    background-color: rgba(235, 207, 113, 0.24);
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -197,34 +203,23 @@ img.cardCreationButtonImg {
 }
 
 #keepTitle {
-    height: 10%; 
-    background-color:#2e75b6;
+    height: 12%; 
+    background-color:var(--primary);
 }
 
 #problemTitle {
-    height: 10%; 
-    background-color:#ed7d31;
+    height: 12%; 
+    background-color:var(--warning);
 }
 
 #tryTitle {
-    height: 5%; 
-    background-color:#60943c;
+    height: 6%; 
+    background-color:var(--green);
 }
 
 /*中央エリア*/
 .centerBox {
     display: block;
-}
-
-/*中央エリア*/
-.centerCircle{
-    position: absolute;
-    display: block;
-    width: 150px;
-    height: auto;
-    top: 338px;
-    left: 675px;
-    z-index: 5;
 }
 
 /*vueがコンパイルされるまでhtmlを非表示*/
