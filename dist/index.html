@@ -10,37 +10,42 @@
   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
-<body>  
+<body>
+  
+  <div class="kpteeContainer" >
 
-  <div id="app" class="kpteeContainer" v-cloak>
-
-    <!-- カード生成場所 -->
-    <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}" >
-      <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{card.text}}</textarea>
-      <br>
-      <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-      <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+    <div id="app" v-cloak>
+      <!-- カード生成場所 -->
+      <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
+        v-bind:style="{top: card.top, left: card.left}">
+        <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
+          class="textarea" v-model="card.text">{{card.text}}</textarea>
+        <br>
+        <button class="changeColorButton" onclick="changeCardColor(this)"
+          v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
+        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+      </div>
     </div>
 
-    <div class="toolsBox">  
-        <!-- インポートボタン -->
-        <label for="importFileButton">
-          <img src="import-icon.png" class="toolIcon" title="Import"/>
-        </label>
+    <div class="toolsBox">
+      <!-- インポートボタン -->
+      <label for="importFileButton">
+        <img src="import-icon.png" class="toolIcon" title="Import" />
+      </label>
 
-        <form id="formTagForImport">
-          <input id="importFileButton" type="file" onclick="importCards()" >
-        </form>
+      <form id="formTagForImport">
+        <input id="importFileButton" type="file" onclick="importCards(this)">
+      </form>
 
-        <!-- エクスポートボタン -->
-        <a id="exportCardsButton" type="button" onclick="exportCards(this)">
-          <image src="export-icon.png" class="toolIcon"  title="Export">
-        </a>
+      <!-- エクスポートボタン -->
+      <a id="exportCardsButton" type="button" onclick="exportCards(this)">
+        <image src="export-icon.png" class="toolIcon" title="Export">
+      </a>
+    </div>
 
-  </div>
     <div class="leftBox">
       <div class="keepAreaBox alert-primary">
-        <div class="titleAreaBox " id="keepTitle">
+        <div class="titleAreaBox" id="keepTitle">
           Keep
         </div>
       </div>
@@ -53,7 +58,7 @@
     <div class="centerLineBox">
       <div class="centerBox">
         <button type="button" onclick="createCard()" id="cardCreationButton">
-          <img src="create-card-icon-bootstrap.png" class="cardCreationButtonImg">
+          <img src="create-card-icon.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>
