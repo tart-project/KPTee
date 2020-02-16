@@ -2,6 +2,8 @@ import Whiteboard from './whiteboard'
 import User from './user'
 import Vue from 'vue'
 import { runInteractjs } from './interactjs'
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // html上の関数と紐づけ
 window.createCard = createCard
