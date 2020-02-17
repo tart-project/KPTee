@@ -4,6 +4,7 @@ import Vue from 'vue'
 import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { test } from './test-websocket'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -14,7 +15,7 @@ window.deleteCard = deleteCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
-const whiteboard = new Whiteboard
+export const whiteboard = new Whiteboard
 const user = new User
 let vue
 
@@ -32,6 +33,8 @@ let vue
 
     // interactjs起動
     runInteractjs(whiteboard)
+
+    test()
 
 }());
 

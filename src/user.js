@@ -1,6 +1,7 @@
 import Card from './card'
 import { colors } from './card-const'
 import { v4 } from 'uuid'
+import { aa } from './test-websocket'
 
 export default class User {
     constructor() {
@@ -10,6 +11,8 @@ export default class User {
     createCard(whiteboard) {
         // カード作成→whiteboardに格納
         whiteboard.cards.push(new Card())
+        aa(whiteboard.cards[whiteboard.cards.length-1])
+        console.log(whiteboard)
     }
 
     // カード削除
