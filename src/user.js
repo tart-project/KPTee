@@ -1,7 +1,7 @@
 import Card from './card'
 import { colors } from './card-const'
 import { v4 } from 'uuid'
-import { aa } from './test-websocket'
+import { sendCard, sendColor } from './test-websocket'
 
 export default class User {
     constructor() {
@@ -11,8 +11,7 @@ export default class User {
     createCard(whiteboard) {
         // カード作成→whiteboardに格納
         whiteboard.cards.push(new Card())
-        aa(whiteboard.cards[whiteboard.cards.length-1])
-        console.log(whiteboard)
+        sendCard(whiteboard.cards[whiteboard.cards.length-1])
     }
 
     // カード削除
@@ -30,6 +29,7 @@ export default class User {
             case colors.default:
                 target.backgroundColor = colors.keep;
                 target.changeColorButtonBackgroundColor = colors.problem;
+                sendColor(target)
                 break;
 
             case colors.keep:

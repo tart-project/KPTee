@@ -11,7 +11,7 @@ s.on('connection', function (ws) {
 
         s.clients.forEach(client => {
             if (client !== ws)
-                client.send(JSON.stringify(cards));
+                client.send(JSON.stringify(cards[cards.length-1]));
         });
     });
 
