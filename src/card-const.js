@@ -12,5 +12,5 @@ export const defaultCard = {
     "text": "",
     "width": "160px",
     "height": "70px",
-    "changeColorButton": {"backgroundColor": colors.keep}
+    "changeColorButtonBackgroundColor": colors.keep
 };

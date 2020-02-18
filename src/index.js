@@ -4,7 +4,8 @@ import Vue from 'vue'
 import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { test } from './test-websocket'
+import { runWebsocket } from './test-websocket'
+//import { obe } from './mutation-observer'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -28,13 +29,29 @@ let vue
         el: '#app',
         data: {
             cards: whiteboard.cards
+        },
+        // memo https://jp.vuejs.org/v2/api/#watch
+        watch: {
+            cards: {
+                handler: function (val, oldVal) {
+                    console.log(val[0])
+                    console.log(oldVal[0])
+                    console.log(val[0]===oldVal[0])
+               //     console.log('new: %s, old: %s', val, oldVal)
+                //    console.log(this)
+                },
+                deep: true
+            }
         }
+
     })
 
     // interactjs起動
     runInteractjs(whiteboard)
 
-    test()
+    // obe()
+
+    runWebsocket()
 
 }());
 

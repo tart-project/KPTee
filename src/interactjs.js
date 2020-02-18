@@ -1,4 +1,6 @@
 import interact from 'interactjs'
+import { sendDrag, sendResize } from './test-websocket'
+
 
 export function runInteractjs(whiteboard) {
     const changedPosition = { x: 0, y: 0 }
@@ -27,6 +29,7 @@ export function runInteractjs(whiteboard) {
             changedPosition.x = 0
             changedPosition.y = 0
             event.target.style.transform = "translate(0px, 0px)"
+            sendDrag(whiteboard.cards.find(({ id }) => id === event.target.id))
         })
 
     // resize function
@@ -57,5 +60,7 @@ export function runInteractjs(whiteboard) {
             // update the card info
             whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).width = event.target.style.width
             whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).height = event.target.style.height
+            sendResize(whiteboard.cards.find(({ id }) => id === event.target.parentNode.id))
+
         })
 };

@@ -14,7 +14,7 @@ export default class Card {
         this.text = card.text
         this.width = card.width
         this.height = card.height
-        this.changeColorButtonBackgroundColor = card.changeColorButton.backgroundColor
+        this.changeColorButtonBackgroundColor = card.changeColorButtonBackgroundColor
     }
 
     // カード情報取得
@@ -29,7 +29,7 @@ export default class Card {
         card.text = this.text
         card.width = this.width
         card.height = this.height
-        card.changeColorButton.backgroundColor = this.changeColorButtonBackgroundColor
+        card.changeColorButtonBackgroundColor = this.changeColorButtonBackgroundColor
 
         return card
     }

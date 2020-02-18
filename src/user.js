@@ -1,7 +1,7 @@
 import Card from './card'
 import { colors } from './card-const'
 import { v4 } from 'uuid'
-import { sendCard, sendColor } from './test-websocket'
+import { sendCard, sendColor, sendDelete } from './test-websocket'
 
 export default class User {
     constructor() {
@@ -16,6 +16,7 @@ export default class User {
 
     // カード削除
     deleteCard(clieckedCardId, whiteboard) {
+        sendDelete(whiteboard.cards.find(({id}) => id === clieckedCardId))
         // カードリストからカードID削除
         whiteboard.cards.splice(whiteboard.cards.findIndex(({id}) => id === clieckedCardId), 1)
     }
@@ -35,16 +36,20 @@ export default class User {
             case colors.keep:
                 target.backgroundColor = colors.problem;
                 target.changeColorButtonBackgroundColor = colors.try;
+                sendColor(target)
+
                 break;
 
             case colors.problem:
                 target.backgroundColor = colors.try;
                 target.changeColorButtonBackgroundColor = colors.default;
+                sendColor(target)
                 break;
 
             case colors.try:
                 target.backgroundColor = colors.default;
                 target.changeColorButtonBackgroundColor = colors.keep;
+                sendColor(target)
                 break;
         }
     }
