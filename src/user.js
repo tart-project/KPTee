@@ -1,7 +1,7 @@
 import Card from './card'
 import { colors } from './card-const'
 import { v4 } from 'uuid'
-import { sendCard, sendColor, sendDelete } from './test-websocket'
+import { sendCard, sendColor, sendDelete } from './websocket-client'
 
 export default class User {
     constructor() {

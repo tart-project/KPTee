@@ -1,5 +1,5 @@
 import interact from 'interactjs'
-import { sendDrag, sendResize } from './test-websocket'
+import { sendDrag, sendResize } from './websocket-client'
 
 
 export function runInteractjs(whiteboard) {
@@ -61,6 +61,5 @@ export function runInteractjs(whiteboard) {
             whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).width = event.target.style.width
             whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).height = event.target.style.height
             sendResize(whiteboard.cards.find(({ id }) => id === event.target.parentNode.id))
-
         })
 };

@@ -4,7 +4,7 @@ import Vue from 'vue'
 import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { runWebsocket } from './test-websocket'
+import { runWebsocket } from './websocket-client'
 //import { obe } from './mutation-observer'
 
 // html上の関数と紐づけ
