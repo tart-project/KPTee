@@ -17,7 +17,6 @@ export function runWebsocket() {
         const card = JSON.parse(e.data)[1]
         if (JSON.parse(e.data)[0] == 0) {
 
-            console.log(card)
             whiteboard.cards.push(new Card(card))
         }
         else if (JSON.parse(e.data)[0] == 1) {
@@ -26,6 +25,9 @@ export function runWebsocket() {
             whiteboard.cards[a].backgroundColor= card.backgroundColor
             whiteboard.cards[a].backgroundColor= card.backgroundColor
             whiteboard.cards[a].changeColorButtonBackgroundColor= card.changeColorButtonBackgroundColor
+            whiteboard.cards[a].text= card.text
+
+
         }
         else if (JSON.parse(e.data)[0] == 2){
             var a= whiteboard.cards.findIndex(({id}) => id === card.id)
@@ -38,7 +40,6 @@ export function runWebsocket() {
 
             whiteboard.cards[a].width= card.width
             whiteboard.cards[a].height= card.height
-            console.log(whiteboard.cards[a])
         }
         else if (JSON.parse(e.data)[0] == 4){
             var a= whiteboard.cards.findIndex(({id}) => id === card.id)

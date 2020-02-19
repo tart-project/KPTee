@@ -5,6 +5,7 @@ import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { runWebsocket } from './websocket-client'
+//mport {obe} from './obeobe'
 //import { obe } from './mutation-observer'
 
 // html上の関数と紐づけ
@@ -34,9 +35,6 @@ let vue
         watch: {
             cards: {
                 handler: function (val, oldVal) {
-                    console.log(val[0])
-                    console.log(oldVal[0])
-                    console.log(val[0]===oldVal[0])
                //     console.log('new: %s, old: %s', val, oldVal)
                 //    console.log(this)
                 },
@@ -49,7 +47,7 @@ let vue
     // interactjs起動
     runInteractjs(whiteboard)
 
-    // obe()
+    //obe()
 
     runWebsocket()
 
