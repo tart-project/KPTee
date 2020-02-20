@@ -54,8 +54,16 @@ export default class User {
         }
     }
 
+    // みて欲しいところ
     changeText(chagedTextarea, whiteboard) {
-    
-        sendText(whiteboard.cards.find(({ id }) => id === chagedTextarea.parentNode.id))
+
+        const target= whiteboard.cards.find(({ id }) => id === chagedTextarea.parentNode.id)
+
+        target.text = chagedTextarea.textContent
+
+        sendText(target)
     }
+
+    // みて欲しいところ
+    // TODO ドラッグ、リサイズ後にwhiteboard反映＋websocketにsendする関数
 }

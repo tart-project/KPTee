@@ -15,9 +15,6 @@ window.deleteCard = deleteCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
-window.changeText = changeText
-
-
 export const whiteboard = new Whiteboard
 const user = new User
 let vue
@@ -30,11 +27,19 @@ let vue
         el: '#app',
         data: {
             cards: whiteboard.cards
+        },
+        methods:{
+            // みて欲しいところ
+            changeText(event){
+                user.changeText(event.target, whiteboard)
+            }
         }
     })
 
     // interactjs起動
     runInteractjs(whiteboard)
+
+    // websocket起動
     runWebsocket()
 }());
 
@@ -66,8 +71,4 @@ function changeCardColor(clieckedButton) {
 function deleteCard(clieckedButton) {
     // クリックされたカードIDを渡す
     user.deleteCard(clieckedButton.parentNode.id, whiteboard)
-}
-
-function changeText(changedTextarea){
-    user.changeText(changedTextarea, whiteboard)
 }

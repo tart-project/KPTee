@@ -26,8 +26,6 @@ export function runWebsocket() {
             whiteboard.cards[a].backgroundColor = card.backgroundColor
             whiteboard.cards[a].changeColorButtonBackgroundColor = card.changeColorButtonBackgroundColor
             whiteboard.cards[a].text = card.text
-
-
         }
         else if (JSON.parse(e.data)[0] == 2) {
             var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
@@ -45,20 +43,15 @@ export function runWebsocket() {
             var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
 
             whiteboard.cards.splice(a, 1)
-
         }
         else if (JSON.parse(e.data)[0] == 5) {
             var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
-
-            console.log( whiteboard.cards[a])
 
             whiteboard.cards[a].text = card.text
         }
     });
 }
 // 接続
-
-
 
 
 export function sendCard(target) {
@@ -89,6 +82,5 @@ export function sendDelete(target) {
 
 export function sendText(target) {
     const sendInfo = [5, target]
-    console.log(sendInfo)
     websocket.send(JSON.stringify(sendInfo));
 }
