@@ -5,8 +5,6 @@ import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { runWebsocket } from './websocket-client'
-//mport {obe} from './obeobe'
-//import { obe } from './mutation-observer'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -17,10 +15,12 @@ window.deleteCard = deleteCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
+window.changeText = changeText
+
+
 export const whiteboard = new Whiteboard
 const user = new User
 let vue
-
 (function () {
     // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
     document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
@@ -30,27 +30,12 @@ let vue
         el: '#app',
         data: {
             cards: whiteboard.cards
-        },
-        // memo https://jp.vuejs.org/v2/api/#watch
-        watch: {
-            cards: {
-                handler: function (val, oldVal) {
-               //     console.log('new: %s, old: %s', val, oldVal)
-                //    console.log(this)
-                },
-                deep: true
-            }
         }
-
     })
 
     // interactjs起動
     runInteractjs(whiteboard)
-
-    //obe()
-
     runWebsocket()
-
 }());
 
 // カード作成関数
@@ -81,4 +66,8 @@ function changeCardColor(clieckedButton) {
 function deleteCard(clieckedButton) {
     // クリックされたカードIDを渡す
     user.deleteCard(clieckedButton.parentNode.id, whiteboard)
+}
+
+function changeText(changedTextarea){
+    user.changeText(changedTextarea, whiteboard)
 }

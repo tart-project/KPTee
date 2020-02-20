@@ -35,7 +35,7 @@ export default class Whiteboard {
         }
         return cardsInfo
     }
-    
+
     // インポート情報→カード作成
     importCards(e) {
 
@@ -58,3 +58,4 @@ export default class Whiteboard {
         })
     }
 }
+

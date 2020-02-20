@@ -1,19 +1,19 @@
 import { whiteboard } from './index'
 import Card from './card';
 
-var sock
+var websocket
 
 export function runWebsocket() {
 
-    sock = new WebSocket('ws://127.0.0.1:5001');
+    websocket = new WebSocket('ws://127.0.0.1:5001');
 
-    sock.addEventListener('open', function (e) {
+    websocket.addEventListener('open', function (e) {
         console.log('Socket 接続成功');
     });
 
 
     // サーバーからデータを受け取る
-    sock.addEventListener('message', function (e) {
+    websocket.addEventListener('message', function (e) {
         const card = JSON.parse(e.data)[1]
         if (JSON.parse(e.data)[0] == 0) {
 
@@ -21,31 +21,38 @@ export function runWebsocket() {
         }
         else if (JSON.parse(e.data)[0] == 1) {
 
-            var a= whiteboard.cards.findIndex(({id}) => id === card.id)
-            whiteboard.cards[a].backgroundColor= card.backgroundColor
-            whiteboard.cards[a].backgroundColor= card.backgroundColor
-            whiteboard.cards[a].changeColorButtonBackgroundColor= card.changeColorButtonBackgroundColor
-            whiteboard.cards[a].text= card.text
+            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
+            whiteboard.cards[a].backgroundColor = card.backgroundColor
+            whiteboard.cards[a].backgroundColor = card.backgroundColor
+            whiteboard.cards[a].changeColorButtonBackgroundColor = card.changeColorButtonBackgroundColor
+            whiteboard.cards[a].text = card.text
 
 
         }
-        else if (JSON.parse(e.data)[0] == 2){
-            var a= whiteboard.cards.findIndex(({id}) => id === card.id)
+        else if (JSON.parse(e.data)[0] == 2) {
+            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
 
-            whiteboard.cards[a].top= card.top
-            whiteboard.cards[a].left= card.left
+            whiteboard.cards[a].top = card.top
+            whiteboard.cards[a].left = card.left
         }
-        else if (JSON.parse(e.data)[0] == 3){
-            var a= whiteboard.cards.findIndex(({id}) => id === card.id)
+        else if (JSON.parse(e.data)[0] == 3) {
+            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
 
-            whiteboard.cards[a].width= card.width
-            whiteboard.cards[a].height= card.height
+            whiteboard.cards[a].width = card.width
+            whiteboard.cards[a].height = card.height
         }
-        else if (JSON.parse(e.data)[0] == 4){
-            var a= whiteboard.cards.findIndex(({id}) => id === card.id)
+        else if (JSON.parse(e.data)[0] == 4) {
+            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
 
-        whiteboard.cards.splice(a, 1)
+            whiteboard.cards.splice(a, 1)
 
+        }
+        else if (JSON.parse(e.data)[0] == 5) {
+            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
+
+            console.log( whiteboard.cards[a])
+
+            whiteboard.cards[a].text = card.text
         }
     });
 }
@@ -56,25 +63,32 @@ export function runWebsocket() {
 
 export function sendCard(target) {
     const sendInfo = [0, target]
-    sock.send(JSON.stringify(sendInfo));
+    websocket.send(JSON.stringify(sendInfo));
 }
 
 export function sendColor(target) {
     const sendInfo = [1, target]
-    sock.send(JSON.stringify(sendInfo));
+    websocket.send(JSON.stringify(sendInfo));
 }
 
 export function sendDrag(target) {
     const sendInfo = [2, target]
-    sock.send(JSON.stringify(sendInfo));
+    websocket.send(JSON.stringify(sendInfo));
 }
 
 export function sendResize(target) {
     const sendInfo = [3, target]
-    sock.send(JSON.stringify(sendInfo));
+    websocket.send(JSON.stringify(sendInfo));
 }
 
 export function sendDelete(target) {
     const sendInfo = [4, target]
-    sock.send(JSON.stringify(sendInfo));
+    websocket.send(JSON.stringify(sendInfo));
+}
+
+
+export function sendText(target) {
+    const sendInfo = [5, target]
+    console.log(sendInfo)
+    websocket.send(JSON.stringify(sendInfo));
 }

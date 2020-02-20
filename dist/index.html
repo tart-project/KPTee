@@ -9,15 +9,15 @@
 </head>
 
 <body>
-  
-  <div class="kpteeContainer" >
+
+  <div class="kpteeContainer">
 
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
       <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
         v-bind:style="{top: card.top, left: card.left}">
         <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
-          class="textarea" v-model="card.text">{{card.text}}</textarea>
+          class="textarea" v-model="card.test" onchange="changeText(this)">{{card.test}}</textarea>
         <br>
         <button class="changeColorButton" onclick="changeCardColor(this)"
           v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
@@ -68,7 +68,6 @@
       </div>
     </div>
   </div>
-
 
   <img src="logo.png" class="logo">
 
