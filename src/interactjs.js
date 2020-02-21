@@ -1,8 +1,6 @@
 import interact from 'interactjs'
-import { sendDrag, sendResize } from './websocket-client'
 
-
-export function runInteractjs(whiteboard) {
+export function runInteractjs(whiteboard, user, websocket) {
     const changedPosition = { x: 0, y: 0 }
 
     // drag and drop function
@@ -22,14 +20,14 @@ export function runInteractjs(whiteboard) {
             // 画面左上からの絶対位置+スクロールの補正分を反映
             const currentTop = targetRectInfo.top + window.pageYOffset;
             const currentLeft = targetRectInfo.left + window.pageXOffset;
-            whiteboard.cards.find(({ id }) => id === event.target.id).left = `${currentLeft}px`
-            whiteboard.cards.find(({ id }) => id === event.target.id).top = `${currentTop}px`
+            console.log(event.target)
+
+            user.changeDrag(whiteboard, websocket, event.target.id, `${currentLeft}px`, `${currentTop}px`)
 
             // 移動距離の初期化
             changedPosition.x = 0
             changedPosition.y = 0
             event.target.style.transform = "translate(0px, 0px)"
-            sendDrag(whiteboard.cards.find(({ id }) => id === event.target.id))
         })
 
     // resize function
@@ -58,8 +56,8 @@ export function runInteractjs(whiteboard) {
         })
         .on('resizeend', (event) => {
             // update the card info
-            whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).width = event.target.style.width
-            whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).height = event.target.style.height
-            sendResize(whiteboard.cards.find(({ id }) => id === event.target.parentNode.id))
+            //whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).width = event.target.style.width
+            //whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).height = event.target.style.height
+            user.changeResize(whiteboard, websocket, event.target.parentNode.id, event.target.style.width, event.target.style.height)
         })
 };

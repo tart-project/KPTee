@@ -4,7 +4,7 @@ import Vue from 'vue'
 import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { runWebsocket } from './websocket-client'
+import RunWebsocket from './websocket-client'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -15,8 +15,9 @@ window.deleteCard = deleteCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
-export const whiteboard = new Whiteboard
-const user = new User
+const whiteboard = new Whiteboard()
+const user = new User()
+const websocket = new RunWebsocket(whiteboard)
 let vue
 (function () {
     // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
@@ -29,23 +30,35 @@ let vue
             cards: whiteboard.cards
         },
         methods:{
-            // みて欲しいところ
             changeText(event){
-                user.changeText(event.target, whiteboard)
+                user.changeText(event.target, whiteboard, websocket)
             }
-        }
+        },
+　// ２つに格納wuochi→差分を見る
     })
 
     // interactjs起動
-    runInteractjs(whiteboard)
+    runInteractjs(whiteboard, user, websocket)
 
     // websocket起動
-    runWebsocket()
+    //runWebsocket(whiteboard)
 }());
 
 // カード作成関数
 function createCard() {
-    user.createCard(whiteboard)
+    user.createCard(whiteboard, websocket)
+}
+
+// カードカラー変更関数
+function changeCardColor(clieckedButton) {
+    // クリックされたカードIDを渡す
+    user.changeCardColor(clieckedButton.parentNode.id, whiteboard, websocket)
+}
+
+// カード削除関数
+function deleteCard(clieckedButton) {
+    // クリックされたカードIDを渡す
+    user.deleteCard(clieckedButton.parentNode.id, whiteboard, websocket)
 }
 
 // インポート関数
@@ -59,16 +72,4 @@ function importCards(e) {
 // エクスポート関数
 function exportCards(clieckedButton) {
     whiteboard.downloadFile(clieckedButton)
-}
-
-// カードカラー変更関数
-function changeCardColor(clieckedButton) {
-    // クリックされたカードIDを渡す
-    user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
-}
-
-// カード削除関数
-function deleteCard(clieckedButton) {
-    // クリックされたカードIDを渡す
-    user.deleteCard(clieckedButton.parentNode.id, whiteboard)
 }

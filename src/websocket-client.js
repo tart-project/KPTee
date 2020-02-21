@@ -1,86 +1,77 @@
-import { whiteboard } from './index'
-import Card from './card';
+export default class RunWebsocket {
+    constructor(whiteboard) {
+        this.websocket = new WebSocket('ws://127.0.0.1:5001');
+        this.websocket.addEventListener('open', function (e) {
+            console.log('Socket connect');
+        });
+        
+        this.websocket.addEventListener('message', function (e) {
+            const card = JSON.parse(e.data)
+            const index = whiteboard.cards.findIndex(({ id }) => id === card[0].id)
+    
+            if (card[1] == "create") {
+                whiteboard.createCard(card[0])
+            } else if (card[1] == "update") {
+                whiteboard.updateCard(index, card[0])
+            } else if (card[1] == "delete") {
+                whiteboard.deleteCard(index)
+            }
+        });
 
-var websocket
+    }
 
-export function runWebsocket() {
+    ceateInfo(target) {
+        const sendInfo = [target, "create"]
+        this.websocket.send(JSON.stringify(sendInfo));
+    }
+    updateInfo(target) {
+        const sendInfo = [target, "update"]
+        this.websocket.send(JSON.stringify(sendInfo));
+    }
+    deleteInfo(target) {
+        const sendInfo = [target, "delete"]
+        this.websocket.send(JSON.stringify(sendInfo));
+    }   
+}
+
+
+
+/*
+export function runWebsocket(whiteboard) {
 
     websocket = new WebSocket('ws://127.0.0.1:5001');
 
     websocket.addEventListener('open', function (e) {
-        console.log('Socket 接続成功');
+        console.log('Socket connect');
     });
-
 
     // サーバーからデータを受け取る
     websocket.addEventListener('message', function (e) {
-        const card = JSON.parse(e.data)[1]
-        if (JSON.parse(e.data)[0] == 0) {
+        const card = JSON.parse(e.data)
+        const index = whiteboard.cards.findIndex(({ id }) => id === card[0].id)
 
-            whiteboard.cards.push(new Card(card))
-        }
-        else if (JSON.parse(e.data)[0] == 1) {
-
-            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
-            whiteboard.cards[a].backgroundColor = card.backgroundColor
-            whiteboard.cards[a].backgroundColor = card.backgroundColor
-            whiteboard.cards[a].changeColorButtonBackgroundColor = card.changeColorButtonBackgroundColor
-            whiteboard.cards[a].text = card.text
-        }
-        else if (JSON.parse(e.data)[0] == 2) {
-            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
-
-            whiteboard.cards[a].top = card.top
-            whiteboard.cards[a].left = card.left
-        }
-        else if (JSON.parse(e.data)[0] == 3) {
-            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
-
-            whiteboard.cards[a].width = card.width
-            whiteboard.cards[a].height = card.height
-        }
-        else if (JSON.parse(e.data)[0] == 4) {
-            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
-
-            whiteboard.cards.splice(a, 1)
-        }
-        else if (JSON.parse(e.data)[0] == 5) {
-            var a = whiteboard.cards.findIndex(({ id }) => id === card.id)
-
-            whiteboard.cards[a].text = card.text
+        if (card[1] == "create") {
+            whiteboard.createCard(card[0])
+        } else if (card[1] == "update") {
+            whiteboard.updateCard(index, card[0])
+        } else if (card[1] == "delete") {
+            whiteboard.deleteCard(index)
         }
     });
 }
-// 接続
 
-
-export function sendCard(target) {
-    const sendInfo = [0, target]
+export function websocketCeateInfo(target) {
+    const sendInfo = [target, "create"]
     websocket.send(JSON.stringify(sendInfo));
 }
 
-export function sendColor(target) {
-    const sendInfo = [1, target]
+export function websocketUpdateInfo(target) {
+    const sendInfo = [target, "update"]
     websocket.send(JSON.stringify(sendInfo));
 }
 
-export function sendDrag(target) {
-    const sendInfo = [2, target]
+export function websocketDeleteInfo(target) {
+    const sendInfo = [target, "delete"]
     websocket.send(JSON.stringify(sendInfo));
 }
-
-export function sendResize(target) {
-    const sendInfo = [3, target]
-    websocket.send(JSON.stringify(sendInfo));
-}
-
-export function sendDelete(target) {
-    const sendInfo = [4, target]
-    websocket.send(JSON.stringify(sendInfo));
-}
-
-
-export function sendText(target) {
-    const sendInfo = [5, target]
-    websocket.send(JSON.stringify(sendInfo));
-}
+*/

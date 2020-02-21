@@ -1,10 +1,22 @@
-import { v4 } from 'uuid'
 import Card from './card'
 
 export default class Whiteboard {
     constructor() {
-        this.id = `id-${v4()}`
         this.cards = []
+        this.stackCards = []
+    }
+
+    createCard(card){
+        this.cards.push(new Card(card))
+    }
+
+    updateCard(targetIndex, card){
+        this.cards.splice(targetIndex, 1)
+        this.cards.push(new Card(card))
+    }
+
+    deleteCard(targetIndex){
+        this.cards.splice(targetIndex, 1)
     }
 
     // エクスポートファイルをダウンロード
