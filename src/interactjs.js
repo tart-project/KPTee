@@ -20,9 +20,8 @@ export function runInteractjs(whiteboard, user, websocket) {
             // 画面左上からの絶対位置+スクロールの補正分を反映
             const currentTop = targetRectInfo.top + window.pageYOffset;
             const currentLeft = targetRectInfo.left + window.pageXOffset;
-            console.log(event.target)
 
-            user.changeDrag(whiteboard, websocket, event.target.id, `${currentLeft}px`, `${currentTop}px`)
+            user.changeDrag(whiteboard, event.target.id, `${currentLeft}px`, `${currentTop}px`)
 
             // 移動距離の初期化
             changedPosition.x = 0
@@ -56,8 +55,6 @@ export function runInteractjs(whiteboard, user, websocket) {
         })
         .on('resizeend', (event) => {
             // update the card info
-            //whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).width = event.target.style.width
-            //whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).height = event.target.style.height
-            user.changeResize(whiteboard, websocket, event.target.parentNode.id, event.target.style.width, event.target.style.height)
+            user.changeResize(whiteboard, event.target.parentNode.id, event.target.style.width, event.target.style.height)
         })
 };

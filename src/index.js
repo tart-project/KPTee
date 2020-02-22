@@ -23,42 +23,36 @@ let vue
     // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
     document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
 
-    // vue設定
     vue = new Vue({
         el: '#app',
         data: {
             cards: whiteboard.cards
         },
-        methods:{
-            changeText(event){
-                user.changeText(event.target, whiteboard, websocket)
+        watch: {
+            cards: {
+                handler: function () {
+                    whiteboard.checkDifference(websocket)
+                },
+                deep: true
             }
-        },
-　// ２つに格納wuochi→差分を見る
+        }
     })
-
-    // interactjs起動
-    runInteractjs(whiteboard, user, websocket)
-
-    // websocket起動
-    //runWebsocket(whiteboard)
+    runInteractjs(whiteboard, user)
 }());
 
 // カード作成関数
 function createCard() {
-    user.createCard(whiteboard, websocket)
+    user.createCard(whiteboard)
 }
 
 // カードカラー変更関数
 function changeCardColor(clieckedButton) {
-    // クリックされたカードIDを渡す
-    user.changeCardColor(clieckedButton.parentNode.id, whiteboard, websocket)
+    user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
 }
 
 // カード削除関数
 function deleteCard(clieckedButton) {
-    // クリックされたカードIDを渡す
-    user.deleteCard(clieckedButton.parentNode.id, whiteboard, websocket)
+    user.deleteCard(clieckedButton.parentNode.id, whiteboard)
 }
 
 // インポート関数

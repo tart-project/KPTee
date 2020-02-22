@@ -17,7 +17,7 @@
       <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
         v-bind:style="{top: card.top, left: card.left}">
         <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
-          class="textarea" v-model="card.text" v-on:change="changeText($event)" >{{ card.text }}</textarea>
+          class="textarea" v-model="card.text">{{ card.text }}</textarea>
         <br>
         <button class="changeColorButton" onclick="changeCardColor(this)"
           v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
