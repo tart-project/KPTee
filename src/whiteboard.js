@@ -1,7 +1,6 @@
 import Card from './card'
 import _ from 'lodash';
 
-
 export default class Whiteboard {
     constructor() {
         this.cards = []
@@ -11,6 +10,21 @@ export default class Whiteboard {
     createCard(card) {
         this.stockCards.push(card)
         this.cards.push(new Card(card))
+    }
+
+    readCard(targetType, targetIndex) {
+        const info = [];
+        if (targetType == "cards") {
+            for (const card of this.cards) {
+                // 参照渡し回避のため、新規オブジェクト生成
+                // TODO: ディープ参照渡しの解決
+                const newCard = JSON.stringify(card.get())
+                info.push(JSON.parse(newCard))
+            }
+        } else if (targetType == "card") {
+            info.push(this.cards[targetIndex])
+        }
+        return info
     }
 
     updateCard(targetIndex, card) {
@@ -28,7 +42,7 @@ export default class Whiteboard {
     // エクスポートファイルをダウンロード
     downloadFile(clieckedButton) {
 
-        const cardsInfo = this.getCardsInfo(this.cards)
+        const cardsInfo = this.readCard("cards")
 
         // 各種設定
         const fileTitle = "kptee-cards.json";
@@ -41,21 +55,8 @@ export default class Whiteboard {
         exportCardsButton.setAttribute("download", fileTitle);
     }
 
-    // エクスポート情報作成
-    getCardsInfo(cards) {
-        const cardsInfo = [];
-
-        for (const card of cards) {
-            // 参照渡し回避のため、新規オブジェクト生成
-            // TODO: ディープ参照渡しの解決
-            const newCard = JSON.stringify(card.get())
-            cardsInfo.push(JSON.parse(newCard))
-        }
-        return cardsInfo
-    }
-
     // インポート情報→カード作成
-    importCards(e) {
+    importCards(e, websocket) {
 
         //FileReaderのインスタンスを作成する
         const fileReader = new FileReader();
@@ -72,6 +73,8 @@ export default class Whiteboard {
             // インポート情報を元にカードを生成
             for (const card of importedCards) {
                 this.cards.push(new Card(card))
+                // CHECK! なぜかwatchがきかないため、差分関数を自分でよばないとだめ もしかすると処理がはやすぎる？→ストリームみたいにしないといけないかも（全体的に大人数にした時にあやしい）
+                this.checkDifference(websocket)
             }
         })
     }

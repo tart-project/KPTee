@@ -8,30 +8,33 @@ export default class RunWebsocket {
 
         this.websocket.addEventListener('message', function (e) {
             // 受信した時
-            const card = JSON.parse(e.data)
-            const index = whiteboard.cards.findIndex(({ id }) => id === card[0].id)
+            const receivedCard = JSON.parse(e.data)
+            const index = whiteboard.cards.findIndex(({ id }) => id === receivedCard[1].id)
 
-            if (card[1] == "create") {
-                whiteboard.createCard(card[0])
-            } else if (card[1] == "update") {
-                whiteboard.updateCard(index, card[0])
-            } else if (card[1] == "delete") {
+            if (receivedCard[0] == "create") {
+                whiteboard.createCard(receivedCard[1])
+            } else if (receivedCard[0] == "update") {
+                whiteboard.updateCard(index, receivedCard[1])
+            } else if (receivedCard[0] == "delete") {
                 whiteboard.deleteCard(index)
+            } else if (receivedCard[0] == "inisialLoad") {
+                for (const card of receivedCard[1]) {
+                    whiteboard.createCard(card)
+                }
             }
         });
-
     }
 
     sendCreatedInfo(target) {
-        const sendInfo = [target, "create"]
+        const sendInfo = ["create", target]
         this.websocket.send(JSON.stringify(sendInfo));
     }
     sendUpdatedInfo(target) {
-        const sendInfo = [target, "update"]
+        const sendInfo = ["update", target]
         this.websocket.send(JSON.stringify(sendInfo));
     }
     sendDeletedInfo(target) {
-        const sendInfo = [target, "delete"]
+        const sendInfo = ["delete", target]
         this.websocket.send(JSON.stringify(sendInfo));
     }
 }

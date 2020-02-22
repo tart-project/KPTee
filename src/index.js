@@ -57,9 +57,9 @@ function deleteCard(clieckedButton) {
 
 // インポート関数
 function importCards(e) {
-    if (e) {
+    if (e.type == "change") {
         // ファイルが読み込まれた場合
-        whiteboard.importCards(e)
+        whiteboard.importCards(e, websocket)
     }
 }
 
