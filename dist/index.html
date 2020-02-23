@@ -9,28 +9,23 @@
 </head>
 
 <body>
-
   <div class="kpteeContainer">
 
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
-      <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
-        v-bind:style="{top: card.top, left: card.left}">
-        <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
-          class="textarea" v-model="card.text">{{ card.text }}</textarea>
+      <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}">
+        <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{ card.text }}</textarea>
         <br>
-        <button class="changeColorButton" onclick="changeCardColor(this)"
-          v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+        <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}" title="Change Card"></button>
+        <button class="deleteCardButton" onclick="deleteCard(this)" title="Delete">×</button>
       </div>
     </div>
 
-    <div class="toolsBox">
+    <header class="toolsBox">
       <!-- インポートボタン -->
       <label for="importFileButton">
-        <img src="import-icon.png" class="toolIcon" title="Import" />
+        <img src="import-icon.png" class="toolIcon" title="Import"/>
       </label>
-
       <form id="formTagForImport">
         <input id="importFileButton" type="file" onclick="importCards(event)">
       </form>
@@ -39,7 +34,7 @@
       <a id="exportCardsButton" type="button" onclick="exportCards(this)">
         <image src="export-icon.png" class="toolIcon" title="Export">
       </a>
-    </div>
+    </header>
 
     <div class="leftBox">
       <div class="keepAreaBox alert-primary">
@@ -53,13 +48,15 @@
         </div>
       </div>
     </div>
+
     <div class="centerLineBox">
       <div class="centerBox">
-        <button type="button" onclick="createCard()" id="cardCreationButton">
+        <button type="button" onclick="createCard()" id="cardCreationButton" title="Create Card">
           <img src="create-card-icon.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>
+
     <div class="rightBox">
       <div class="tryAreaBox alert-success">
         <div class="titleAreaBox" id="tryTitle">
@@ -67,12 +64,12 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <img src="logo.png" class="logo">
-
+  
   <script src="main.js"></script>
-
 </body>
 
 </html>

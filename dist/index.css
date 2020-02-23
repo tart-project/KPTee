@@ -28,7 +28,6 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    transition: .3s;
     position:absolute;
     top: 293px;
     left: 715px;
@@ -63,6 +62,10 @@ img.cardCreationButtonImg {
     vertical-align:top;
 }
 
+.changeColorButton:hover {
+    background-color: rgb(245, 240, 240)! important;
+}
+
 .deleteCardButton{
     width: 17px;
     height: 17px;
@@ -81,12 +84,17 @@ img.cardCreationButtonImg {
     font-size: 10px;
     font-weight: 900; 
 }
+
+.deleteCardButton:hover {
+    background-color: rgb(245, 240, 240)! important;
+}
+
 /*ヘッダコンテナ*/
 .headerContainer {
     background-color: #727171;
     display: block;
-    width: 1475px;/*1465*/
-    height: 50px;/*735*/
+    width: 1475px;
+    height: 50px;
 }
 
 /*ロゴ画像*/
@@ -112,8 +120,8 @@ img.cardCreationButtonImg {
 /*KPTエリアコンテナ*/
 .kpteeContainer {
     display: block;
-    width: 1475px;/*1465*/
-    height: 635px;/*735*/
+    width: 1475px;
+    height: 635px;
     font-size: 0;
 }
 
@@ -182,6 +190,7 @@ img.cardCreationButtonImg {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 /*Problemエリア*/
 .problemAreaBox {
     display: block;
@@ -216,12 +225,7 @@ img.cardCreationButtonImg {
     background-color:var(--green);
 }
 
-/*中央エリア*/
-.centerBox {
-    display: block;
-}
-
 /*vueがコンパイルされるまでhtmlを非表示*/
 [v-cloak] {
     display: none;
-  }
+}
