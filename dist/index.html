@@ -9,49 +9,54 @@
 </head>
 
 <body>
+  
+  <div class="kpteeContainer" >
 
-  <!-- リストアボタン -->
+    <div id="app" v-cloak>
+      <!-- カード生成場所 -->
+      <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
+        v-bind:style="{top: card.top, left: card.left}">
+        <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
+          class="textarea" v-model="card.text">{{card.text}}</textarea>
+        <br>
+        <button class="changeColorButton" onclick="changeCardColor(this)"
+          v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
+        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+      </div>
+    </div>
+
+    <div class="toolsBox">
+      <!-- インポートボタン -->
+      <label for="importFileButton">
+        <img src="import-icon.png" class="toolIcon" title="Import" />
+      </label>
+
+      <form id="formTagForImport">
+        <input id="importFileButton" type="file" onclick="importCards(this)">
+      </form>
+
+      <!-- エクスポートボタン -->
+      <a id="exportCardsButton" type="button" onclick="exportCards(this)">
+        <image src="export-icon.png" class="toolIcon" title="Export">
+      </a>
+
+        <!-- リストアボタン -->
   <label for="restoreCardButton">
-    <img src="restore.png" class="toolIcon" />
+	<image src="restore.png" class="restoreIcon" title="Restore">
+
   </label>
   <form id="formTagForRestore">
     <input id="restoreCardButton" type="button" onclick="restoreCard()" style=display:none>
   </form>
-
-  <div class="headerContainer">
-    <img src="logo.png" class="logo">
-    <div class="tools">
-      <!-- エクスポートボタン -->
-      <a id="exportCardsButton" type="button" onclick="exportCards(this)">
-        <image src="export.png" class="toolIcon">
-      </a>
-
-      <!-- インポートボタン -->
-      <label for="importFileButton">
-        <img src="import.png" class="toolIcon" />
-      </label>
-
-      <form id="formTagForImport">
-        <input id="importFileButton" type="file" onclick="importCards()" >
-      </form>
     </div>
-  </div>
 
-  <div id="app" class="kpteeContainer" v-cloak>
-    <!-- カード生成場所 -->
-        <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}" >
-          <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{card.text}}</textarea>
-          <br>
-          <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-          <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
-        </div>
     <div class="leftBox">
-      <div class="keepAreaBox">
+      <div class="keepAreaBox alert-primary">
         <div class="titleAreaBox" id="keepTitle">
           Keep
         </div>
       </div>
-      <div class="problemAreaBox">
+      <div class="problemAreaBox alert-warning">
         <div class="titleAreaBox" id="problemTitle">
           Problem
         </div>
@@ -59,22 +64,23 @@
     </div>
     <div class="centerLineBox">
       <div class="centerBox">
-        <img src="circle.png" class="centerCircle">
         <button type="button" onclick="createCard()" id="cardCreationButton">
           <img src="create-card-icon.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>
     <div class="rightBox">
-      <div class="tryAreaBox">
+      <div class="tryAreaBox alert-success">
         <div class="titleAreaBox" id="tryTitle">
           Try
         </div>
       </div>
     </div>
   </div>
+  <img src="logo.png" class="logo">
 
   <script src="main.js"></script>
+
 </body>
 
 </html>

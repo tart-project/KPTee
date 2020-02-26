@@ -16,13 +16,12 @@ export function runInteractjs(whiteboard) {
             }
         }).on("dragend", (event) => {
             const targetRectInfo = event.target.getBoundingClientRect();
-            const targetIndex = whiteboard.cards.findIndex(({ id }) => id === event.target.id)
 
             // 画面左上からの絶対位置+スクロールの補正分を反映
             const currentTop = targetRectInfo.top + window.pageYOffset;
             const currentLeft = targetRectInfo.left + window.pageXOffset;
-            whiteboard.cards[targetIndex].left = `${currentLeft}px`
-            whiteboard.cards[targetIndex].top = `${currentTop}px`
+            whiteboard.cards.find(({ id }) => id === event.target.id).left = `${currentLeft}px`
+            whiteboard.cards.find(({ id }) => id === event.target.id).top = `${currentTop}px`
 
             // 移動距離の初期化
             changedPosition.x = 0
@@ -55,10 +54,8 @@ export function runInteractjs(whiteboard) {
             }
         })
         .on('resizeend', (event) => {
-            const targetIndex = whiteboard.cards.findIndex(({ id }) => id === event.target.parentNode.id)
-
             // update the card info
-            whiteboard.cards[targetIndex].width = event.target.style.width
-            whiteboard.cards[targetIndex].height = event.target.style.height
+            whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).width = event.target.style.width
+            whiteboard.cards.find(({ id }) => id === event.target.parentNode.id).height = event.target.style.height
         })
 };
