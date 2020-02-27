@@ -9,9 +9,8 @@
 </head>
 
 <body>
-  
-  <div class="kpteeContainer" >
 
+  <div class="kpteeContainer">
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
       <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
@@ -40,14 +39,10 @@
         <image src="export-icon.png" class="toolIcon" title="Export">
       </a>
 
-        <!-- リストアボタン -->
-  <label for="restoreCardButton">
-	<image src="restore.png" class="restoreIcon" title="Restore">
-
-  </label>
-  <form id="formTagForRestore">
-    <input id="restoreCardButton" type="button" onclick="restoreCard()" style=display:none>
-  </form>
+      <!-- リストアボタン -->
+      <button type="button" onclick="restoreCard()" id="restoreCardButton">
+        <img src="restore.png" class="restoreCardButtonImg" title="Restore">
+      </button>
     </div>
 
     <div class="leftBox">
