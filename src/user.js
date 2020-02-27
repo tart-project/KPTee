@@ -23,12 +23,8 @@ export default class User {
     restoreCard(whiteboard, garbageCan) {
         if (garbageCan.cards.length != 0) {
             // if there is a archive card
-            const archivedCardInfo = garbageCan.cards[garbageCan.cards.length - 1]
-
-            whiteboard.cards.push(archivedCardInfo)
-
-            // Delete target card information
-            garbageCan.cards.pop()
+            // Restore target card 
+            whiteboard.cards.push(garbageCan.cards.pop())
         }
     }
 
