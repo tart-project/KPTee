@@ -25,7 +25,7 @@
           <img src="delete.png" class="changeColorButtonImg" title="Change Color">
         </button>
         <br>
-        <div class="pickers" v-if="card.colorPickerFlag" id="testtest">
+        <div class="pickers" v-if="card.colorPickerFlag">
           <button v-for="picker in pickers" :key="picker.id" class="picker"
             v-bind:style="{backgroundColor: picker.backgroundColor}" @click="changeColor"></button>
         </div>

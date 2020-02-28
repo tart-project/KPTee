@@ -3,15 +3,15 @@
     outline: none !important;
 }
 
-#testtest{
+.pickers{
     width: 150px;
     height: 150px;
     background-color: white;
     box-shadow: 1px 1px 0px gray;
     border-radius: 5%;
     position:relative;
-    bottom: 50px;
-    left: 50px;
+    bottom: 40px;
+    left: 40px;
 }
 
 .changeColorButtonImg{
@@ -24,7 +24,6 @@
     background-color: rgb(245, 240, 240);
 }
 
-
 .picker{
     width: 30px;
     height: 30px;
@@ -32,6 +31,7 @@
     margin: 10px;
     border: none;
 }
+
 .picker:hover {
     background-color: rgb(245, 240, 240);
 }
