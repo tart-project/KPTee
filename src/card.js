@@ -3,9 +3,9 @@ import { v4 } from 'uuid'
 
 export default class Card {
     constructor(card = defaultCard) {
-        if (card.id == ""){
+        if (card.id == "") {
             this.id = `id-${v4()}`
-        } else{
+        } else {
             this.id = card.id
         }
         this.top = card.top
