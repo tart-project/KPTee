@@ -15,4 +15,8 @@ export default class User {
         // カードリストからカードID削除
         whiteboard.cards.splice(whiteboard.cards.findIndex(({id}) => id === clieckedCardId), 1)
     }
+
+    changeColor(e, whiteboard){
+        whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id).backgroundColor = e.target.style.backgroundColor
+    }
 }

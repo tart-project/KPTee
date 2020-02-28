@@ -12,8 +12,18 @@
     position:relative;
     bottom: 50px;
     left: 50px;
-
 }
+
+.changeColorButtonImg{
+    display: block;
+    width: 8px;
+    height: auto;
+    }
+
+.changeColorButtonImg:hover {
+    background-color: rgb(245, 240, 240);
+}
+
 
 .picker{
     width: 30px;
@@ -49,19 +59,12 @@
     position: absolute;
     display: block;
     z-index: 10;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    transition: .3s;
     position:absolute;
     top: 293px;
     left: 715px;
-    color: white;
-    line-height: 56px;
-    font-size: 70px; 
-    border-width: 0px;
     padding: 0;
-    background-color: rgba(45,45,45, 0.0);;
+    border: none;
+    background: transparent;
 }
 
 img.cardCreationButtonImg {
@@ -74,36 +77,22 @@ img.cardCreationButtonImg {
 }
 
 .changeColorButton{
-    width: 17px;
-    height: 17px;
     position:relative;
-    bottom: 24px;
-    left: 4px;
-    border-radius: 50%;            
-    border-color:white;
-    border-style: solid;
-    border-width: 0px;
-    box-shadow: 1px 1px 0px gray;
+    bottom: 15px;
+    left: 6px;
     vertical-align:top;
+    padding: 0;
+    border: none;
+    background: transparent;
 }
 
 .deleteCardButton{
-    width: 17px;
-    height: 17px;
     position:relative;
-    bottom: 24px;
+    bottom: 15px;
     left: 10px;
-    color: white;
-    border-radius: 50%;              
-    border-color:white;
-    border-style: solid;
-    border-width: 0px;
-    box-shadow: 1px 1px 0px gray;
     padding: 0;
-    background-color: #727171;
-    vertical-align:top;
-    font-size: 10px;
-    font-weight: 900; 
+    border: none;
+    background: transparent;
 }
 /*ヘッダコンテナ*/
 .headerContainer {

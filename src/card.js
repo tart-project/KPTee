@@ -17,7 +17,6 @@ export default class Card {
         this.colorPickerFlag = card.colorPickerFlag
     }
 
-    // カード情報取得
     get() {
         // カード情報生成
         // TODO: ディープ参照渡しの解決
