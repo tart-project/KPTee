@@ -53,7 +53,7 @@ function createCard() {
 }
 
 function importCards(e) {
-    if (e) {
+    if (e.target) {
         // ファイルが読み込まれた場合
         whiteboard.importCards(e)
     }

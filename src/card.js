@@ -14,7 +14,7 @@ export default class Card {
         this.text = card.text
         this.width = card.width
         this.height = card.height
-        this.colorPickerFlag = card.colorPickerFlag
+        this.colorPickerFlag = false
     }
 
     get() {
@@ -28,7 +28,6 @@ export default class Card {
         card.text = this.text
         card.width = this.width
         card.height = this.height
-        card.changeColorButton.backgroundColor = this.changeColorButtonBackgroundColor
 
         return card
     }
