@@ -15,38 +15,53 @@ window.deleteCard = deleteCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
+
+window.addEventListener('click', function (e) {
+    console.log(e.target.className)
+    if (e.target.className != "pickers" || e.target.className != "picker") {
+        let aaaaa = whiteboard.cards.find(({ id }) => id === pickersFlagId)
+        if (aaaaa == undefined) { return }
+        if (flagflag == true) { return }
+
+        aaaaa.colorPickerFlag = false
+    }
+});
+
 const whiteboard = new Whiteboard
 const user = new User
 let vue
+let pickersFlagId
+let flagflag =true
 
-(function () {
-    // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
-    document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
+    (function () {
+        // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
+        document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
 
-    // vue設定
-    vue = new Vue({
-        el: '#app',
-        data: {
-            cards: whiteboard.cards,
-            pickers: colors
-        },
-        methods: {
-            click: function (e) {
-                let aaaaa = whiteboard.cards.find(({ id }) => id === e.target.parentNode.id)
-                aaaaa.colorPickerFlag = !aaaaa.colorPickerFlag
+        // vue設定
+        vue = new Vue({
+            el: '#app',
+            data: {
+                cards: whiteboard.cards,
+                pickers: colors
             },
-            changeColor: function (e) {
-                let aaaaa = whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id)
-                aaaaa.backgroundColor = e.target.style.backgroundColor
-                console.log(e.target.style.backgroundColor)
+            methods: {
+                click: function (e) {
+                    let aaaaa = whiteboard.cards.find(({ id }) => id === e.target.parentNode.id)
+                    aaaaa.colorPickerFlag = !aaaaa.colorPickerFlag
+                    pickersFlagId = e.target.parentNode.id
+                    console.log(pickersFlagId)
+                },
+                changeColor: function (e) {
+                    let aaaaa = whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id)
+                    aaaaa.backgroundColor = e.target.style.backgroundColor
+                }
             }
-        }
-    })
+        })
 
-    // interactjs起動
-    runInteractjs(whiteboard)
+        // interactjs起動
+        runInteractjs(whiteboard)
 
-}());
+    }());
 
 // カード作成関数
 function createCard() {
