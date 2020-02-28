@@ -9,8 +9,7 @@
 </head>
 
 <body>
-  
-  <div class="kpteeContainer" >
+  <div class="kpteeContainer">
 
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
@@ -21,7 +20,11 @@
         <br>
         <button class="changeColorButton" onclick="changeCardColor(this)"
           v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+        <button class="deleteCardButton" @click="click">×</button>
+        <br>
+        <div v-if="card.colorPickerFlag"  id="testtest">
+          <button v-for="picker in pickers" :key="picker.id" class="picker" v-bind:style="{backgroundColor: picker.backgroundColor}" @click="changeColor"></button>
+        </div>
       </div>
     </div>
 
@@ -69,6 +72,9 @@
     </div>
   </div>
   <img src="logo.png" class="logo">
+
+
+
 
   <script src="main.js"></script>
 

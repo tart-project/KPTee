@@ -3,6 +3,29 @@
     outline: none !important;
 }
 
+#testtest{
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    box-shadow: 1px 1px 0px gray;
+    border-radius: 5%;
+    position:relative;
+    bottom: 50px;
+    left: 50px;
+
+}
+
+.picker{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 10px;
+    border: none;
+}
+.picker:hover {
+    background-color: rgb(245, 240, 240);
+}
+
 .cardDiv {
     cursor: move;
     position: absolute;

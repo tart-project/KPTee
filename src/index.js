@@ -4,6 +4,7 @@ import Vue from 'vue'
 import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { colors } from './color-picker'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -26,7 +27,19 @@ let vue
     vue = new Vue({
         el: '#app',
         data: {
-            cards: whiteboard.cards
+            cards: whiteboard.cards,
+            pickers: colors
+        },
+        methods: {
+            click: function (e) {
+                let aaaaa = whiteboard.cards.find(({ id }) => id === e.target.parentNode.id)
+                aaaaa.colorPickerFlag = !aaaaa.colorPickerFlag
+            },
+            changeColor: function (e) {
+                let aaaaa = whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id)
+                aaaaa.backgroundColor = e.target.style.backgroundColor
+                console.log(e.target.style.backgroundColor)
+            }
         }
     })
 
