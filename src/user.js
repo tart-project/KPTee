@@ -8,8 +8,25 @@ export default class User {
     }
 
     createCard(whiteboard) {
-        // カード作成→whiteboardに格納
         whiteboard.cards.push(new Card())
+    }
+
+    deleteCard(clieckedCardId, whiteboard, garbageCan) {
+        console.log(whiteboard.cards.find(({ id }) => id === clieckedCardId))
+
+        // Add a card to a garbage can
+        garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
+
+        // Delete a card from a whiteboard
+        whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
+    }
+
+    restoreCard(whiteboard, garbageCan) {
+        if (garbageCan.cards.length != 0) {
+            // if there is a archive card
+            // Restore target card 
+            whiteboard.cards.push(garbageCan.cards.pop())
+        }
     }
 
     changeCardColor(clieckedCardId, whiteboard) {
@@ -49,9 +66,5 @@ export default class User {
         const target = whiteboard.cards.find(({ id }) => id === targetId)
         target.width = changedWidth
         target.height = changedHeight
-    }
-
-    deleteCard(clieckedCardId, whiteboard) {
-        whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
     }
 }

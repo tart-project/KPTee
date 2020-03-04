@@ -2,6 +2,7 @@ import Whiteboard from './whiteboard'
 import User from './user'
 import Vue from 'vue'
 import { runInteractjs } from './interactjs'
+import GarbageCan from './garbage-can'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RunWebsocket from './websocket-client'
@@ -12,12 +13,14 @@ window.changeCardColor = changeCardColor
 window.importCards = importCards
 window.exportCards = exportCards
 window.deleteCard = deleteCard
+window.restoreCard = restoreCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
 const whiteboard = new Whiteboard()
 const user = new User()
 const websocket = new RunWebsocket(whiteboard)
+const garbageCan = new GarbageCan()
 let vue
 (function () {
     // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
@@ -40,22 +43,23 @@ let vue
     runInteractjs(whiteboard, user)
 }());
 
-// カード作成関数
 function createCard() {
     user.createCard(whiteboard)
 }
 
-// カードカラー変更関数
 function changeCardColor(clieckedButton) {
     user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
 }
 
-// カード削除関数
 function deleteCard(clieckedButton) {
-    user.deleteCard(clieckedButton.parentNode.id, whiteboard)
+    user.deleteCard(clieckedButton.parentNode.id, whiteboard, garbageCan)
 }
 
-// インポート関数
+function restoreCard() {
+    console.log("aaaaaa")
+    user.restoreCard(whiteboard, garbageCan)
+}
+
 function importCards(e) {
     if (e.type == "change") {
         // ファイルが読み込まれた場合
@@ -63,7 +67,6 @@ function importCards(e) {
     }
 }
 
-// エクスポート関数
 function exportCards(clieckedButton) {
     whiteboard.downloadFile(clieckedButton)
 }
