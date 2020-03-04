@@ -14,7 +14,7 @@ export default class User {
     deleteCard(clieckedCardId, whiteboard, garbageCan) {
 
         // Add a card to a garbage can
-        garbageCan.cards.push(whiteboard.cards[whiteboard.cards.findIndex(({ id }) => id === clieckedCardId)])
+        garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
 
         // Delete a card from a whiteboard
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
@@ -29,8 +29,8 @@ export default class User {
     }
 
     changeCardColor(clieckedCardId, whiteboard) {
-        const target = whiteboard.cards.find(({id}) => id === clieckedCardId)
-    
+        const target = whiteboard.cards.find(({ id }) => id === clieckedCardId)
+
         // カードカラーの変更
         switch (target.backgroundColor) {
             case colors.default:
