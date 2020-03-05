@@ -18,10 +18,10 @@
           class="textarea" v-model="card.text">{{ card.text }}</textarea>
         <br>
         <button class="changeColorButton" @click="showAndHide">
-          <img src="changeColor.png" class="changeColorButtonImg" title="Change Color">
+          <img src="changeColor.png" class="imagesOnCard" title="Change Color">
         </button>
         <button class="deleteCardButton" onclick="deleteCard(this)">
-          <img src="delete.png" class="changeColorButtonImg" title="Change Color">
+          <img src="delete.png" class="imagesOnCard" title="Delete Color">
         </button>
         <br>
         <div class="pickers" v-if="card.colorPickerFlag">

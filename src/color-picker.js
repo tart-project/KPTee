@@ -9,7 +9,7 @@ export default class ColorsPicker {
 
 	// pickerが表示中に他要素をクリックした場合にpickerを非表示
 	checkClickedPoint(e, whiteboard) {
-		if (e.target.className == "changeColorButtonImg" || e.target.className == "picker" || e.target.className == "pickers") { return }
+		if (e.target.className == "imagesOnCard" || e.target.className == "picker" || e.target.className == "pickers") { return }
 		if (this.pickersFlagId != "") {
 			let target = whiteboard.cards.find(({ id }) => id === this.pickersFlagId)
 			if (target.colorPickerFlag) {

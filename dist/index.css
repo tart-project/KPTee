@@ -14,13 +14,13 @@
     left: 40px;
 }
 
-.changeColorButtonImg{
+.imagesOnCard{
     display: block;
     width: 8px;
     height: auto;
     }
 
-.changeColorButtonImg:hover {
+.imagesOnCard:hover {
     background-color: rgb(245, 240, 240);
 }
 
