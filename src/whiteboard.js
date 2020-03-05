@@ -79,6 +79,7 @@ export default class Whiteboard {
         })
     }
 
+    // TODO websocketをここで使うのはなし
     checkDifference(websocket) {
         const cardsLength = this.cards.length
         const stockCardsLength = this.stockCards.length
