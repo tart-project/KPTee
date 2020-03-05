@@ -11,8 +11,8 @@ window.createCard = createCard
 window.changeCardColor = changeCardColor
 window.importCards = importCards
 window.exportCards = exportCards
-window.deleteCard = deleteCard
-window.restoreCard = restoreCard
+window.throwAwayCard = throwAwayCard
+window.takeOutCard = takeOutCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
@@ -57,12 +57,12 @@ function changeCardColor(clieckedButton) {
     user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
 }
 
-function deleteCard(clieckedButton) {
+function throwAwayCard(clieckedButton) {
     // クリックされたカードIDを渡す
-    user.deleteCard(clieckedButton.parentNode.id, whiteboard, garbageCan )
+    user.throwAwayCard(clieckedButton.parentNode.id, whiteboard, garbageCan )
 }
 
 
-function restoreCard() {
-    user.restoreCard(whiteboard, garbageCan)
+function takeOutCard() {
+    user.takeOutCard(whiteboard, garbageCan)
 }

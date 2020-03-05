@@ -11,7 +11,7 @@ export default class User {
         whiteboard.cards.push(new Card())
     }
 
-    deleteCard(clieckedCardId, whiteboard, garbageCan) {
+    throwAwayCard(clieckedCardId, whiteboard, garbageCan) {
 
         // Add a card to a garbage can
         garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
@@ -20,7 +20,7 @@ export default class User {
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
     }
 
-    restoreCard(whiteboard, garbageCan) {
+    takeOutCard(whiteboard, garbageCan) {
         if (garbageCan.cards.length != 0) {
             // if there is a archive card
             // Restore target card 

@@ -51,7 +51,7 @@ img.cardCreationButtonImg {
     vertical-align:top;
 }
 
-.deleteCardButton{
+.throwAwayCardButton{
     width: 17px;
     height: 17px;
     position:relative;
@@ -130,7 +130,7 @@ img.cardCreationButtonImg {
     background-color: rgb(245, 240, 240);
 }
 
-.restoreCardButtonImg{
+.takeOutCardButtonImg{
     display: block;
     margin-top: 10px;
     margin-left: 4px;
@@ -138,11 +138,11 @@ img.cardCreationButtonImg {
     height: auto;
     }
 
-.restoreCardButtonImg:hover {
+.takeOutCardButtonImg:hover {
     background-color: rgb(245, 240, 240);
 }
 
-#restoreCardButton{
+#takeOutCardButton{
     padding: 0;
     border: none;
     background: transparent;

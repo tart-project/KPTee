@@ -20,7 +20,7 @@
         <br>
         <button class="changeColorButton" onclick="changeCardColor(this)"
           v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+        <button class="throwAwayCardButton" onclick="throwAwayCard(this)">×</button>
       </div>
     </div>
 
@@ -40,8 +40,8 @@
       </a>
 
       <!-- リストアボタン -->
-      <button type="button" onclick="restoreCard()" id="restoreCardButton">
-        <img src="restore.png" class="restoreCardButtonImg" title="Restore">
+      <button type="button" onclick="takeOutCard()" id="takeOutCardButton">
+        <img src="restore.png" class="takeOutCardButtonImg" title="Restore">
       </button>
     </div>
 
