@@ -1,5 +1,4 @@
 import Card from './card'
-import { colors } from './card-const'
 import { v4 } from 'uuid'
 
 export default class User {
@@ -12,8 +11,6 @@ export default class User {
     }
 
     deleteCard(clieckedCardId, whiteboard, garbageCan) {
-        console.log(whiteboard.cards.find(({ id }) => id === clieckedCardId))
-
         // Add a card to a garbage can
         garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
 
@@ -29,31 +26,8 @@ export default class User {
         }
     }
 
-    changeCardColor(clieckedCardId, whiteboard) {
-        const target = whiteboard.cards.find(({ id }) => id === clieckedCardId)
-
-        // カードカラーの変更
-        switch (target.backgroundColor) {
-            case colors.default:
-                target.backgroundColor = colors.keep;
-                target.changeColorButtonBackgroundColor = colors.problem;
-                break;
-
-            case colors.keep:
-                target.backgroundColor = colors.problem;
-                target.changeColorButtonBackgroundColor = colors.try;
-                break;
-
-            case colors.problem:
-                target.backgroundColor = colors.try;
-                target.changeColorButtonBackgroundColor = colors.default;
-                break;
-
-            case colors.try:
-                target.backgroundColor = colors.default;
-                target.changeColorButtonBackgroundColor = colors.keep;
-                break;
-        }
+    changeColor(e, whiteboard) {
+        whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id).backgroundColor = e.target.style.backgroundColor
     }
 
     changeDrag(whiteboard, targetId, changedLeft, changedTop){

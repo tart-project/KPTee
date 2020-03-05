@@ -9,22 +9,32 @@
 </head>
 
 <body>
-
   <div class="kpteeContainer">
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
-      <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id" v-bind:style="{top: card.top, left: card.left}">
-        <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}" class="textarea" v-model="card.text">{{ card.text }}</textarea>
+      <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
+        v-bind:style="{top: card.top, left: card.left}">
+        <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
+          class="textarea" v-model="card.text">{{ card.text }}</textarea>
         <br>
-        <button class="changeColorButton" onclick="changeCardColor(this)" v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}" title="Change Card"></button>
-        <button class="deleteCardButton" onclick="deleteCard(this)" title="Delete">×</button>
+        <button class="changeColorButton" @click="showAndHide">
+          <img src="changeColor.png" class="changeColorButtonImg" title="Change Color">
+        </button>
+        <button class="deleteCardButton" onclick="deleteCard(this)">
+          <img src="delete.png" class="changeColorButtonImg" title="Change Color">
+        </button>
+        <br>
+        <div class="pickers" v-if="card.colorPickerFlag">
+          <button v-for="picker in pickers" :key="picker.id" class="picker"
+            v-bind:style="{backgroundColor: picker.backgroundColor}" @click="changeColor"></button>
+        </div>
       </div>
     </div>
 
     <header class="toolsBox">
       <!-- インポートボタン -->
       <label for="importFileButton">
-        <img src="import-icon.png" class="toolIcon" title="Import"/>
+        <img src="import-icon.png" class="toolIcon" title="Import" />
       </label>
       <form id="formTagForImport">
         <input id="importFileButton" type="file" onclick="importCards(event)">
@@ -71,9 +81,6 @@
     </div>
 
   </div>
-
-  <img src="logo.png" class="logo">
-  
   <script src="main.js"></script>
 </body>
 

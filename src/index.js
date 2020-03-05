@@ -6,6 +6,7 @@ import GarbageCan from './garbage-can'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RunWebsocket from './websocket-client'
+import ColorsPicker from './color-picker'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -21,22 +22,34 @@ const whiteboard = new Whiteboard()
 const user = new User()
 const websocket = new RunWebsocket(whiteboard)
 const garbageCan = new GarbageCan()
-let vue
+const colorPicker = new ColorsPicker()
+
+// カラーピッカー 以外をクリックした場合にカラーピッカー表示をOFFにする
+window.addEventListener('click', function (e) { colorPicker.checkClickedPoint(e, whiteboard) });
+
 (function () {
     // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
     document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
 
-    vue = new Vue({
+    new Vue({
         el: '#app',
         data: {
-            cards: whiteboard.cards
-        },
-        watch: {
+            cards: whiteboard.cards,
+            pickers: colorPicker.colors
+        }, watch: {
             cards: {
                 handler: function () {
                     whiteboard.checkDifference(websocket)
                 },
                 deep: true
+            }
+        },
+        methods: {
+            showAndHide: function (e) {
+                colorPicker.showAndHide(e, whiteboard)
+            },
+            changeColor: function (e) {
+                user.changeColor(e, whiteboard)
             }
         }
     })
@@ -56,12 +69,11 @@ function deleteCard(clieckedButton) {
 }
 
 function restoreCard() {
-    console.log("aaaaaa")
     user.restoreCard(whiteboard, garbageCan)
 }
 
 function importCards(e) {
-    if (e.type == "change") {
+    if (e.target) {
         // ファイルが読み込まれた場合
         whiteboard.importCards(e, websocket)
     }
@@ -70,3 +82,5 @@ function importCards(e) {
 function exportCards(clieckedButton) {
     whiteboard.downloadFile(clieckedButton)
 }
+
+

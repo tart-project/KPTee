@@ -3,6 +3,39 @@
     outline: none !important;
 }
 
+.pickers{
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    box-shadow: 1px 1px 0px gray;
+    border-radius: 5%;
+    position:relative;
+    bottom: 40px;
+    left: 40px;
+}
+
+.changeColorButtonImg{
+    display: block;
+    width: 8px;
+    height: auto;
+    }
+
+.changeColorButtonImg:hover {
+    background-color: rgb(245, 240, 240);
+}
+
+.picker{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 10px;
+    border: none;
+}
+
+.picker:hover {
+    background-color: rgb(245, 240, 240);
+}
+
 .cardDiv {
     cursor: move;
     position: absolute;
@@ -19,6 +52,7 @@
     font-size: 10px;
     padding: 10px;
     box-shadow: 1px 1px 0px gray;
+    color: white;
 }
 
 #cardCreationButton {
@@ -38,17 +72,13 @@ img.cardCreationButtonImg {
 }
 
 .changeColorButton{
-    width: 17px;
-    height: 17px;
     position:relative;
-    bottom: 24px;
-    left: 4px;
-    border-radius: 50%;            
-    border-color:white;
-    border-style: solid;
-    border-width: 0px;
-    box-shadow: 1px 1px 0px gray;
+    bottom: 15px;
+    left: 6px;
     vertical-align:top;
+    padding: 0;
+    border: none;
+    background: transparent;
 }
 
 .changeColorButton:hover {
@@ -56,22 +86,12 @@ img.cardCreationButtonImg {
 }
 
 .deleteCardButton{
-    width: 17px;
-    height: 17px;
     position:relative;
-    bottom: 24px;
+    bottom: 15px;
     left: 10px;
-    color: white;
-    border-radius: 50%;              
-    border-color:white;
-    border-style: solid;
-    border-width: 0px;
-    box-shadow: 1px 1px 0px gray;
     padding: 0;
-    background-color: #727171;
-    vertical-align:top;
-    font-size: 10px;
-    font-weight: 900; 
+    border: none;
+    background: transparent;
 }
 
 .deleteCardButton:hover {
