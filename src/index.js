@@ -30,7 +30,7 @@ window.addEventListener('click', function (e) { colorPicker.checkClickedPoint(e,
         el: '#app',
         data: {
             cards: whiteboard.cards,
-            pickers: colorPicker.colors
+            colors: colorPicker.colors
         },
         methods: {
             showAndHide: function (e) {
