@@ -3,7 +3,7 @@
     outline: none !important;
 }
 
-.colors{
+.picker{
     width: 150px;
     height: 150px;
     background-color: white;
@@ -14,17 +14,17 @@
     left: 40px;
 }
 
-.changeColorButtonImg{
+.imgOnCard{
     display: block;
     width: 8px;
     height: auto;
     }
 
-.changeColorButtonImg:hover {
+.imgOnCard:hover {
     background-color: rgb(245, 240, 240);
 }
 
-.picker{
+.colors{
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -32,7 +32,7 @@
     border: none;
 }
 
-.picker:hover {
+.colors:hover {
     background-color: rgb(245, 240, 240);
 }
 
@@ -76,7 +76,7 @@ img.cardCreationButtonImg {
     left: 8px;
 }
 
-.changeColorButton{
+.colorPickerButton{
     position:relative;
     bottom: 15px;
     left: 6px;

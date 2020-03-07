@@ -18,16 +18,16 @@
         <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
           class="textarea" v-model="card.text">{{card.text}}</textarea>
         <br>
-        <button class="changeColorButton" @click="showAndHide">
-          <img src="changeColor.png" class="changeColorButtonImg" title="Change Color">
+        <button class="colorPickerButton" @click="showAndHide">
+          <img src="changeColor.png" class="imgOnCard" title="Change Color">
         </button>
         <button class="deleteCardButton" onclick="deleteCard(this)">
-          <img src="delete.png" class="changeColorButtonImg" title="Change Color">
+          <img src="delete.png" class="imgOnCard" title="Delete Color">
         </button>
         <br>
-        <div class="colors" v-if="card.colorPickerFlag">
-          <button v-for="picker in colors" :key="picker.id" class="picker"
-            v-bind:style="{backgroundColor: picker.backgroundColor}" @click="changeColor"></button>
+        <div class="picker" v-if="card.pickerShowOrHideFlag">
+          <button v-for="color in colors" :key="colors.id" class="colors"
+            v-bind:style="{backgroundColor: color.color}" @click="changeColor"></button>
         </div>
       </div>
     </div>
