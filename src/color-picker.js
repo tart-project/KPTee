@@ -4,7 +4,7 @@ export default class ColorsPicker {
 	constructor() {
 		this.colors = colors
 		// ピッカーを表示しているカードを特定するために保持
-		this.pickerId = ""
+		this.showingPickerId = ""
 	}
 
 	// pickerが表示中に他要素をクリックした場合にpickerを非表示
@@ -13,24 +13,31 @@ export default class ColorsPicker {
 			// ピッカー、カラーが押された場合はリターン
 			return
 		}
-		if (this.pickerId != "") {
-			let target = whiteboard.cards.find(({ id }) => id === this.pickerId)
-			if (target.pickerShowOrHideFlag) {
-				target.pickerShowOrHideFlag = false
-				this.pickerId = ""
-			}
+		if (this.showingPickerId != "") {
+			// カラーピッカーが表示中だった場合→非表示
+			const target = whiteboard.cards.find(({ id }) => id === this.showingPickerId)
+			target.pickerShowOrHideFlag = false
+			this.showingPickerId = ""
 		}
 	}
 
-	showAndHide(e, whiteboard) {
+	showOrHide(e, whiteboard) {
 		let target = whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id)
-		if (this.pickerId != "" && this.pickerId != target.id) {
-			whiteboard.cards.find(({ id }) => id === this.pickerId).pickerShowOrHideFlag = false
-		}
-		else if (this.pickerId != "" && this.pickerId == target.id) {
-			this.pickerId = ""
-		}
 		target.pickerShowOrHideFlag = !target.pickerShowOrHideFlag
-		this.pickerId = target.id
+
+		if (this.showingPickerId == "") {
+			// ピッカー表示中カードない場合
+			this.showingPickerId = target.id
+			return
+		} else if (this.showingPickerId != "" && this.showingPickerId != target.id) {
+			// クリックされたボタンがピッカー表示中カードではない場合
+			whiteboard.cards.find(({ id }) => id === this.showingPickerId).pickerShowOrHideFlag = false
+			this.showingPickerId = target.id
+			return
+		} else if (this.showingPickerId != "" && this.showingPickerId == target.id) {
+			// クリックされたボタンがピッカー表示中カードだった場合
+			this.showingPickerId = ""
+			return
+		}
 	}
 }

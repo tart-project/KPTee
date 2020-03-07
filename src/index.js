@@ -6,19 +6,19 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ColorsPicker from './color-picker'
 
-// html上の関数と紐づけ
-window.createCard = createCard
-window.changeCardColor = changeCardColor
-window.importCards = importCards
-window.exportCards = exportCards
-window.deleteCard = deleteCard
-// 画面遷移前に確認ダイアログを表示
-window.onbeforeunload = () => { return "" };
-
 const whiteboard = new Whiteboard()
 const user = new User()
 const colorPicker = new ColorsPicker()
 
+// html上の関数と紐づけ
+window.createCard = createCard
+window.importCards = importCards
+window.exportCards = exportCards
+window.deleteCard = deleteCard
+window.showOrHide = showOrHide
+window.changeColor = changeColor
+// 画面遷移前に確認ダイアログを表示
+window.onbeforeunload = () => { return "" };
 // カラーピッカー 以外をクリックした場合にカラーピッカー表示をOFFにする
 window.addEventListener('click', function (e) { colorPicker.checkClickedPoint(e, whiteboard) });
 
@@ -31,20 +31,11 @@ window.addEventListener('click', function (e) { colorPicker.checkClickedPoint(e,
         data: {
             cards: whiteboard.cards,
             colors: colorPicker.colors
-        },
-        methods: {
-            showAndHide: function (e) {
-                colorPicker.showAndHide(e, whiteboard)
-            },
-            changeColor: function (e) {
-                user.changeColor(e, whiteboard)
-            }
         }
     })
 
     // interactjs起動
     runInteractjs(whiteboard)
-
 }());
 
 // カード作成関数
@@ -63,10 +54,14 @@ function exportCards(clieckedButton) {
     whiteboard.downloadFile(clieckedButton)
 }
 
-function changeCardColor(clieckedButton) {
-    user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
-}
-
 function deleteCard(clieckedButton) {
     user.deleteCard(clieckedButton.parentNode.id, whiteboard)
+}
+
+function changeColor(e) {
+    user.changeColor(e, whiteboard)
+}
+
+function showOrHide(e) {
+    colorPicker.showOrHide(e, whiteboard)
 }
