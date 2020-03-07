@@ -6,9 +6,9 @@ exports.run = function () {
 
     http.createServer(function (request, response) {
 
-        var filePath = './dist' + request.url;
-        if (filePath == './dist/') {
-            filePath = './dist/index.html';
+        var filePath = '.' + request.url;
+        if (filePath == './') {
+            filePath = './index.html';
         }
 
         var extname = String(path.extname(filePath)).toLowerCase();

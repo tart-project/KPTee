@@ -1,12 +1,12 @@
-import Whiteboard from './whiteboard'
-import User from './user'
+import Whiteboard from './domain/whiteboard'
+import User from './domain/user'
 import Vue from 'vue'
-import { runInteractjs } from './interactjs'
-import GarbageCan from './garbage-can'
+import { runInteractjs } from './lib/interactjs'
+import GarbageCan from './domain/garbage-can'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import RunWebsocket from './websocket-client'
-import ColorsPicker from './color-picker'
+import RunWebsocket from './lib/websocket-client'
+import ColorsPicker from './domain/color-picker'
 
 // html上の関数と紐づけ
 window.createCard = createCard
@@ -35,11 +35,17 @@ window.addEventListener('click', function (e) { colorPicker.checkClickedPoint(e,
         el: '#app',
         data: {
             cards: whiteboard.cards,
-            pickers: colorPicker.colors
+            pickers: colorPicker.colors,
+            garbageCan: garbageCan.cards
         }, watch: {
             cards: {
                 handler: function () {
                     whiteboard.checkDifference(websocket)
+                },
+                deep: true
+            },
+            garbageCan:{
+                handler: function () {
                 },
                 deep: true
             }

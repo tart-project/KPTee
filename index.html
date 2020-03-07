@@ -18,10 +18,10 @@
           class="textarea" v-model="card.text">{{ card.text }}</textarea>
         <br>
         <button class="changeColorButton" @click="showAndHide">
-          <img src="changeColor.png" class="imagesOnCard" title="Change Color">
+          <img src="images/changeColor.png" class="imagesOnCard" title="Change Color">
         </button>
         <button class="deleteCardButton" onclick="deleteCard(this)">
-          <img src="delete.png" class="imagesOnCard" title="Delete Color">
+          <img src="images/delete.png" class="imagesOnCard" title="Delete Color">
         </button>
         <br>
         <div class="pickers" v-if="card.colorPickerFlag">
@@ -34,7 +34,7 @@
     <header class="toolsBox">
       <!-- インポートボタン -->
       <label for="importFileButton">
-        <img src="import-icon.png" class="toolIcon" title="Import" />
+        <img src="images/import-icon.png" class="toolIcon" title="Import" />
       </label>
       <form id="formTagForImport">
         <input id="importFileButton" type="file" onclick="importCards(event)">
@@ -42,12 +42,12 @@
 
       <!-- エクスポートボタン -->
       <a id="exportCardsButton" type="button" onclick="exportCards(this)">
-        <image src="export-icon.png" class="toolIcon" title="Export">
+        <image src="images/export-icon.png" class="toolIcon" title="Export">
       </a>
 
       <!-- リストアボタン -->
       <button type="button" onclick="restoreCard()" id="restoreCardButton">
-        <img src="restore.png" class="restoreCardButtonImg" title="Restore">
+        <img src="images/restore.png" class="restoreCardButtonImg" title="Restore">
       </button>
     </header>
 
@@ -67,7 +67,7 @@
     <div class="centerLineBox">
       <div class="centerBox">
         <button type="button" onclick="createCard()" id="cardCreationButton" title="Create Card">
-          <img src="create-card-icon.png" class="cardCreationButtonImg">
+          <img src="images/create-card-icon.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>

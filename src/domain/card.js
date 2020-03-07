@@ -1,4 +1,4 @@
-import { defaultCard } from './card-const'
+import { defaultCard } from '../constant'
 import { v4 } from 'uuid'
 
 export default class Card {

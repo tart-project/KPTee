@@ -1,4 +1,4 @@
-import { colors } from './card-const'
+import { colors } from '../constant'
 
 export default class ColorsPicker {
 	constructor() {
