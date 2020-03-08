@@ -3,6 +3,11 @@
     outline: none !important;
 }
 
+img {
+    /*画像のドラッグ禁止*/
+    -webkit-user-drag: none;
+}
+
 .cardDiv {
     cursor: move;
     position: absolute;
@@ -27,14 +32,13 @@
     background: transparent;
 }
 
-img.cardCreationButtonImg {
+.cardCreationButtonImg {
     opacity: 1;
     widows: 75px;
     height:75px;
     position: absolute;
     top: 299px;
     left: 722px;
-    -webkit-user-drag: none;
 }
 
 .changeColorButton{
