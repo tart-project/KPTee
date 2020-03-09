@@ -40,7 +40,7 @@ window.addEventListener('click', function (e) { colorPicker.checkClickedPoint(e,
         }, watch: {
             cards: {
                 handler: function () {
-                    websocket.checkDifference(whiteboard)
+                    websocket.sendChengedInfo(websocket.checkDifference(whiteboard))
                 },
                 deep: true
             },

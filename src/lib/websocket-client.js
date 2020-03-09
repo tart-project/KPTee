@@ -31,62 +31,62 @@ export default class RunWebsocket {
         });
     }
 
-    sendCreatedInfo(target) {
-        const sendInfo = ["create", target]
-        this.websocket.send(JSON.stringify(sendInfo));
-    }
-    sendUpdatedInfo(target) {
-        const sendInfo = ["update", target]
-        this.websocket.send(JSON.stringify(sendInfo));
-    }
-    sendDeletedInfo(target) {
-        const sendInfo = ["delete", target]
-        this.websocket.send(JSON.stringify(sendInfo));
+    sendChengedInfo(chengedInfo){
+        if (chengedInfo != null){
+        this.websocket.send(JSON.stringify(chengedInfo));
+        }
     }
 
     checkDifference(whiteboard) {
-        console.log(1)
         const cardsLength = whiteboard.cards.length
         const stockCardsLength = this.stockCards.length
 
         if (cardsLength > stockCardsLength) {
             // カードが作成された場合
-            this.stockCards.push(whiteboard.cards[cardsLength - 1].get())
-            this.sendCreatedInfo(whiteboard.cards[cardsLength - 1].get())
+            const createdCard = whiteboard.cards[cardsLength - 1].get()
+            this.stockCards.push(createdCard)
+            const sendInfo = ["create", createdCard]
+
+            return sendInfo
         } else if (cardsLength == stockCardsLength) {
             // カード情報が更新された場合
             for (var i = 0; i < cardsLength; i++) {
                 const stockCard = this.stockCards[i]
-                const card = whiteboard.cards[i].get()
-                const diff = _.omitBy(card, (v, k) => stockCard[k] === v)
+                const updatedCard = whiteboard.cards[i].get()
+                const diff = _.omitBy(updatedCard, (v, k) => stockCard[k] === v)
                 if (JSON.stringify(diff) != "{}") {
                     this.stockCards[i] = whiteboard.cards[i].get()
-                    this.sendUpdatedInfo(whiteboard.cards[i])
-                    break
+                    const sendInfo = ["update", updatedCard]
+
+                    return sendInfo
                 }
             }
         } else if (cardsLength < stockCardsLength) {
             // カードが削除された場合
             for (var i = 0; i < stockCardsLength; i++) {
                 const stockCard = this.stockCards[i]
-                let card
+                let deletedCard
                 try {
-                    card = this.cards[i].get()
+                    deletedCard = whiteboard.cards[i].get()
                 } catch (err) {
-                    // cards[i]が存在しない場合エラーキャッチ
-                    this.sendDeletedInfo(this.stockCards[i])
+                    // cards[i]が存在しない場合＝最後のカードが削除された場合
+                    const sendInfo = ["delete", stockCard]
                     this.stockCards.splice(i, 1)
-                    break
+
+                    return sendInfo
                 }
-                // 差分がなければ{}を返す
-                const diff = _.omitBy(card, (v, k) => stockCard[k] === v)
+                // _.omitByは差分がなければ{}を返す
+                const diff = _.omitBy(deletedCard, (v, k) => stockCard[k] === v)
                 if (JSON.stringify(diff) != "{}") {
                     // 差分が出た場合
-                    this.sendDeletedInfo(this.stockCards[i])
+                    const sendInfo = ["delete", stockCard]
                     this.stockCards.splice(i, 1)
-                    break
+
+                    return sendInfo
                 }
             }
         }
+        // websocketから変化点が送られてきた場合は上記に該当しないためnullを返却
+        return null
     }
 }

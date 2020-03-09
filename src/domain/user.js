@@ -41,4 +41,9 @@ export default class User {
         target.width = changedWidth
         target.height = changedHeight
     }
+
+    updateCard(whiteboard, index, card){
+
+        
+    }
 }
