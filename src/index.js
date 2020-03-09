@@ -4,18 +4,18 @@ import Vue from 'vue'
 import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ColorsPicker from './color-picker'
+import ColorPicker from './color-picker'
 
 const whiteboard = new Whiteboard()
 const user = new User()
-const colorPicker = new ColorsPicker()
+const colorPicker = new ColorPicker()
 
 // html上の関数と紐づけ
 window.createCard = createCard
 window.importCards = importCards
 window.exportCards = exportCards
 window.deleteCard = deleteCard
-window.showOrHide = showOrHide
+window.showOrHideColorPicker = showOrHideColorPicker
 window.changeColor = changeColor
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
@@ -62,6 +62,6 @@ function changeColor(e) {
     user.changeColor(e, whiteboard)
 }
 
-function showOrHide(e) {
+function showOrHideColorPicker(e) {
     colorPicker.showOrHide(e, whiteboard)
 }
