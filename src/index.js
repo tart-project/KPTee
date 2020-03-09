@@ -79,7 +79,7 @@ function restoreCard() {
 }
 
 function importCards(e) {
-    if (e.target) {
+    if (e.type == "change") {
         // ファイルが読み込まれた場合
         whiteboard.importCards(e, websocket)
     }

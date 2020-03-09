@@ -87,7 +87,6 @@ export default class Whiteboard {
             // カードが作成された場合
             this.stockCards.push(this.cards[cardsLength - 1].get())
             websocket.sendCreatedInfo(this.cards[this.cards.length - 1].get())
-
         } else if (cardsLength == stockCardsLength) {
             // カード情報が更新された場合
             for (var i = 0; i < cardsLength; i++) {
