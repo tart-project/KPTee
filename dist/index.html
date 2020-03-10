@@ -9,9 +9,8 @@
 </head>
 
 <body>
-  
-  <div class="kpteeContainer" >
 
+  <div class="kpteeContainer">
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
       <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
@@ -21,7 +20,7 @@
         <br>
         <button class="changeColorButton" onclick="changeCardColor(this)"
           v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+        <button class="throwAwayCardButton" onclick="throwAwayCard(this)">×</button>
       </div>
     </div>
 
@@ -39,6 +38,11 @@
       <a id="exportCardsButton" type="button" onclick="exportCards(this)">
         <image src="export-icon.png" class="toolIcon" title="Export">
       </a>
+
+      <!-- リストアボタン -->
+      <button type="button" onclick="takeOutCard()" id="takeOutCardButton">
+        <img src="restore.png" class="takeOutCardButtonImg" title="Restore">
+      </button>
     </div>
 
     <div class="leftBox">

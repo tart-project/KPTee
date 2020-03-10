@@ -2,6 +2,7 @@ import Whiteboard from './whiteboard'
 import User from './user'
 import Vue from 'vue'
 import { runInteractjs } from './interactjs'
+import GarbageCan from './garbage-can'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -10,12 +11,14 @@ window.createCard = createCard
 window.changeCardColor = changeCardColor
 window.importCards = importCards
 window.exportCards = exportCards
-window.deleteCard = deleteCard
+window.throwAwayCard = throwAwayCard
+window.takeOutCard = takeOutCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 
-const whiteboard = new Whiteboard
-const user = new User
+const whiteboard = new Whiteboard()
+const user = new User()
+const garbageCan = new GarbageCan()
 let vue
 
 (function () {
@@ -30,17 +33,14 @@ let vue
         }
     })
 
-    // interactjs起動
     runInteractjs(whiteboard)
 
 }());
 
-// カード作成関数
 function createCard() {
     user.createCard(whiteboard)
 }
 
-// インポート関数
 function importCards(e) {
     if (e) {
         // ファイルが読み込まれた場合
@@ -48,19 +48,21 @@ function importCards(e) {
     }
 }
 
-// エクスポート関数
 function exportCards(clieckedButton) {
     whiteboard.downloadFile(clieckedButton)
 }
 
-// カードカラー変更関数
 function changeCardColor(clieckedButton) {
     // クリックされたカードIDを渡す
     user.changeCardColor(clieckedButton.parentNode.id, whiteboard)
 }
 
-// カード削除関数
-function deleteCard(clieckedButton) {
+function throwAwayCard(clieckedButton) {
     // クリックされたカードIDを渡す
-    user.deleteCard(clieckedButton.parentNode.id, whiteboard)
+    user.throwAwayCard(clieckedButton.parentNode.id, whiteboard, garbageCan )
+}
+
+
+function takeOutCard() {
+    user.takeOutCard(whiteboard, garbageCan)
 }
