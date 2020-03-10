@@ -1,6 +1,6 @@
 import interact from 'interactjs'
 
-export function runInteractjs(whiteboard, user, websocket) {
+export function runInteractjs(whiteboard, user) {
     const changedPosition = { x: 0, y: 0 }
 
     // drag and drop function

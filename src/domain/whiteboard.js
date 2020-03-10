@@ -69,7 +69,7 @@ export default class Whiteboard {
             for (const card of importedCards) {
                 this.cards.push(new Card(card))
                 // CHECK! なぜかwatchがきかないため、差分関数を自分でよばないとだめ もしかすると処理がはやすぎる？→ストリームみたいにしないといけないかも（全体的に大人数にした時にあやしい）
-                this.checkDifference(websocket)
+                this.checkChangedPoint(websocket)
             }
         })
     }

@@ -1,6 +1,7 @@
 export default class RunWebsocket {
     constructor(whiteboard) {
         this.stockCards = []
+        this.stockGarbageCanCards = []
 
         this.websocket = new WebSocket('ws://127.0.0.1:5001');
         this.websocket.addEventListener('open', (e) => {
@@ -31,13 +32,7 @@ export default class RunWebsocket {
         });
     }
 
-    sendChengedInfo(chengedInfo){
-        if (chengedInfo != null){
-        this.websocket.send(JSON.stringify(chengedInfo));
-        }
-    }
-
-    checkDifference(whiteboard) {
+    checkChangedPointWhiteboard(whiteboard) {
         const cardsLength = whiteboard.cards.length
         const stockCardsLength = this.stockCards.length
 
@@ -89,4 +84,38 @@ export default class RunWebsocket {
         // websocketから変化点が送られてきた場合は上記に該当しないためnullを返却
         return null
     }
+
+
+    checkChangedPointGarbageCan(garbageCan) {
+        const garbageCanCardsLength = garbageCan.cards.length
+        const stockGarbageCanCardsLength = this.stockGarbageCanCards.length
+
+        if (stockGarbageCanCardsLength > garbageCanCardsLength) {
+            // カードが復元された場合
+            const sendInfo = ["garbegeFromWhiteboard", this.stockGarbageCanCards[stockGarbageCanCardsLength - 1].get()]
+
+            this.stockGarbageCanCards.splice(stockGarbageCanCardsLength - 1, 1)
+
+            return sendInfo
+        } else if (stockGarbageCanCardsLength < garbageCanCardsLength) {
+            // カードが削除された場合
+
+            this.stockGarbageCanCards.push()
+
+            const sendInfo = ["garbegeFromWhiteboard", this.stockGarbageCanCards[stockGarbageCanCardsLength - 1].get()]
+
+
+
+        }
+
+    }
+
+    sendChengedInfo(chengedInfo) {
+        if (chengedInfo != null) {
+            this.websocket.send(JSON.stringify(chengedInfo));
+        }
+    }
+
+
+
 }
