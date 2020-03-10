@@ -36,6 +36,11 @@
     background-color: rgb(245, 240, 240);
 }
 
+img {
+    /*画像のドラッグ禁止*/
+    -webkit-user-drag: none;
+}
+
 .cardDiv {
     cursor: move;
     position: absolute;
@@ -55,25 +60,19 @@
     color: white;
 }
 
-#cardCreationButton {/*円の部分*/
-    position: absolute;
-    display: block;
-    z-index: 10;
-    position:absolute;
-    top: 293px;
-    left: 715px;
+#cardCreationButton {
     padding: 0;
     border: none;
     background: transparent;
 }
 
-img.cardCreationButtonImg {
+.cardCreationButtonImg {
     opacity: 1;
     widows: 75px;
     height:75px;
-    position:absolute;
-    top: 8px;
-    left: 8px;
+    position: absolute;
+    top: 299px;
+    left: 722px;
 }
 
 .colorPickerButton{
@@ -86,9 +85,11 @@ img.cardCreationButtonImg {
     background: transparent;
 }
 
-.deleteCardButton{
+.throwAwayCardButton{
+    width: 17px;
+    height: 17px;
     position:relative;
-    bottom: 15px;
+    bottom: 19px;
     left: 10px;
     padding: 0;
     border: none;
@@ -153,6 +154,24 @@ img.cardCreationButtonImg {
 /*アイコンの画像ホバー用*/
 .toolIcon:hover {
     background-color: rgb(245, 240, 240);
+}
+
+.takeOutCardButtonImg{
+    display: block;
+    margin-top: 10px;
+    margin-left: 4px;
+    width: 35px;
+    height: auto;
+    }
+
+.takeOutCardButtonImg:hover {
+    background-color: rgb(245, 240, 240);
+}
+
+#takeOutCardButton{
+    padding: 0;
+    border: none;
+    background: transparent;
 }
 
 /*左半分コンテナ*/

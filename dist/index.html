@@ -10,7 +10,6 @@
 
 <body>
   <div class="kpteeContainer">
-
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
       <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
@@ -18,10 +17,10 @@
         <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
           class="textarea" v-model="card.text">{{card.text}}</textarea>
         <br>
-        <button class="colorPickerButton" onclick="showOrHideColorPicker(event)">
+        <button class="colorPickerButton" onclick="toggleDisplayColorPicker(event)">
           <img src="changeColor.png" class="imgOnCard" title="Change Color">
         </button>
-        <button class="deleteCardButton" onclick="deleteCard(this)">
+        <button class="throwAwayCardButton" onclick="throwAwayCard(this)">
           <img src="delete.png" class="imgOnCard" title="Delete Color">
         </button>
         <br>
@@ -46,6 +45,11 @@
       <a id="exportCardsButton" type="button" onclick="exportCards(this)">
         <image src="export-icon.png" class="toolIcon" title="Export">
       </a>
+
+      <!-- リストアボタン -->
+      <button type="button" onclick="takeOutCard()" id="takeOutCardButton">
+        <img src="restore.png" class="takeOutCardButtonImg" title="Restore">
+      </button>
     </div>
 
     <div class="leftBox">

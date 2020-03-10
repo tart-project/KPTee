@@ -21,7 +21,7 @@ export default class ColorPicker {
 	}
 
 	// ピッカーの表示非表示を行う
-	showOrHide(e, whiteboard) {
+	toggleDisplay(e, whiteboard) {
 		let target = whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id)
 		target.isColorPickerShow = !target.isColorPickerShow
 
