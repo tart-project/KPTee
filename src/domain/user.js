@@ -1,5 +1,5 @@
 import Card from './card'
-import { colors } from './card-const'
+import { colors } from '../constant'
 import { v4 } from 'uuid'
 
 export default class User {

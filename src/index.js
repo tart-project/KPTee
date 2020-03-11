@@ -1,8 +1,8 @@
-import Whiteboard from './whiteboard'
-import User from './user'
+import Whiteboard from './domain/whiteboard'
+import User from './domain/user'
 import Vue from 'vue'
-import { runInteractjs } from './interactjs'
-import GarbageCan from './garbage-can'
+import { runInteractjs } from './lib/interactjs'
+import GarbageCan from './domain/garbage-can'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
