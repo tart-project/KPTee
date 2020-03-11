@@ -1,15 +1,3 @@
-export const defaultCard = {
-    "id": "",
-    "top": "360px",
-    "left": "700px",
-    "backgroundColor": "rgb(108, 117, 125)",
-    "text": "",
-    "width": "160px",
-    "height": "70px",
-    "isColorPickerShow":false
-};
-
-
 export const colors = [
     // idはv-forのkeyのために付与
     {
@@ -40,3 +28,15 @@ export const colors = [
         "colorId": "9",
         "color": "rgb(232, 23, 173)"
     },]
+
+
+    export const defaultCard = {
+        "id": "",
+        "top": "360px",
+        "left": "700px",
+        "backgroundColor": colors[6].color,
+        "text": "",
+        "width": "160px",
+        "height": "70px",
+        "isColorPickerShow":false
+    };

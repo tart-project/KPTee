@@ -8,21 +8,15 @@ export default class ColorPicker {
 	}
 
 	// ピッカーが表示中に他要素をクリックした場合にピッカーを非表示にする
-	checkClickedPoint(e, whiteboard) {
-		// ピッカー、カラーが押された場合はリターン
-		if (e.target.className == "imgOnCard" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
-
+	checkClickedPoint(whiteboard) {
 		if (this.showingCardId != "") {
-			// カラーピッカーが表示中だった場合→非表示にする
-			const target = whiteboard.cards.find(({ id }) => id === this.showingCardId)
-			target.isColorPickerShow = false
-			this.showingCardId = ""
+			this.toggleDisplay(this.showingCardId, whiteboard)
 		}
 	}
 
 	// ピッカーの表示非表示を行う
-	toggleDisplay(e, whiteboard) {
-		let target = whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id)
+	toggleDisplay(clickedId, whiteboard) {
+		let target = whiteboard.cards.find(({ id }) => id === clickedId)
 		target.isColorPickerShow = !target.isColorPickerShow
 
 		if (this.showingCardId == "") {

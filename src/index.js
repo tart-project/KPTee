@@ -23,7 +23,11 @@ window.takeOutCard = takeOutCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 // カラーピッカー 以外をクリックした場合にカラーピッカー表示をOFFにする
-window.addEventListener('click', function (e) { colorPicker.checkClickedPoint(e, whiteboard) });
+window.addEventListener('click', function (e) {
+    // ピッカー、カラーが押された場合はリターン
+    if (e.target.className == "imgOnCard" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
+    colorPicker.checkClickedPoint(whiteboard)
+});
 
 (function () {
     // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
@@ -56,16 +60,18 @@ function exportCards(clieckedButton) {
 }
 
 function changeColor(e) {
-    user.changeColor(e, whiteboard)
+    user.changeColor(e.target.parentNode.parentNode.id, e.target.style.backgroundColor, whiteboard)
 }
 
 function toggleDisplayColorPicker(e) {
-    colorPicker.toggleDisplay(e, whiteboard)
+    colorPicker.toggleDisplay(e.target.parentNode.parentNode.id, whiteboard)
 }
 
 function throwAwayCard(clieckedButton) {
+
+    console.log(clieckedButton.parentNode.id)
     // クリックされたカードIDを渡す
-    user.throwAwayCard(clieckedButton.parentNode.id, whiteboard, garbageCan )
+    user.throwAwayCard(clieckedButton.parentNode.id, garbageCan, whiteboard)
 }
 
 function takeOutCard() {

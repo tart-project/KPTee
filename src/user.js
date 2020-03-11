@@ -10,19 +10,13 @@ export default class User {
         whiteboard.cards.push(new Card())
     }
 
-    deleteCard(clieckedCardId, whiteboard) {
-        // カードリストからカードID削除
-        whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
+    changeColor(cardId, CardBackgroundColor, whiteboard) {
+        whiteboard.cards.find(({ id }) => id === cardId).backgroundColor = CardBackgroundColor
     }
 
-    changeColor(e, whiteboard) {
-        whiteboard.cards.find(({ id }) => id === e.target.parentNode.parentNode.id).backgroundColor = e.target.style.backgroundColor
-    }
-    throwAwayCard(clieckedCardId, whiteboard, garbageCan) {
-
+    throwAwayCard(clieckedCardId, garbageCan, whiteboard) {
         // Add a card to a garbage can
         garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
-
         // Delete a card from a whiteboard
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
     }
@@ -34,5 +28,4 @@ export default class User {
             whiteboard.cards.push(garbageCan.cards.pop())
         }
     }
-    
 }
