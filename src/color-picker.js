@@ -7,6 +7,8 @@ export default class ColorPicker {
 		this.showingCardId = ""
 	}
 
+
+
 	// ピッカーが表示中に他要素をクリックした場合にピッカーを非表示にする
 	checkClickedPoint(whiteboard) {
 		if (this.showingCardId != "") {
@@ -14,24 +16,32 @@ export default class ColorPicker {
 		}
 	}
 
+	// とにかく他を消す　とにかくHTMLを持たせない
+
 	// ピッカーの表示非表示を行う
-	toggleDisplay(clickedId, whiteboard) {
-		let target = whiteboard.cards.find(({ id }) => id === clickedId)
-		target.isColorPickerShow = !target.isColorPickerShow
+	toggleDisplay(a, whiteboard) {
+
+		a.lastElementChild.style.display = "block"
 
 		if (this.showingCardId == "") {
 			// ピッカー表示中カードない場合
-			this.showingCardId = target.id
+			this.showingCardId = a.id
 			return
-		} else if (this.showingCardId != "" && this.showingCardId != target.id) {
+		} else if (this.showingCardId != "" && this.showingCardId != a.id) {
 			// クリックされたボタンがピッカー表示中カードではない場合
 			whiteboard.cards.find(({ id }) => id === this.showingCardId).isColorPickerShow = false
-			this.showingCardId = target.id
+			this.showingCardId = a.id
 			return
-		} else if (this.showingCardId != "" && this.showingCardId == target.id) {
+		} else if (this.showingCardId != "" && this.showingCardId == a.id) {
 			// クリックされたボタンがピッカー表示中カードだった場合
 			this.showingCardId = ""
 			return
 		}
 	}
 }
+
+
+
+
+
+// 自分以外をクリックされたタイミングでオフマウスオーバー→マウスオフ

@@ -1,5 +1,6 @@
 import { defaultCard } from './card-const'
 import { v4 } from 'uuid'
+import ColorPicker from './color-picker'
 
 export default class Card {
     constructor(card = defaultCard) {
@@ -15,6 +16,7 @@ export default class Card {
         this.width = card.width
         this.height = card.height
         this.isColorPickerShow = false
+        this.colorPicker = new ColorPicker
     }
 
     get() {

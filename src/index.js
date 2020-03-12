@@ -33,11 +33,11 @@ window.addEventListener('click', function (e) {
     // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
     document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
 
+
     new Vue({
         el: '#app',
         data: {
             cards: whiteboard.cards,
-            colors: colorPicker.colors
         }
     })
 
@@ -46,6 +46,8 @@ window.addEventListener('click', function (e) {
 
 function createCard() {
     user.createCard(whiteboard)
+    console.log(whiteboard.cards[0].colorPicker
+        )
 }
 
 function importCards(e) {
@@ -64,7 +66,8 @@ function changeColor(e) {
 }
 
 function toggleDisplayColorPicker(e) {
-    colorPicker.toggleDisplay(e.target.parentNode.parentNode.id, whiteboard)
+    console.log(e.target.parentNode.parentNode.lastElementChild)
+    colorPicker.toggleDisplay(e.target.parentNode.parentNode, whiteboard)
 }
 
 function throwAwayCard(clieckedButton) {
@@ -76,4 +79,9 @@ function throwAwayCard(clieckedButton) {
 
 function takeOutCard() {
     user.takeOutCard(whiteboard, garbageCan)
+}
+
+
+function leaveColorPicker(){
+	console.log(1)
 }

@@ -13,7 +13,7 @@
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
       <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
-        v-bind:style="{top: card.top, left: card.left}">
+        v-bind:style="{top: card.top, left: card.left}" draggable="false">
         <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
           class="textarea" v-model="card.text">{{card.text}}</textarea>
         <br>
@@ -24,8 +24,8 @@
           <img src="delete.png" class="imgOnCard" title="Delete Color">
         </button>
         <br>
-        <div class="colorPicker" v-if="card.isColorPickerShow">
-          <button v-for="color in colors" :key="colors.id" class="colors"
+        <div class="colorPicker" style="display: none;"  draggable="false">
+          <button v-for="color in card.colorPicker.colors" :key="card.colorPicker.colors.id" class="colors"
             v-bind:style="{backgroundColor: color.color}" onclick="changeColor(event)"></button>
         </div>
       </div>
