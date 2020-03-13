@@ -24,7 +24,7 @@
           <img src="delete.png" class="imgOnCard" title="Delete Color">
         </button>
         <br>
-        <div class="colorPicker" style="display: none;"  draggable="false">
+        <div class="colorPicker" style="display: none;">
           <button v-for="color in card.colorPicker.colors" :key="card.colorPicker.colors.id" class="colors"
             v-bind:style="{backgroundColor: color.color}" onclick="changeColor(event)"></button>
         </div>

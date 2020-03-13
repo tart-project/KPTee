@@ -1,18 +1,23 @@
 import Whiteboard from './whiteboard'
 import User from './user'
 import Vue from 'vue'
-import { runInteractjs } from './interactjs'
 import GarbageCan from './garbage-can'
+import { runInteractjs } from './interactjs'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ColorPicker from './color-picker'
 
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
-const colorPicker = new ColorPicker()
+new Vue({
+    el: '#app',
+    data: {
+        cards: whiteboard.cards,
+    }
+})
 
-// html上の関数と紐づけ
+let showingCororPickerId = ""
+
 window.createCard = createCard
 window.importCards = importCards
 window.exportCards = exportCards
@@ -23,31 +28,15 @@ window.takeOutCard = takeOutCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 // カラーピッカー 以外をクリックした場合にカラーピッカー表示をOFFにする
-window.addEventListener('click', function (e) {
-    // ピッカー、カラーが押された場合はリターン
-    if (e.target.className == "imgOnCard" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
-    colorPicker.checkClickedPoint(whiteboard)
-});
+window.addEventListener('click', checkClickedPoint, false);
+// インポートボタンにイベントをセット→ファイルが読み込まれたら発火
+document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false);
 
-(function () {
-    // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
-    document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false)
-
-
-    new Vue({
-        el: '#app',
-        data: {
-            cards: whiteboard.cards,
-        }
-    })
-
-    runInteractjs(whiteboard)
-}());
+// interactjsを起動
+runInteractjs(whiteboard);
 
 function createCard() {
     user.createCard(whiteboard)
-    console.log(whiteboard.cards[0].colorPicker
-        )
 }
 
 function importCards(e) {
@@ -61,18 +50,7 @@ function exportCards(clieckedButton) {
     whiteboard.downloadFile(clieckedButton)
 }
 
-function changeColor(e) {
-    user.changeColor(e.target.parentNode.parentNode.id, e.target.style.backgroundColor, whiteboard)
-}
-
-function toggleDisplayColorPicker(e) {
-    console.log(e.target.parentNode.parentNode.lastElementChild)
-    colorPicker.toggleDisplay(e.target.parentNode.parentNode, whiteboard)
-}
-
 function throwAwayCard(clieckedButton) {
-
-    console.log(clieckedButton.parentNode.id)
     // クリックされたカードIDを渡す
     user.throwAwayCard(clieckedButton.parentNode.id, garbageCan, whiteboard)
 }
@@ -81,7 +59,40 @@ function takeOutCard() {
     user.takeOutCard(whiteboard, garbageCan)
 }
 
+function changeColor(e) {
+    user.changeColor(e.target.parentNode.parentNode.id, e.target.style.backgroundColor, whiteboard)
+}
 
-function leaveColorPicker(){
-	console.log(1)
+function toggleDisplayColorPicker(e) {
+    const targetCard = e.target.parentNode.parentNode
+    if (targetCard.lastElementChild.style.display == "none") {
+        targetCard.lastElementChild.style.display = "block"
+    } else if (targetCard.lastElementChild.style.display == "block") {
+        targetCard.lastElementChild.style.display = "none"
+    }
+
+    if (showingCororPickerId == "") {
+        // ピッカー表示中カードない場合
+        showingCororPickerId = targetCard.id
+        return
+    } else if (showingCororPickerId != targetCard.id) {
+        // クリックされたボタンがピッカー表示中カードではない場合
+        document.getElementById(showingCororPickerId).lastElementChild.style.display = "none"
+        showingCororPickerId = targetCard.id
+        return
+    } else if (showingCororPickerId == targetCard.id) {
+        // クリックされたボタンがピッカー表示中カードだった場合
+        showingCororPickerId = ""
+        return
+    }
+}
+
+function checkClickedPoint(e) {
+    // ピッカー、カラーが押された場合はリターン
+    if (e.target.className == "imgOnCard" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
+
+    if (showingCororPickerId != "") {
+        document.getElementById(showingCororPickerId).lastElementChild.style.display = "none"
+        showingCororPickerId = ""
+    }
 }

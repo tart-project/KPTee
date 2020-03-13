@@ -38,5 +38,4 @@ export const colors = [
         "text": "",
         "width": "160px",
         "height": "70px",
-        "isColorPickerShow":false
     };
