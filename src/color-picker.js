@@ -5,3 +5,5 @@ export default class ColorPicker {
 		this.colors = colors
 	}
 }
+
+// 小さく

@@ -17,7 +17,7 @@
         <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
           class="textarea" v-model="card.text">{{card.text}}</textarea>
         <br>
-        <button class="colorPickerButton" onclick="toggleDisplayColorPicker(event)">
+        <button class="colorPickerButton" onclick="toggleColorPicker(this.parentNode.id)">
           <img src="changeColor.png" class="imgOnCard" title="Change Color">
         </button>
         <button class="throwAwayCardButton" onclick="throwAwayCard(this)">

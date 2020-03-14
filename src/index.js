@@ -21,14 +21,14 @@ let showingCororPickerId = ""
 window.createCard = createCard
 window.importCards = importCards
 window.exportCards = exportCards
-window.toggleDisplayColorPicker = toggleDisplayColorPicker
+window.toggleColorPicker = toggleColorPicker
 window.changeColor = changeColor
 window.throwAwayCard = throwAwayCard
 window.takeOutCard = takeOutCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
 // カラーピッカー 以外をクリックした場合にカラーピッカー表示をOFFにする
-window.addEventListener('click', checkClickedPoint, false);
+window.addEventListener('mousedown', checkClickedPoint, false);
 // インポートボタンにイベントをセット→ファイルが読み込まれたら発火
 document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false);
 
@@ -51,7 +51,6 @@ function exportCards(clieckedButton) {
 }
 
 function throwAwayCard(clieckedButton) {
-    // クリックされたカードIDを渡す
     user.throwAwayCard(clieckedButton.parentNode.id, garbageCan, whiteboard)
 }
 
@@ -63,36 +62,44 @@ function changeColor(e) {
     user.changeColor(e.target.parentNode.parentNode.id, e.target.style.backgroundColor, whiteboard)
 }
 
-function toggleDisplayColorPicker(e) {
-    const targetCard = e.target.parentNode.parentNode
-    if (targetCard.lastElementChild.style.display == "none") {
-        targetCard.lastElementChild.style.display = "block"
-    } else if (targetCard.lastElementChild.style.display == "block") {
-        targetCard.lastElementChild.style.display = "none"
-    }
-
-    if (showingCororPickerId == "") {
-        // ピッカー表示中カードない場合
-        showingCororPickerId = targetCard.id
-        return
-    } else if (showingCororPickerId != targetCard.id) {
-        // クリックされたボタンがピッカー表示中カードではない場合
-        document.getElementById(showingCororPickerId).lastElementChild.style.display = "none"
-        showingCororPickerId = targetCard.id
-        return
-    } else if (showingCororPickerId == targetCard.id) {
-        // クリックされたボタンがピッカー表示中カードだった場合
-        showingCororPickerId = ""
-        return
-    }
+function toggleColorPicker(targetCardId) {
+    changeColorPcikerState(targetCardId)
+    changePickerId(targetCardId)
 }
 
 function checkClickedPoint(e) {
-    // ピッカー、カラーが押された場合はリターン
+    // カラーピッカー表示ボタン、カラーピッカー、カラーズが押された場合はリターン
     if (e.target.className == "imgOnCard" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
 
     if (showingCororPickerId != "") {
-        document.getElementById(showingCororPickerId).lastElementChild.style.display = "none"
+        toggleColorPicker(showingCororPickerId)
+    }
+}
+
+function changeColorPcikerState(targetId) {
+
+    const targetPicker = document.getElementById(targetId).lastElementChild
+
+    if (targetPicker.style.display == "none") {
+        targetPicker.style.display = "block"
+
+    } else {
+        targetPicker.style.display = "none"
+    }
+}
+
+function changePickerId(targetCardId) {
+    if (showingCororPickerId == "") {
+        // ピッカー表示中カードない場合
+        showingCororPickerId = targetCardId
+
+    } else if (showingCororPickerId != targetCardId) {
+        // クリックされたボタンがピッカー表示中カードではない場合
+        changeColorPcikerState(showingCororPickerId)
+        showingCororPickerId = targetCardId
+
+    } else {
+        // クリックされたボタンがピッカー表示中カードだった場合
         showingCororPickerId = ""
     }
 }

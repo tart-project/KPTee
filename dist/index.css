@@ -4,14 +4,14 @@
 }
 
 .colorPicker{
-    width: 150px;
-    height: 150px;
+    width: 60px;
+    height: 60px;
     background-color: rgb(255, 255, 255);
     box-shadow: 1px 1px 0px rgb(128, 128, 128);
     border-radius: 5%;
     position:relative;
-    bottom: 40px;
-    left: 45px;
+    bottom: 10px;
+    border: none;
 }
 
 .imgOnCard{
@@ -25,10 +25,10 @@
 }
 
 .colors{
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    margin: 10px;
+    margin: 2.5px;
     border: none;
 }
 
