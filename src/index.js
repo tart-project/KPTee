@@ -3,6 +3,7 @@ import User from './user'
 import Vue from 'vue'
 import GarbageCan from './garbage-can'
 import { runInteractjs } from './interactjs'
+import { colors } from './card-const'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,6 +14,7 @@ new Vue({
     el: '#app',
     data: {
         cards: whiteboard.cards,
+        colors: colors
     }
 })
 
