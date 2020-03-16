@@ -63,7 +63,7 @@ function changeColor(e) {
 }
 
 function toggleColorPicker(targetCardId) {
-    changeColorPcikerState(targetCardId)
+    changeColorPickerState(targetCardId)
     changePickerId(targetCardId)
 }
 
@@ -76,7 +76,7 @@ function checkClickedPoint(e) {
     }
 }
 
-function changeColorPcikerState(targetId) {
+function changeColorPickerState(targetId) {
 
     const targetPicker = document.getElementById(targetId).lastElementChild
 
@@ -95,7 +95,7 @@ function changePickerId(targetCardId) {
 
     } else if (showingCororPickerId != targetCardId) {
         // クリックされたボタンがピッカー表示中カードではない場合
-        changeColorPcikerState(showingCororPickerId)
+        changeColorPickerState(showingCororPickerId)
         showingCororPickerId = targetCardId
 
     } else {
