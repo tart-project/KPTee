@@ -3,6 +3,39 @@
     outline: none !important;
 }
 
+.colorPicker{
+    width: 90px;
+    height: 90px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 0px rgb(128, 128, 128);
+    border-radius: 5%;
+    position:relative;
+    bottom: 20px;
+    border: none;
+}
+
+.imgOnCard{
+    display: block;
+    width: 15px;
+    height: auto;
+    }
+
+.imgOnCard:hover {
+    background-color: rgb(245, 240, 240);
+}
+
+.colors{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 5px;
+    border: none;
+}
+
+.colors:hover {
+    background-color: rgb(245, 240, 240);
+}
+
 img {
     /*画像のドラッグ禁止*/
     -webkit-user-drag: none;
@@ -23,7 +56,8 @@ img {
     border-radius: 2%;
     font-size: 10px;
     padding: 10px;
-    box-shadow: 1px 1px 0px gray;
+    box-shadow: 1px 1px 0px rgb(128, 128, 128);
+    color: rgb(255, 255, 255);
 }
 
 #cardCreationButton {
@@ -41,41 +75,29 @@ img {
     left: 722px;
 }
 
-.changeColorButton{
-    width: 17px;
-    height: 17px;
+.colorPickerButton{
     position:relative;
-    bottom: 24px;
-    left: 4px;
-    border-radius: 50%;            
-    border-color:white;
-    border-style: solid;
-    border-width: 0px;
-    box-shadow: 1px 1px 0px gray;
+    bottom: 20px;
+    left: 8px;
     vertical-align:top;
+    padding: 0;
+    border: none;
+    background: transparent;
 }
 
 .throwAwayCardButton{
     width: 17px;
     height: 17px;
     position:relative;
-    bottom: 24px;
-    left: 10px;
-    color: white;
-    border-radius: 50%;              
-    border-color:white;
-    border-style: solid;
-    border-width: 0px;
-    box-shadow: 1px 1px 0px gray;
+    bottom: 21px;
+    left: 12px;
     padding: 0;
-    background-color: #727171;
-    vertical-align:top;
-    font-size: 10px;
-    font-weight: 900; 
+    border: none;
+    background: transparent;
 }
 /*ヘッダコンテナ*/
 .headerContainer {
-    background-color: #727171;
+    background-color: rgb(114, 113, 113);
     display: block;
     width: 1475px;/*1465*/
     height: 50px;/*735*/
@@ -115,8 +137,8 @@ img {
     width: 3%;
     height: 100%;
     font-size: 0;
-    background-color:var(--secondary);
-    border-right: 2px solid gray;
+    background-color:rgb(108, 117, 125);
+    border-right: 2px solid rgb(128, 128, 128);
     padding-top: 10px;
 }
 
@@ -174,7 +196,7 @@ img {
     vertical-align: top;
     width: 0.5%;
     height: 100%;
-    background-color:var(--secondary);
+    background-color:rgb(108, 117, 125);
 }
 
 /*Keepエリア*/
@@ -207,23 +229,23 @@ img {
     display: block;
     width: 100%;
     font-size: 25px;
-    color: white;
-    box-shadow: 1px 1px 0px gray;
+    color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 0px rgb(128, 128, 128);
 }
 
 #keepTitle {
     height: 12%; 
-    background-color:var(--primary);
+    background-color:rgb(0, 123, 255);
 }
 
 #problemTitle {
     height: 12%; 
-    background-color:var(--warning);
+    background-color:rgb(255, 193, 7);
 }
 
 #tryTitle {
     height: 6%; 
-    background-color:var(--green);
+    background-color:rgb(40, 167, 69);
 }
 
 /*中央エリア*/
