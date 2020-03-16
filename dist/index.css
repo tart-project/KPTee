@@ -4,13 +4,13 @@
 }
 
 .colorPicker{
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     background-color: rgb(255, 255, 255);
     box-shadow: 1px 1px 0px rgb(128, 128, 128);
     border-radius: 5%;
     position:relative;
-    bottom: 10px;
+    bottom: 20px;
     border: none;
 }
 
@@ -25,10 +25,10 @@
 }
 
 .colors{
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    margin: 2.5px;
+    margin: 5px;
     border: none;
 }
 
