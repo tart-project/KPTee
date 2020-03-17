@@ -3,9 +3,9 @@ import { v4 } from 'uuid'
 
 export default class Card {
     constructor(card = defaultCard) {
-        if (card.id == ""){
+        if (card.id == "") {
             this.id = `id-${v4()}`
-        } else{
+        } else {
             this.id = card.id
         }
         this.top = card.top
@@ -14,10 +14,8 @@ export default class Card {
         this.text = card.text
         this.width = card.width
         this.height = card.height
-        this.changeColorButtonBackgroundColor = card.changeColorButton.backgroundColor
     }
 
-    // カード情報取得
     get() {
         // カード情報生成
         // TODO: ディープ参照渡しの解決
@@ -29,7 +27,6 @@ export default class Card {
         card.text = this.text
         card.width = this.width
         card.height = this.height
-        card.changeColorButton.backgroundColor = this.changeColorButtonBackgroundColor
 
         return card
     }
