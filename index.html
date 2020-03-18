@@ -18,10 +18,10 @@
           class="textarea" v-model="card.text">{{card.text}}</textarea>
         <br>
         <button class="colorPickerButton" onclick="toggleColorPicker(this.parentNode.id)">
-          <img src="changeColor.png" class="imgOnCard" title="Change Color">
+          <img src="images/changeColor.png" class="imgOnCard" title="Change Color">
         </button>
         <button class="throwAwayCardButton" onclick="throwAwayCard(this)">
-          <img src="delete.png" class="imgOnCard" title="Delete Color">
+          <img src="images/delete.png" class="imgOnCard" title="Delete Color">
         </button>
         <br>
         <div class="colorPicker" style="display: none;">
@@ -35,7 +35,7 @@
     <div class="toolsBox">
       <!-- インポートボタン -->
       <label for="importFileButton">
-        <img src="import-icon.png" class="toolIcon" title="Import" />
+        <img src="images/import-icon.png" class="toolIcon" title="Import" />
       </label>
 
       <form id="formTagForImport">
@@ -44,12 +44,12 @@
 
       <!-- エクスポートボタン -->
       <a id="exportCardsButton" type="button" onclick="exportCards(this)">
-        <image src="export-icon.png" class="toolIcon" title="Export">
+        <image src="images/export-icon.png" class="toolIcon" title="Export">
       </a>
 
       <!-- リストアボタン -->
       <button type="button" onclick="takeOutCard()" id="takeOutCardButton">
-        <img src="restore.png" class="takeOutCardButtonImg" title="Restore">
+        <img src="images/restore.png" class="takeOutCardButtonImg" title="Restore">
       </button>
     </div>
 
@@ -68,7 +68,7 @@
     <div class="centerLineBox">
       <div class="centerBox">
         <button type="button" onclick="createCard()" id="cardCreationButton">
-          <img src="create-card-icon.png" class="cardCreationButtonImg">
+          <img src="images/create-card-icon.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>
@@ -80,7 +80,8 @@
       </div>
     </div>
   </div>
-  <img src="logo.png" class="logo">
+  <img src="images/logo.png" class="logo">
+
   <script src="main.js"></script>
 
 </body>
