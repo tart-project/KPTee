@@ -21,7 +21,7 @@ export default class User {
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
     }
 
-    restoreCard(whiteboard, garbageCan) {
+    takeOutCard(whiteboard, garbageCan) {
         if (garbageCan.cards.length != 0) {
             // if there is a archive card
             // Restore target card 
@@ -42,7 +42,5 @@ export default class User {
     }
 
     updateCard(whiteboard, index, card){
-
-        
     }
 }

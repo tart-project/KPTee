@@ -1,6 +1,7 @@
 import Whiteboard from './domain/whiteboard'
 import User from './domain/user'
 import Vue from 'vue'
+import RunWebsocket from './lib/websocket-client'
 import GarbageCan from './domain/garbage-can'
 import { runInteractjs } from './lib/interactjs'
 import { colors } from './constant'
@@ -20,13 +21,13 @@ new Vue({
     }, watch: {
         cards: {
             handler: function () {
-                websocket.sendChengedInfo(websocket.checkChangedPoint(whiteboard))
+                websocket.sendChengedInfo(websocket.checkChangedPointWhiteboard(whiteboard))
             },
             deep: true
         },
         garbageCan:{
             handler: function () {
-                websocket.sendChengedInfo(websocket.checkChangedPointGarbageCan(whiteboard))
+                websocket.sendChengedInfo(websocket.checkChangedPointGarbageCan(garbageCan))
             },
             deep: true
         }
@@ -50,7 +51,7 @@ window.addEventListener('mousedown', checkClickedPoint, false);
 document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false);
 
 // interactjsを起動
-runInteractjs(whiteboard);
+runInteractjs(whiteboard, user);
 
 function createCard() {
     user.createCard(whiteboard)
