@@ -3,37 +3,42 @@
     outline: none !important;
 }
 
-.pickers{
-    width: 150px;
-    height: 150px;
-    background-color: white;
-    box-shadow: 1px 1px 0px gray;
+.colorPicker{
+    width: 90px;
+    height: 90px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 0px rgb(128, 128, 128);
     border-radius: 5%;
     position:relative;
-    bottom: 40px;
-    left: 40px;
-}
-
-.imagesOnCard{
-    display: block;
-    width: 8px;
-    height: auto;
-    }
-
-.imagesOnCard:hover {
-    background-color: rgb(245, 240, 240);
-}
-
-.picker{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin: 10px;
+    bottom: 20px;
     border: none;
 }
 
-.picker:hover {
+.imgOnCard{
+    display: block;
+    width: 15px;
+    height: auto;
+    }
+
+.imgOnCard:hover {
     background-color: rgb(245, 240, 240);
+}
+
+.colors{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 5px;
+    border: none;
+}
+
+.colors:hover {
+    background-color: rgb(245, 240, 240);
+}
+
+img {
+    /*画像のドラッグ禁止*/
+    -webkit-user-drag: none;
 }
 
 .cardDiv {
@@ -51,8 +56,8 @@
     border-radius: 2%;
     font-size: 10px;
     padding: 10px;
-    box-shadow: 1px 1px 0px gray;
-    color: white;
+    box-shadow: 1px 1px 0px rgb(128, 128, 128);
+    color: rgb(255, 255, 255);
 }
 
 #cardCreationButton {
@@ -61,20 +66,19 @@
     background: transparent;
 }
 
-img.cardCreationButtonImg {
+.cardCreationButtonImg {
     opacity: 1;
     widows: 75px;
     height:75px;
     position: absolute;
     top: 299px;
     left: 722px;
-    -webkit-user-drag: none;
 }
 
-.changeColorButton{
+.colorPickerButton{
     position:relative;
-    bottom: 15px;
-    left: 6px;
+    bottom: 20px;
+    left: 8px;
     vertical-align:top;
     padding: 0;
     border: none;
@@ -85,10 +89,12 @@ img.cardCreationButtonImg {
     background-color: rgb(245, 240, 240)! important;
 }
 
-.deleteCardButton{
+.throwAwayCardButton{
+    width: 17px;
+    height: 17px;
     position:relative;
-    bottom: 15px;
-    left: 10px;
+    bottom: 21px;
+    left: 12px;
     padding: 0;
     border: none;
     background: transparent;
@@ -100,7 +106,7 @@ img.cardCreationButtonImg {
 
 /*ヘッダコンテナ*/
 .headerContainer {
-    background-color: #727171;
+    background-color: rgb(114, 113, 113);
     display: block;
     width: 1475px;
     height: 50px;
@@ -140,8 +146,8 @@ img.cardCreationButtonImg {
     width: 3%;
     height: 100%;
     font-size: 0;
-    background-color:var(--secondary);
-    border-right: 2px solid gray;
+    background-color:rgb(108, 117, 125);
+    border-right: 2px solid rgb(128, 128, 128);
     padding-top: 10px;
 }
 
@@ -159,7 +165,7 @@ img.cardCreationButtonImg {
     background-color: rgb(245, 240, 240);
 }
 
-.restoreCardButtonImg{
+.takeOutCardButtonImg{
     display: block;
     margin-top: 10px;
     margin-left: 4px;
@@ -167,11 +173,11 @@ img.cardCreationButtonImg {
     height: auto;
     }
 
-.restoreCardButtonImg:hover {
+.takeOutCardButtonImg:hover {
     background-color: rgb(245, 240, 240);
 }
 
-#restoreCardButton{
+#takeOutCardButton{
     padding: 0;
     border: none;
     background: transparent;
@@ -199,7 +205,7 @@ img.cardCreationButtonImg {
     vertical-align: top;
     width: 0.5%;
     height: 100%;
-    background-color:var(--secondary);
+    background-color:rgb(108, 117, 125);
 }
 
 /*Keepエリア*/
@@ -233,23 +239,23 @@ img.cardCreationButtonImg {
     display: block;
     width: 100%;
     font-size: 25px;
-    color: white;
-    box-shadow: 1px 1px 0px gray;
+    color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 0px rgb(128, 128, 128);
 }
 
 #keepTitle {
     height: 12%; 
-    background-color:var(--primary);
+    background-color:rgb(0, 123, 255);
 }
 
 #problemTitle {
     height: 12%; 
-    background-color:var(--warning);
+    background-color:rgb(255, 193, 7);
 }
 
 #tryTitle {
     height: 6%; 
-    background-color:var(--green);
+    background-color:rgb(40, 167, 69);
 }
 
 /*vueがコンパイルされるまでhtmlを非表示*/

@@ -1,5 +1,5 @@
-var webServer = require('./server/web-server')
-var websocketServer = require('./server/websocket-server')
+const webServer = require('./server/web-server')
+const websocketServer = require('./server/websocket-server')
 
 webServer.run()
 websocketServer.run()

@@ -32,6 +32,13 @@ export default class RunWebsocket {
         });
     }
 
+    
+    sendChengedInfo(chengedInfo) {
+        if (chengedInfo != null) {
+            this.websocket.send(JSON.stringify(chengedInfo));
+        }
+    }
+
     checkChangedPointWhiteboard(whiteboard) {
         const cardsLength = whiteboard.cards.length
         const stockCardsLength = this.stockCards.length
@@ -104,17 +111,12 @@ export default class RunWebsocket {
 
             const sendInfo = ["garbegeFromWhiteboard", this.stockGarbageCanCards[stockGarbageCanCardsLength - 1].get()]
 
-
-
+            return sendInfo
         }
 
     }
 
-    sendChengedInfo(chengedInfo) {
-        if (chengedInfo != null) {
-            this.websocket.send(JSON.stringify(chengedInfo));
-        }
-    }
+
 
 
 

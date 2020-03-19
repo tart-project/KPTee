@@ -14,7 +14,6 @@ export default class Card {
         this.text = card.text
         this.width = card.width
         this.height = card.height
-        this.colorPickerFlag = false
     }
 
     get() {
