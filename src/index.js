@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
-const websocket = new RunWebsocket(whiteboard)
+const websocket = new RunWebsocket(whiteboard, garbageCan)
 new Vue({
     el: '#app',
     data: {

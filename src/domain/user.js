@@ -16,16 +16,17 @@ export default class User {
 
     throwAwayCard(clieckedCardId, garbageCan, whiteboard) {
         // Add a card to a garbage can
-        garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
+        garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId).get())
         // Delete a card from a whiteboard
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
+        console.log(garbageCan.cards)
     }
 
     takeOutCard(whiteboard, garbageCan) {
         if (garbageCan.cards.length != 0) {
             // if there is a archive card
             // Restore target card 
-            whiteboard.cards.push(garbageCan.cards.pop())
+            whiteboard.cards.push(new Card(garbageCan.cards.pop()))
         }
     }
 
@@ -39,8 +40,5 @@ export default class User {
         const target = whiteboard.cards.find(({ id }) => id === targetId)
         target.width = changedWidth
         target.height = changedHeight
-    }
-
-    updateCard(whiteboard, index, card){
     }
 }
