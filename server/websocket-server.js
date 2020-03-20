@@ -15,31 +15,34 @@ exports.run = () => {
             ws.send(JSON.stringify(sendInfo))
         }
 
-        // クライアントからメッセージを受け取った場合
+        // クライアントからメッセージを受け取ったに発火
         ws.on('message', (message) => {
+
+            const receivedType = JSON.parse(message)[0]
+            const receivedCard = JSON.parse(message)[1]
             const card = JSON.parse(message)
 
-            let index = cards.findIndex(({ id }) => id === card[1].id)
+            let index = cards.findIndex(({ id }) => id === receivedCard.id)
 
             // cardsに最新情報を送信
-            if (card[0] == "create") {
-                cards.push(card[1])
+            if (receivedType == "create") {
+                cards.push(receivedCard)
 
-            } else if (card[0] == "update") {
+            } else if (receivedType == "update") {
                 cards.splice(index, 1)
-                cards.splice(index, 0, card[1])
+                cards.splice(index, 0, receivedCard)
 
-            } else if (card[0] == "delete") {
+            } else if (receivedType == "delete") {
                 cards.splice(index, 1)
 
-            } else if (card[0] == "addCardToGarbegeCan") {
-                garbageCanCards.push(card[1])
+            } else if (receivedType == "addCardToGarbegeCan") {
+                garbageCanCards.push(receivedCard)
 
-            } else if (card[0] == "deleteCardFromGarbegeCan") {
-                garbageCanCards.splice(garbageCanCards.length-1, 1)
+            } else if (receivedType == "deleteCardFromGarbegeCan") {
+                garbageCanCards.pop()
             }
 
-            // 送信者以外にデータを送信
+            // 送信者以外のクライアントにデータを送信
             websocketServer.clients.forEach(client => {
 
                 if (client !== ws)
@@ -47,9 +50,9 @@ exports.run = () => {
             });
         });
 
-        // クライアントが通信を切断した場合
+        // クライアントが通信を切断した場合に発火
         ws.on('close', () => {
-            
+
             if (websocketServer.clients.size == 0) {
                 // 接続者が0人だった場合→初期化
                 cards.splice(0, cards.length)

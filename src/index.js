@@ -21,13 +21,13 @@ new Vue({
     }, watch: {
         cards: {
             handler: function () {
-                websocket.sendChengedInfo(websocket.checkChangedPointWhiteboard(whiteboard))
+                websocket.sendChengedInfo(websocket.getChangedPointOfWhiteboard(whiteboard))
             },
             deep: true
         },
         garbageCan:{
             handler: function () {
-                websocket.sendChengedInfo(websocket.checkChangedPointGarbageCan(garbageCan))
+                websocket.sendChengedInfo(websocket.getChangedPointOfGarbageCan(garbageCan))
             },
             deep: true
         }

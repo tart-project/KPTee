@@ -19,7 +19,6 @@ export default class User {
         garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId).get())
         // Delete a card from a whiteboard
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
-        console.log(garbageCan.cards)
     }
 
     takeOutCard(whiteboard, garbageCan) {

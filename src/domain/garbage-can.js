@@ -8,7 +8,6 @@ export default class GarbageCan {
     }
 
     deleteCard(){
-        console.log(1)
         this.cards.pop()
     }
 }

@@ -2,49 +2,46 @@ export default class RunWebsocket {
     constructor(whiteboard, garbageCan) {
         this.stockCards = []
         this.stockGarbageCanCards = []
-
         this.websocket = new WebSocket('ws://127.0.0.1:5001');
-        this.websocket.addEventListener('open', (e) => {
-            // websocketに疎通された時→現状処理はなし
-        });
-
+        // 他のクライアントから受信した場合に発火
         this.websocket.addEventListener('message', (e) => {
-
-            // 受信した時
-            const receivedType = JSON.parse(e.data)[0]
-            const receivedCard = JSON.parse(e.data)[1]
-            const index = whiteboard.cards.findIndex(({ id }) => id === receivedCard.id)
-
-            if (receivedType == "create") {
-                this.stockCards.push(receivedCard)
-                whiteboard.createCard(receivedCard)
-
-            } else if (receivedType == "update") {
-                this.stockCards.splice(index, 1)
-                this.stockCards.push(receivedCard)
-                whiteboard.updateCard(index, receivedCard)
-
-            } else if (receivedType == "delete") {
-                this.stockCards.splice(index, 1)
-                whiteboard.deleteCard(index)
-
-            } else if (receivedType == "addCardToGarbegeCan") {
-                this.stockGarbageCanCards.push(receivedCard)
-                garbageCan.addCard(receivedCard)
-                console.log(garbageCan.cards)
-                
-            } else if (receivedType == "deleteCardFromGarbegeCan") {
-                this.stockGarbageCanCards.pop()
-                garbageCan.deleteCard()
-
-            } else if (receivedType == "inisialLoad") {
-                // 初期ロード時
-                for (const card of receivedCard) {
-                    this.stockCards.push(card)
-                    whiteboard.createCard(card)
-                }
-            }
+            this.reflectReceivedInfo(e, whiteboard, garbageCan)
         });
+    }
+
+    reflectReceivedInfo(e, whiteboard, garbageCan){
+        const receivedType = JSON.parse(e.data)[0]
+        const receivedCard = JSON.parse(e.data)[1]
+        const index = whiteboard.cards.findIndex(({ id }) => id === receivedCard.id)
+
+        if (receivedType == "create") {
+            this.stockCards.push(receivedCard)
+            whiteboard.createCard(receivedCard)
+
+        } else if (receivedType == "update") {
+            this.stockCards.splice(index, 1)
+            this.stockCards.push(receivedCard)
+            whiteboard.updateCard(index, receivedCard)
+
+        } else if (receivedType == "delete") {
+            this.stockCards.splice(index, 1)
+            whiteboard.deleteCard(index)
+
+        } else if (receivedType == "addCardToGarbegeCan") {
+            this.stockGarbageCanCards.push(receivedCard)
+            garbageCan.addCard(receivedCard)
+
+        } else if (receivedType == "deleteCardFromGarbegeCan") {
+            this.stockGarbageCanCards.pop()
+            garbageCan.deleteCard()
+
+        } else if (receivedType == "inisialLoad") {
+            // 初期ロード時
+            for (const card of receivedCard) {
+                this.stockCards.push(card)
+                whiteboard.createCard(card)
+            }
+        }
     }
 
     sendChengedInfo(chengedInfo) {
@@ -53,7 +50,7 @@ export default class RunWebsocket {
         }
     }
 
-    checkChangedPointWhiteboard(whiteboard) {
+    getChangedPointOfWhiteboard(whiteboard) {
         const cardsLength = whiteboard.cards.length
         const stockCardsLength = this.stockCards.length
         const sendInfo = []
@@ -117,8 +114,7 @@ export default class RunWebsocket {
         return null
     }
 
-
-    checkChangedPointGarbageCan(garbageCan) {
+    getChangedPointOfGarbageCan(garbageCan) {
 
         const cardsLength = garbageCan.cards.length
         const stockcardsLength = this.stockGarbageCanCards.length
@@ -137,7 +133,6 @@ export default class RunWebsocket {
             sendInfo.push("deleteCardFromGarbegeCan", this.stockGarbageCanCards.pop())
 
             return sendInfo
-
         }
         return null
     }

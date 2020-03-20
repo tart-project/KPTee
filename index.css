@@ -100,10 +100,6 @@ img {
     background: transparent;
 }
 
-.deleteCardButton:hover {
-    background-color: rgb(245, 240, 240)! important;
-}
-
 /*ヘッダコンテナ*/
 .headerContainer {
     background-color: rgb(114, 113, 113);
