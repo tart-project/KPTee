@@ -12,8 +12,8 @@ export default class WebsocketClient {
     reflectReceivedInfo(e, whiteboard, garbageCan) {
         const receivedInfo = JSON.parse(e.data)
         const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.card.id)
-        this.reflectStockState(receivedInfo.type, receivedInfo.card, receivedInfo.index)
 
+        this.reflectStockState(receivedInfo.type, receivedInfo.card, receivedInfo.index)
 
         if (receivedInfo.type == "create") {
             whiteboard.createCard(receivedInfo.card)
@@ -28,14 +28,12 @@ export default class WebsocketClient {
             garbageCan.addCard(receivedInfo.card)
 
         } else if (receivedInfo.type == "deleteCardFromGarbegeCan") {
-            this.stockGarbageCanCards.pop()
             garbageCan.deleteCard()
-
 
         } else if (receivedInfo.type == "inisialLoad") {
             // 初期ロード時
             for (const card of receivedInfo.card) {
-                this.stockCards.push(card)
+                this.reflectStockState("create", card)
                 whiteboard.createCard(card)
             }
         }
@@ -47,8 +45,8 @@ export default class WebsocketClient {
         }
     }
 
-    // ストックカーズに反映する関数か何かで外だしするないしは関数内に出す
     getChangedPointOfWhiteboard(whiteboard) {
+        console.log("aaaaaaa")
         const cardsLength = whiteboard.cards.length
         const stockCardsLength = this.stockCards.length
 
@@ -68,7 +66,6 @@ export default class WebsocketClient {
                 // _.omitByは差分がなければ{}を返す
                 if (JSON.stringify(diff) != "{}") {
                     // 差分があった場合
-
                     return this.makeSendInfo("update", updatedCard, i)
                 }
             }
@@ -88,8 +85,6 @@ export default class WebsocketClient {
         return null
     }
 
-
-
     getChangedPointOfGarbageCan(garbageCan) {
 
         const cardsLength = garbageCan.cards.length
@@ -103,7 +98,8 @@ export default class WebsocketClient {
 
         } else if (stockcardsLength > cardsLength) {
             // カードが復元された場合
-            return this.makeSendInfo("deleteCardFromGarbegeCan", this.stockGarbageCanCards.pop())
+            const restoredCard = this.stockGarbageCanCards[stockcardsLength - 1]
+            return this.makeSendInfo("deleteCardFromGarbegeCan", restoredCard)
         }
         return null
     }
@@ -112,7 +108,7 @@ export default class WebsocketClient {
 
         this.reflectStockState(type, cardInfo, index)
 
-        const sendInfo = { type: type, card: cardInfo, index:index }
+        const sendInfo = { type: type, card: cardInfo, index: index }
 
         return sendInfo
     }
@@ -127,9 +123,12 @@ export default class WebsocketClient {
         } else if (type == "delete") {
             this.stockCards.splice(index, 1)
 
-        } else if (type == "addCardToGarbegeCan"){
+        } else if (type == "addCardToGarbegeCan") {
             this.stockGarbageCanCards.push(card)
-        } 
+
+        } else if (type == "deleteCardFromGarbegeCan") [
+            this.stockGarbageCanCards.pop()
+        ]
     }
 
 }

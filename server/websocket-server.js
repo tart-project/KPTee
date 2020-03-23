@@ -4,6 +4,7 @@ exports.run = () => {
     const websocketServer = new server({ port: 5001 });
     const cards = []
     const garbageCanCards = []
+    let aaaa= 0
 
     // on()はイベントに対する処理を設定できる関数
     websocketServer.on('connection', (ws) => {
@@ -17,6 +18,7 @@ exports.run = () => {
 
         // クライアントからメッセージを受け取ったに発火
         ws.on('message', (message) => {
+            console.log(++aaaa)
             const receivedInfo = JSON.parse(message)
             let index = cards.findIndex(({ id }) => id === receivedInfo.card.id)
 
