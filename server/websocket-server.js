@@ -17,28 +17,24 @@ exports.run = () => {
 
         // クライアントからメッセージを受け取ったに発火
         ws.on('message', (message) => {
-
-            const receivedType = JSON.parse(message)[0]
-            const receivedCard = JSON.parse(message)[1]
-            const card = JSON.parse(message)
-
-            let index = cards.findIndex(({ id }) => id === receivedCard.id)
+            const receivedInfo = JSON.parse(message)
+            let index = cards.findIndex(({ id }) => id === receivedInfo.card.id)
 
             // cardsに最新情報を送信
-            if (receivedType == "create") {
-                cards.push(receivedCard)
+            if (receivedInfo.type == "create") {
+                cards.push(receivedInfo.card)
 
-            } else if (receivedType == "update") {
+            } else if (receivedInfo.type == "update") {
                 cards.splice(index, 1)
-                cards.splice(index, 0, receivedCard)
+                cards.splice(index, 0, receivedInfo.card)
 
-            } else if (receivedType == "delete") {
+            } else if (receivedInfo.type == "delete") {
                 cards.splice(index, 1)
 
-            } else if (receivedType == "addCardToGarbegeCan") {
-                garbageCanCards.push(receivedCard)
+            } else if (receivedInfo.type == "addCardToGarbegeCan") {
+                garbageCanCards.push(receivedInfo.card)
 
-            } else if (receivedType == "deleteCardFromGarbegeCan") {
+            } else if (receivedInfo.type == "deleteCardFromGarbegeCan") {
                 garbageCanCards.pop()
             }
 
@@ -46,7 +42,7 @@ exports.run = () => {
             websocketServer.clients.forEach(client => {
 
                 if (client !== ws)
-                    client.send(JSON.stringify(card));
+                    client.send(JSON.stringify(receivedInfo));
             });
         });
 

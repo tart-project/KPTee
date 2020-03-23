@@ -1,7 +1,7 @@
 import Whiteboard from './domain/whiteboard'
 import User from './domain/user'
 import Vue from 'vue'
-import RunWebsocket from './lib/websocket-client'
+import WebsocketClient from './lib/websocket-client'
 import GarbageCan from './domain/garbage-can'
 import { runInteractjs } from './lib/interactjs'
 import { colors } from './constant'
@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
-const websocket = new RunWebsocket(whiteboard, garbageCan)
+const websocket = new WebsocketClient(whiteboard, garbageCan)
 new Vue({
     el: '#app',
     data: {
