@@ -9,31 +9,37 @@ export default class WebsocketClient {
         });
     }
 
-    receiveCardInfo(e, whiteboard, garbageCan) {
-        const receivedInfo = JSON.parse(e.data)
-        const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.card.id)
+    receiveCardInfo(e, whiteboard, garbageCan){
+        const receivedType = JSON.parse(e.data).type
+        const receivedCard = JSON.parse(e.data).card
 
-        this.reflectStockState(receivedInfo.type, receivedInfo.card, receivedInfo.index)
+        const index = whiteboard.cards.findIndex(({ id }) => id === receivedCard.id)
 
-        if (receivedInfo.type == "create") {
-            whiteboard.createCard(receivedInfo.card)
+        if (receivedType == "create") {
+            this.stockCards.push(receivedCard)
+            whiteboard.createCard(receivedCard)
 
-        } else if (receivedInfo.type == "update") {
-            whiteboard.updateCard(index, receivedInfo.card)
+        } else if (receivedType == "update") {
+            this.stockCards.splice(index, 1)
+            this.stockCards.push(receivedCard)
+            whiteboard.updateCard(index, receivedCard)
 
-        } else if (receivedInfo.type == "delete") {
+        } else if (receivedType == "delete") {
+            this.stockCards.splice(index, 1)
             whiteboard.deleteCard(index)
 
-        } else if (receivedInfo.type == "addCardToGarbegeCan") {
-            garbageCan.addCard(receivedInfo.card)
+        } else if (receivedType == "addCardToGarbegeCan") {
+            this.stockGarbageCanCards.push(receivedCard)
+            garbageCan.addCard(receivedCard)
 
-        } else if (receivedInfo.type == "deleteCardFromGarbegeCan") {
+        } else if (receivedType == "deleteCardFromGarbegeCan") {
+            this.stockGarbageCanCards.pop()
             garbageCan.deleteCard()
 
-        } else if (receivedInfo.type == "inisialLoad") {
+        } else if (receivedType == "inisialLoad") {
             // 初期ロード時
-            for (const card of receivedInfo.card) {
-                this.reflectStockState("create", card)
+            for (const card of receivedCard) {
+                this.stockCards.push(card)
                 whiteboard.createCard(card)
             }
         }
