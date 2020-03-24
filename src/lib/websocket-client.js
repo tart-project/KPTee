@@ -5,11 +5,11 @@ export default class WebsocketClient {
         this.websocket = new WebSocket('ws://127.0.0.1:5001');
         // 他のクライアントから受信した場合に発火
         this.websocket.addEventListener('message', (e) => {
-            this.reflectReceivedInfo(e, whiteboard, garbageCan)
+            this.receiveCardInfo(e, whiteboard, garbageCan)
         });
     }
 
-    reflectReceivedInfo(e, whiteboard, garbageCan) {
+    receiveCardInfo(e, whiteboard, garbageCan) {
         const receivedInfo = JSON.parse(e.data)
         const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.card.id)
 
@@ -46,7 +46,6 @@ export default class WebsocketClient {
     }
 
     getChangedPointOfWhiteboard(whiteboard) {
-        console.log("aaaaaaa")
         const cardsLength = whiteboard.cards.length
         const stockCardsLength = this.stockCards.length
 
@@ -54,14 +53,14 @@ export default class WebsocketClient {
             // カードが作成された場合
             const createdCard = whiteboard.cards[cardsLength - 1].get()
 
-            return this.makeSendInfo("create", createdCard)
+            return this.makeSendInfo("create", createdCard, null)
 
         } else if (cardsLength == stockCardsLength) {
             // カード情報が更新された場合
             for (var i = 0; i < cardsLength; i++) {
                 const stockCard = this.stockCards[i]
                 const updatedCard = whiteboard.cards[i].get()
-                const diff = _.omitBy(updatedCard, (v, k) => stockCard[k] === v) // 左調べる
+                const diff = _.omitBy(updatedCard, (v, k) => stockCard[k] === v) 
 
                 // _.omitByは差分がなければ{}を返す
                 if (JSON.stringify(diff) != "{}") {
@@ -86,7 +85,6 @@ export default class WebsocketClient {
     }
 
     getChangedPointOfGarbageCan(garbageCan) {
-
         const cardsLength = garbageCan.cards.length
         const stockcardsLength = this.stockGarbageCanCards.length
 
@@ -99,16 +97,16 @@ export default class WebsocketClient {
         } else if (stockcardsLength > cardsLength) {
             // カードが復元された場合
             const restoredCard = this.stockGarbageCanCards[stockcardsLength - 1]
+
             return this.makeSendInfo("deleteCardFromGarbegeCan", restoredCard)
         }
         return null
     }
 
     makeSendInfo(type, cardInfo, index) {
+        const sendInfo = { type: type, card: cardInfo, index: index }
 
         this.reflectStockState(type, cardInfo, index)
-
-        const sendInfo = { type: type, card: cardInfo, index: index }
 
         return sendInfo
     }
