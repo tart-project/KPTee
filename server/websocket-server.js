@@ -10,7 +10,8 @@ exports.run = () => {
 
         // 初期ロード時最新のホワイトボード情報反映
         if (cards.length > 0) {
-            const sendInfo = ["inisialLoad", cards]
+            const sendInfo = { type: "inisialLoad", card: cards, index: null }
+
             // 送信者に送信
             ws.send(JSON.stringify(sendInfo))
         }
@@ -25,8 +26,7 @@ exports.run = () => {
                 cards.push(receivedInfo.card)
 
             } else if (receivedInfo.type == "update") {
-                cards.splice(index, 1)
-                cards.splice(index, 0, receivedInfo.card)
+                cards.splice(index, 1, receivedInfo.card)
 
             } else if (receivedInfo.type == "delete") {
                 cards.splice(index, 1)

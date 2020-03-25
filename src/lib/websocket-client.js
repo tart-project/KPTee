@@ -5,40 +5,36 @@ export default class WebsocketClient {
         this.websocket = new WebSocket('ws://127.0.0.1:5001');
         // 他のクライアントから受信した場合に発火
         this.websocket.addEventListener('message', (e) => {
-            this.receiveCardInfo(e, whiteboard, garbageCan)
+            this.reflectReceivedInfo(e, whiteboard, garbageCan)
         });
     }
 
-    receiveCardInfo(e, whiteboard, garbageCan){
-        const receivedType = JSON.parse(e.data).type
-        const receivedCard = JSON.parse(e.data).card
+    reflectReceivedInfo(e, whiteboard, garbageCan) {
+        const receivedInfo = JSON.parse(e.data)
+        const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.card.id)
 
-        const index = whiteboard.cards.findIndex(({ id }) => id === receivedCard.id)
+        this.reflectStockState(receivedInfo.type, receivedInfo.card, receivedInfo.index)
 
-        if (receivedType == "create") {
-            this.stockCards.push(receivedCard)
-            whiteboard.createCard(receivedCard)
+        if (receivedInfo.type == "create") {
+            whiteboard.createCard(receivedInfo.card)
 
-        } else if (receivedType == "update") {
-            this.stockCards.splice(index, 1)
-            this.stockCards.push(receivedCard)
-            whiteboard.updateCard(index, receivedCard)
+        } else if (receivedInfo.type == "update") {
+            whiteboard.updateCard(index, receivedInfo.card)
 
-        } else if (receivedType == "delete") {
-            this.stockCards.splice(index, 1)
+        } else if (receivedInfo.type == "delete") {
             whiteboard.deleteCard(index)
 
-        } else if (receivedType == "addCardToGarbegeCan") {
-            this.stockGarbageCanCards.push(receivedCard)
-            garbageCan.addCard(receivedCard)
+        } else if (receivedInfo.type == "addCardToGarbegeCan") {
+            garbageCan.addCard(receivedInfo.card)
 
-        } else if (receivedType == "deleteCardFromGarbegeCan") {
+        } else if (receivedInfo.type == "deleteCardFromGarbegeCan") {
             this.stockGarbageCanCards.pop()
             garbageCan.deleteCard()
 
-        } else if (receivedType == "inisialLoad") {
+
+        } else if (receivedInfo.type == "inisialLoad") {
             // 初期ロード時
-            for (const card of receivedCard) {
+            for (const card of receivedInfo.card) {
                 this.stockCards.push(card)
                 whiteboard.createCard(card)
             }
@@ -122,7 +118,7 @@ export default class WebsocketClient {
             this.stockCards.push(card)
 
         } else if (type == "update") {
-            this.stockCards[index] = card
+            this.stockCards.splice(index, 1, card)
 
         } else if (type == "delete") {
             this.stockCards.splice(index, 1)
