@@ -3,11 +3,11 @@ export default class GarbageCan {
         this.cards = []
     }
 
-    addCard(card){
+    throwAwayCard(card){
         this.cards.push(card)
     }
 
-    deleteCard(){
+    takeOutCard(){
         this.cards.pop()
     }
 }

@@ -31,10 +31,10 @@ exports.run = () => {
             } else if (receivedInfo.type == "delete") {
                 cards.splice(index, 1)
 
-            } else if (receivedInfo.type == "addCardToGarbegeCan") {
+            } else if (receivedInfo.type == "throwAwayCardToGarbegeCan") {
                 garbageCanCards.push(receivedInfo.card)
 
-            } else if (receivedInfo.type == "deleteCardFromGarbegeCan") {
+            } else if (receivedInfo.type == "takeOutCardFromGarbegeCan") {
                 garbageCanCards.pop()
             }
 

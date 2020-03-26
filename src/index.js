@@ -33,7 +33,6 @@ new Vue({
         }
     }
 })
-
 let showingCororPickerId = ""
 
 window.createCard = createCard

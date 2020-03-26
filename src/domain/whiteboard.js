@@ -1,5 +1,4 @@
 import Card from './card'
-import _ from 'lodash';
 
 export default class Whiteboard {
     constructor() {
@@ -34,7 +33,7 @@ export default class Whiteboard {
         this.cards.splice(index, 1, new Card(card))
     }
 
-    deleteCard(card) {
+    takeOutCard(card) {
         const index = this.cards.findIndex(({ id }) => id === card.id)
         this.cards.splice(index, 1)
     }

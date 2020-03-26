@@ -21,13 +21,13 @@ export default class WebsocketClient {
             whiteboard.updateCard(receivedInfo.card)
 
         } else if (receivedInfo.type == "delete") {
-            whiteboard.deleteCard(receivedInfo.card)
+            whiteboard.takeOutCard(receivedInfo.card)
 
-        } else if (receivedInfo.type == "addCardToGarbegeCan") {
-            garbageCan.addCard(receivedInfo.card)
+        } else if (receivedInfo.type == "throwAwayCardToGarbegeCan") {
+            garbageCan.throwAwayCard(receivedInfo.card)
 
-        } else if (receivedInfo.type == "deleteCardFromGarbegeCan") {
-            garbageCan.deleteCard()
+        } else if (receivedInfo.type == "takeOutCardFromGarbegeCan") {
+            garbageCan.takeOutCard()
 
         } else if (receivedInfo.type == "inisialLoad") {
             // 初期ロード時
@@ -91,13 +91,13 @@ export default class WebsocketClient {
             // カードが削除された場合
             const deletedCard = garbageCan.cards[cardsLength - 1]
 
-            return this.makeSendInfo("addCardToGarbegeCan", deletedCard)
+            return this.makeSendInfo("throwAwayCardToGarbegeCan", deletedCard)
 
         } else if (stockcardsLength > cardsLength) {
             // カードが復元された場合
             const restoredCard = this.stockGarbageCanCards[stockcardsLength - 1]
 
-            return this.makeSendInfo("deleteCardFromGarbegeCan", restoredCard)
+            return this.makeSendInfo("takeOutCardFromGarbegeCan", restoredCard)
         }
         return null
     }
@@ -124,10 +124,10 @@ export default class WebsocketClient {
         } else if (type == "delete") {
             this.stockCards.splice(index, 1)
 
-        } else if (type == "addCardToGarbegeCan") {
+        } else if (type == "throwAwayCardToGarbegeCan") {
             this.stockGarbageCanCards.push(card)
 
-        } else if (type == "deleteCardFromGarbegeCan") [
+        } else if (type == "takeOutCardFromGarbegeCan") [
             this.stockGarbageCanCards.pop()
         ]
     }
