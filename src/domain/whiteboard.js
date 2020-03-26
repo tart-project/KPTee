@@ -29,12 +29,14 @@ export default class Whiteboard {
         return info
     }
 
-    updateCard(targetIndex, card) {
-        this.cards.splice(targetIndex, 1, new Card(card))
+    updateCard(card) {
+        const index = this.cards.findIndex(({ id }) => id === card.id)
+        this.cards.splice(index, 1, new Card(card))
     }
 
-    deleteCard(targetIndex) {
-        this.cards.splice(targetIndex, 1)
+    deleteCard(card) {
+        const index = this.cards.findIndex(({ id }) => id === card.id)
+        this.cards.splice(index, 1)
     }
 
     // エクスポートファイルをダウンロード

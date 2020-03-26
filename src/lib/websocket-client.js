@@ -11,26 +11,23 @@ export default class WebsocketClient {
 
     reflectReceivedInfo(e, whiteboard, garbageCan) {
         const receivedInfo = JSON.parse(e.data)
-        const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.card.id)
 
-        this.reflectStockState(receivedInfo.type, receivedInfo.card, receivedInfo.index)
+        this.reflectStockState(receivedInfo.type, receivedInfo.card)
 
         if (receivedInfo.type == "create") {
             whiteboard.createCard(receivedInfo.card)
 
         } else if (receivedInfo.type == "update") {
-            whiteboard.updateCard(index, receivedInfo.card)
+            whiteboard.updateCard(receivedInfo.card)
 
         } else if (receivedInfo.type == "delete") {
-            whiteboard.deleteCard(index)
+            whiteboard.deleteCard(receivedInfo.card)
 
         } else if (receivedInfo.type == "addCardToGarbegeCan") {
             garbageCan.addCard(receivedInfo.card)
 
         } else if (receivedInfo.type == "deleteCardFromGarbegeCan") {
-            this.stockGarbageCanCards.pop()
             garbageCan.deleteCard()
-
 
         } else if (receivedInfo.type == "inisialLoad") {
             // 初期ロード時
@@ -55,7 +52,7 @@ export default class WebsocketClient {
             // カードが作成された場合
             const createdCard = whiteboard.cards[cardsLength - 1].get()
 
-            return this.makeSendInfo("create", createdCard, null)
+            return this.makeSendInfo("create", createdCard)
 
         } else if (cardsLength == stockCardsLength) {
             // カード情報が更新された場合
@@ -67,7 +64,7 @@ export default class WebsocketClient {
                 // _.omitByは差分がなければ{}を返す
                 if (JSON.stringify(diff) != "{}") {
                     // 差分があった場合
-                    return this.makeSendInfo("update", updatedCard, i)
+                    return this.makeSendInfo("update", updatedCard)
                 }
             }
 
@@ -78,7 +75,7 @@ export default class WebsocketClient {
                     // 一致するカードが無かった場合＝削除されたカード
                     const deletedCard = this.stockCards[i]
 
-                    return this.makeSendInfo("delete", deletedCard, i)
+                    return this.makeSendInfo("delete", deletedCard)
                 }
             }
         }
@@ -105,15 +102,19 @@ export default class WebsocketClient {
         return null
     }
 
-    makeSendInfo(type, cardInfo, index) {
-        const sendInfo = { type: type, card: cardInfo, index: index }
+    makeSendInfo(type, cardInfo) {
+        // 変えるならvalue タイプバリュー
+        // インデックスはＩＤでやるべきだからいらない
+        const sendInfo = { type: type, card: cardInfo}
 
-        this.reflectStockState(type, cardInfo, index)
+        this.reflectStockState(type, cardInfo)
 
         return sendInfo
     }
 
-    reflectStockState(type, card, index) {
+    reflectStockState(type, card) {
+        const index = this.stockCards.findIndex(({ id }) => id === card.id)
+
         if (type == "create") {
             this.stockCards.push(card)
 
