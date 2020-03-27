@@ -9,23 +9,16 @@ export default class Whiteboard {
         this.cards.push(new Card(card))
     }
 
-    readCard(targetType, targetIndex) {
-        const info = [];
-
-        if (targetType == "cards") {
-
+    readCards() {
+        const returnInfo = [];
             for (const card of this.cards) {
                 // 参照渡し回避のため、新規オブジェクト生成
                 // TODO: ディープ参照渡しの解決
-                const newCard = JSON.stringify(card.get())
-                info.push(JSON.parse(newCard))
+                const cardInfo = JSON.stringify(card.get())
+                returnInfo.push(JSON.parse(cardInfo))
             }
 
-        } else if (targetType == "card") {
-            info.push(this.cards[targetIndex])           
-        }
-
-        return info
+        return returnInfo
     }
 
     updateCard(card) {
@@ -41,7 +34,7 @@ export default class Whiteboard {
     // エクスポートファイルをダウンロード
     downloadFile(clieckedButton) {
 
-        const cardsInfo = this.readCard("cards")
+        const cardsInfo = this.readCards()
         // 各種設定
         const fileTitle = "kptee-cards.json";
         const exportCardsButton = clieckedButton;

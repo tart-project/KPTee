@@ -60,7 +60,7 @@ export default class WebsocketClient {
                 const stockCard = this.stockCards[i]
                 const updatedCard = whiteboard.cards[i].get()
                 const diff = _.omitBy(updatedCard, (v, k) => stockCard[k] === v) 
-
+                
                 // _.omitByは差分がなければ{}を返す
                 if (JSON.stringify(diff) != "{}") {
                     // 差分があった場合
