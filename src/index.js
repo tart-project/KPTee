@@ -86,7 +86,7 @@ function toggleColorPicker(targetCardId) {
 
 function checkClickedPoint(e) {
     // カラーピッカー表示ボタン、カラーピッカー、カラーズが押された場合はリターン
-    if (e.target.className == "imgOnCard" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
+    if (e.target.className == "test" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
 
     if (showingCororPickerId != "") {
         toggleColorPicker(showingCororPickerId)

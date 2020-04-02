@@ -14,13 +14,23 @@
     border: none;
 }
 
-.imgOnCard{
+.test{
     display: block;
     width: 15px;
     height: auto;
     }
 
-.imgOnCard:hover {
+.test:hover {
+    background-color: rgb(245, 240, 240);
+}
+
+.test1{
+    display: block;
+    width: 15px;
+    height: auto;
+    }
+
+.test1:hover {
     background-color: rgb(245, 240, 240);
 }
 

@@ -10,7 +10,7 @@ exports.run = () => {
 
         // 初期ロード時最新のホワイトボード情報反映
         if (cards.length > 0) {
-            const sendInfo = { type: "inisialLoad", card: cards, index: null }
+            const sendInfo = { type: "inisialLoad", cardsInfo: cards, garbageCanCardsInfo: garbageCanCards}
 
             // 送信者に送信
             ws.send(JSON.stringify(sendInfo))
@@ -19,20 +19,20 @@ exports.run = () => {
         // クライアントからメッセージを受け取ったに発火
         ws.on('message', (message) => {
             const receivedInfo = JSON.parse(message)
-            const index = cards.findIndex(({ id }) => id === receivedInfo.card.id)
+            const index = cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
 
             // cardsに最新情報を送信
             if (receivedInfo.type == "create") {
-                cards.push(receivedInfo.card)
+                cards.push(receivedInfo.cardInfo)
 
             } else if (receivedInfo.type == "update") {
-                cards.splice(index, 1, receivedInfo.card)
+                cards.splice(index, 1, receivedInfo.cardInfo)
 
             } else if (receivedInfo.type == "delete") {
                 cards.splice(index, 1)
 
             } else if (receivedInfo.type == "throwAwayCardToGarbegeCan") {
-                garbageCanCards.push(receivedInfo.card)
+                garbageCanCards.push(receivedInfo.cardInfo)
 
             } else if (receivedInfo.type == "takeOutCardFromGarbegeCan") {
                 garbageCanCards.pop()

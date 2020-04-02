@@ -12,28 +12,34 @@ export default class WebsocketClient {
     reflectReceivedInfo(e, whiteboard, garbageCan) {
         const receivedInfo = JSON.parse(e.data)
 
-        this.reflectStockState(receivedInfo.type, receivedInfo.card)
+        this.reflectStockState(receivedInfo.type, receivedInfo.cardInfo)
 
         if (receivedInfo.type == "create") {
-            whiteboard.createCard(receivedInfo.card)
+            whiteboard.createCard(receivedInfo.cardInfo)
 
         } else if (receivedInfo.type == "update") {
-            whiteboard.updateCard(receivedInfo.card)
+            whiteboard.updateCard(receivedInfo.cardInfo)
 
         } else if (receivedInfo.type == "delete") {
-            whiteboard.takeOutCard(receivedInfo.card)
+            whiteboard.takeOutCard(receivedInfo.cardInfo)
 
         } else if (receivedInfo.type == "throwAwayCardToGarbegeCan") {
-            garbageCan.throwAwayCard(receivedInfo.card)
+            garbageCan.throwAwayCard(receivedInfo.cardInfo)
 
         } else if (receivedInfo.type == "takeOutCardFromGarbegeCan") {
             garbageCan.takeOutCard()
 
         } else if (receivedInfo.type == "inisialLoad") {
-            // 初期ロード時
-            for (const card of receivedInfo.card) {
+            // カード情報反映
+            for (const card of receivedInfo.cardsInfo) {
                 this.stockCards.push(card)
                 whiteboard.createCard(card)
+            }
+
+            // ゴミ箱情報連携
+            for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
+                this.stockGarbageCanCards.push(garbageCanCard)
+                garbageCan.throwAwayCard(garbageCanCard)
             }
         }
     }
@@ -102,30 +108,28 @@ export default class WebsocketClient {
         return null
     }
 
-    makeSendInfo(type, cardInfo) {
-        // 変えるならvalue タイプバリュー
-        // インデックスはＩＤでやるべきだからいらない
-        const sendInfo = { type: type, card: cardInfo}
+    makeSendInfo(typeValue, cardInfoVale) {
+        const sendInfo = { type: typeValue, cardInfo: cardInfoVale}
 
-        this.reflectStockState(type, cardInfo)
+        this.reflectStockState(typeValue, cardInfoVale)
 
         return sendInfo
     }
 
-    reflectStockState(type, card) {
-        const index = this.stockCards.findIndex(({ id }) => id === card.id)
+    reflectStockState(type, cardInfo) {
+        const index = this.stockCards.findIndex(({ id }) => id === cardInfo.id)
 
         if (type == "create") {
-            this.stockCards.push(card)
+            this.stockCards.push(cardInfo)
 
         } else if (type == "update") {
-            this.stockCards.splice(index, 1, card)
+            this.stockCards.splice(index, 1, cardInfo)
 
         } else if (type == "delete") {
             this.stockCards.splice(index, 1)
 
         } else if (type == "throwAwayCardToGarbegeCan") {
-            this.stockGarbageCanCards.push(card)
+            this.stockGarbageCanCards.push(cardInfo)
 
         } else if (type == "takeOutCardFromGarbegeCan") [
             this.stockGarbageCanCards.pop()
