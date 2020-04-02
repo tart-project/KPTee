@@ -14,23 +14,23 @@
     border: none;
 }
 
-.test{
+.colorPickerImg{
     display: block;
     width: 15px;
     height: auto;
     }
 
-.test:hover {
+.colorPickerImg:hover {
     background-color: rgb(245, 240, 240);
 }
 
-.test1{
+.throwAwayCardImg{
     display: block;
     width: 15px;
     height: auto;
     }
 
-.test1:hover {
+.throwAwayCardImg:hover {
     background-color: rgb(245, 240, 240);
 }
 
