@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default class WebsocketClient {
     constructor(whiteboard, garbageCan) {
         this.stockCards = []
