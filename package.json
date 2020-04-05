@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "start": "node server/run.js",
-    "dev": "webpack && node server/run.js"
+    "server": "node server/run.js",
+    "start": "webpack && node server/run.js"
   },
   "repository": {
     "type": "git",

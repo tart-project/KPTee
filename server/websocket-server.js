@@ -31,10 +31,10 @@ exports.run = () => {
             } else if (receivedInfo.type == "delete") {
                 cards.splice(index, 1)
 
-            } else if (receivedInfo.type == "throwAwayCardToGarbegeCan") {
+            } else if (receivedInfo.type == "throwAway") {
                 garbageCanCards.push(receivedInfo.cardInfo)
 
-            } else if (receivedInfo.type == "takeOutCardFromGarbegeCan") {
+            } else if (receivedInfo.type == "takeOut") {
                 garbageCanCards.pop()
             }
 
@@ -51,7 +51,7 @@ exports.run = () => {
 
             if (websocketServer.clients.size == 0) {
                 // 接続者が0人だった場合→初期化
-                cards.splice(0, cards.length)
+                cards.length = 0
             }
         });
     });

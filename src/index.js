@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
-const websocket = new WebsocketClient(whiteboard, garbageCan)
+const websocketClient = new WebsocketClient(whiteboard, garbageCan)
 new Vue({
     el: '#app',
     data: {
@@ -21,19 +21,19 @@ new Vue({
     }, watch: {
         cards: {
             handler: function () {
-                websocket.sendChengedInfo(websocket.getChangedPointOfWhiteboard(whiteboard))
+                websocketClient.sendChangedInfo(whiteboard)
             },
             deep: true
         },
         garbageCan:{
             handler: function () {
-                websocket.sendChengedInfo(websocket.getChangedPointOfGarbageCan(garbageCan))
+                websocketClient.sendChangedInfo(garbageCan)
             },
             deep: true
         }
     }
 })
-let showingCororPickerId = ""
+let showingColorPickerId = ""
 
 window.createCard = createCard
 window.importCards = importCards
@@ -44,12 +44,11 @@ window.throwAwayCard = throwAwayCard
 window.takeOutCard = takeOutCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
-// カラーピッカー 以外をクリックした場合にカラーピッカー表示をOFFにする
+// カラーピッカー以外をクリックした場合にカラーピッカー表示をOFFにする
 window.addEventListener('mousedown', checkClickedPoint, false);
-// インポートボタンにイベントをセット→ファイルが読み込まれたら発火
+// ファイルが読み込まれたら発火
 document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false);
 
-// interactjsを起動
 runInteractjs(whiteboard, user);
 
 function createCard() {
@@ -59,7 +58,7 @@ function createCard() {
 function importCards(e) {
     if (e.type == "change") {
         // ファイルが読み込まれた場合
-        whiteboard.importCards(e, websocket)
+        whiteboard.importCards(e, websocketClient)
     }
 }
 
@@ -85,16 +84,15 @@ function toggleColorPicker(targetCardId) {
 }
 
 function checkClickedPoint(e) {
-    // カラーピッカー表示ボタン、カラーピッカー、カラーズが押された場合はリターン
-    if (e.target.className == "test" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
+    // カラーピッカー表示ボタン、カラーピッカー内場合はリターン
+    if (e.target.className.match(/colorPicker/) || e.target.className == "colors") { return }
 
-    if (showingCororPickerId != "") {
-        toggleColorPicker(showingCororPickerId)
+    if (showingColorPickerId != "") {
+        toggleColorPicker(showingColorPickerId)
     }
 }
 
 function changeColorPickerState(targetId) {
-
     const targetPicker = document.getElementById(targetId).lastElementChild
 
     if (targetPicker.style.display == "none") {
@@ -106,17 +104,17 @@ function changeColorPickerState(targetId) {
 }
 
 function changePickerId(targetCardId) {
-    if (showingCororPickerId == "") {
+    if (showingColorPickerId == "") {
         // ピッカー表示中カードない場合
-        showingCororPickerId = targetCardId
+        showingColorPickerId = targetCardId
 
-    } else if (showingCororPickerId != targetCardId) {
+    } else if (showingColorPickerId != targetCardId) {
         // クリックされたボタンがピッカー表示中カードではない場合
-        changeColorPickerState(showingCororPickerId)
-        showingCororPickerId = targetCardId
+        changeColorPickerState(showingColorPickerId)
+        showingColorPickerId = targetCardId
 
     } else {
         // クリックされたボタンがピッカー表示中カードだった場合
-        showingCororPickerId = ""
+        showingColorPickerId = ""
     }
 }

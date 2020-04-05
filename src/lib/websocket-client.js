@@ -25,10 +25,10 @@ export default class WebsocketClient {
         } else if (receivedInfo.type == "delete") {
             whiteboard.takeOutCard(receivedInfo.cardInfo)
 
-        } else if (receivedInfo.type == "throwAwayCardToGarbegeCan") {
+        } else if (receivedInfo.type == "throwAway") {
             garbageCan.throwAwayCard(receivedInfo.cardInfo)
 
-        } else if (receivedInfo.type == "takeOutCardFromGarbegeCan") {
+        } else if (receivedInfo.type == "takeOut") {
             garbageCan.takeOutCard()
 
         } else if (receivedInfo.type == "inisialLoad") {
@@ -46,9 +46,18 @@ export default class WebsocketClient {
         }
     }
 
-    sendChengedInfo(chengedInfo) {
-        if (chengedInfo != null) {
-            this.websocket.send(JSON.stringify(chengedInfo));
+    sendChangedInfo(targetObject) {
+        let changedInfo
+
+        if (targetObject.constructor.name == "Whiteboard") {
+            changedInfo = this.getChangedPointOfWhiteboard(targetObject)
+
+        } else if (targetObject.constructor.name == "GarbageCan") {
+            changedInfo = this.getChangedPointOfGarbageCan(targetObject)
+        }
+
+        if (changedInfo != null) {
+            this.websocket.send(JSON.stringify(changedInfo));
         }
     }
 
@@ -67,8 +76,8 @@ export default class WebsocketClient {
             for (var i = 0; i < cardsLength; i++) {
                 const stockCard = this.stockCards[i]
                 const updatedCard = whiteboard.cards[i].get()
-                const diff = _.omitBy(updatedCard, (v, k) => stockCard[k] === v) 
-                
+                const diff = _.omitBy(updatedCard, (v, k) => stockCard[k] === v)
+
                 // _.omitByは差分がなければ{}を返す
                 if (JSON.stringify(diff) != "{}") {
                     // 差分があった場合
@@ -99,19 +108,19 @@ export default class WebsocketClient {
             // カードが削除された場合
             const deletedCard = garbageCan.cards[cardsLength - 1]
 
-            return this.makeSendInfo("throwAwayCardToGarbegeCan", deletedCard)
+            return this.makeSendInfo("throwAway", deletedCard)
 
         } else if (stockcardsLength > cardsLength) {
             // カードが復元された場合
             const restoredCard = this.stockGarbageCanCards[stockcardsLength - 1]
 
-            return this.makeSendInfo("takeOutCardFromGarbegeCan", restoredCard)
+            return this.makeSendInfo("takeOut", restoredCard)
         }
         return null
     }
 
     makeSendInfo(typeValue, cardInfoVale) {
-        const sendInfo = { type: typeValue, cardInfo: cardInfoVale}
+        const sendInfo = { type: typeValue, cardInfo: cardInfoVale }
 
         this.reflectStockState(typeValue, cardInfoVale)
 
@@ -130,12 +139,11 @@ export default class WebsocketClient {
         } else if (type == "delete") {
             this.stockCards.splice(index, 1)
 
-        } else if (type == "throwAwayCardToGarbegeCan") {
+        } else if (type == "throwAway") {
             this.stockGarbageCanCards.push(cardInfo)
 
-        } else if (type == "takeOutCardFromGarbegeCan") [
+        } else if (type == "takeOut") {
             this.stockGarbageCanCards.pop()
-        ]
+        }
     }
-
 }

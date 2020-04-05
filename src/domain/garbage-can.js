@@ -8,6 +8,6 @@ export default class GarbageCan {
     }
 
     takeOutCard(){
-        this.cards.pop()
+        return this.cards.pop()
     }
 }
