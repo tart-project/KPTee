@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import Card from '../domain/card';
 
 export default class WebsocketClient {
     constructor(whiteboard, garbageCan) {
@@ -17,31 +18,33 @@ export default class WebsocketClient {
         this.reflectStockState(receivedInfo.type, receivedInfo.cardInfo)
 
         if (receivedInfo.type == "create") {
-            whiteboard.createCard(receivedInfo.cardInfo)
+            whiteboard.cards.push(new Card(receivedInfo.cardInfo))
 
         } else if (receivedInfo.type == "update") {
-            whiteboard.updateCard(receivedInfo.cardInfo)
+            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+            whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
 
         } else if (receivedInfo.type == "delete") {
-            whiteboard.takeOutCard(receivedInfo.cardInfo)
+            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+            whiteboard.cards.splice(index, 1)
 
         } else if (receivedInfo.type == "throwAway") {
-            garbageCan.throwAwayCard(receivedInfo.cardInfo)
+            garbageCan.cards.push(receivedInfo.cardInfo)
 
         } else if (receivedInfo.type == "takeOut") {
-            garbageCan.takeOutCard()
+            garbageCan.cards.pop()
 
         } else if (receivedInfo.type == "inisialLoad") {
             // カード情報反映
             for (const card of receivedInfo.cardsInfo) {
                 this.stockCards.push(card)
-                whiteboard.createCard(card)
+                whiteboard.cards.push(new Card(card))
             }
 
             // ゴミ箱情報連携
             for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
                 this.stockGarbageCanCards.push(garbageCanCard)
-                garbageCan.throwAwayCard(garbageCanCard)
+                garbageCan.cards.push(garbageCanCard)
             }
         }
     }

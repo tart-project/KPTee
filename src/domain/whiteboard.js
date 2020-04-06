@@ -5,29 +5,6 @@ export default class Whiteboard {
         this.cards = []
     }
 
-    createCard(card) {
-        this.cards.push(new Card(card))
-    }
-
-    readCards() {
-        const returnInfo = [];
-        for (const card of this.cards) {
-            returnInfo.push(card.get())
-        }
-
-        return returnInfo
-    }
-
-    updateCard(card) {
-        const index = this.cards.findIndex(({ id }) => id === card.id)
-        this.cards.splice(index, 1, new Card(card))
-    }
-
-    takeOutCard(card) {
-        const index = this.cards.findIndex(({ id }) => id === card.id)
-        this.cards.splice(index, 1)
-    }
-
     // エクスポートファイルをダウンロード
     downloadFile(clieckedButton) {
         const cardsInfo = this.readCards()
@@ -38,6 +15,15 @@ export default class Whiteboard {
 
         exportCardsButton.setAttribute("href", downloadUrl);
         exportCardsButton.setAttribute("download", fileTitle);
+    }
+
+    readCards() {
+        const returnInfo = [];
+        for (const card of this.cards) {
+            returnInfo.push(card.get())
+        }
+
+        return returnInfo
     }
 
     // インポート情報→カード作成
