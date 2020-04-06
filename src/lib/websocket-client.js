@@ -12,43 +12,6 @@ export default class WebsocketClient {
         });
     }
 
-    reflectReceivedInfo(e, whiteboard, garbageCan) {
-        const receivedInfo = JSON.parse(e.data)
-
-        this.reflectStockState(receivedInfo.type, receivedInfo.cardInfo)
-
-        if (receivedInfo.type == "create") {
-            whiteboard.cards.push(new Card(receivedInfo.cardInfo))
-
-        } else if (receivedInfo.type == "update") {
-            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
-            whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
-
-        } else if (receivedInfo.type == "delete") {
-            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
-            whiteboard.cards.splice(index, 1)
-
-        } else if (receivedInfo.type == "throwAway") {
-            garbageCan.cards.push(receivedInfo.cardInfo)
-
-        } else if (receivedInfo.type == "takeOut") {
-            garbageCan.cards.pop()
-
-        } else if (receivedInfo.type == "inisialLoad") {
-            // カード情報反映
-            for (const card of receivedInfo.cardsInfo) {
-                this.stockCards.push(card)
-                whiteboard.cards.push(new Card(card))
-            }
-
-            // ゴミ箱情報連携
-            for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
-                this.stockGarbageCanCards.push(garbageCanCard)
-                garbageCan.cards.push(garbageCanCard)
-            }
-        }
-    }
-
     sendChangedInfo(targetObject) {
         let changedInfo
 
@@ -98,7 +61,7 @@ export default class WebsocketClient {
                 }
             }
         }
-        // 別ユーザーから変化点が送られてきた場合は上記に該当しないためnullを返却
+        // 自身変化→別ユーザーから変化点が送られてきた場合は上記に該当しないためnullを返却
         return null
     }
 
@@ -127,6 +90,43 @@ export default class WebsocketClient {
         this.reflectStockState(typeValue, cardInfoVale)
 
         return sendInfo
+    }
+
+    reflectReceivedInfo(e, whiteboard, garbageCan) {
+        const receivedInfo = JSON.parse(e.data)
+
+        this.reflectStockState(receivedInfo.type, receivedInfo.cardInfo)
+
+        if (receivedInfo.type == "create") {
+            whiteboard.cards.push(new Card(receivedInfo.cardInfo))
+
+        } else if (receivedInfo.type == "update") {
+            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+            whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
+
+        } else if (receivedInfo.type == "delete") {
+            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+            whiteboard.cards.splice(index, 1)
+
+        } else if (receivedInfo.type == "throwAway") {
+            garbageCan.cards.push(receivedInfo.cardInfo)
+
+        } else if (receivedInfo.type == "takeOut") {
+            garbageCan.cards.pop()
+
+        } else if (receivedInfo.type == "inisialLoad") {
+            // カード情報反映
+            for (const card of receivedInfo.cardsInfo) {
+                this.stockCards.push(card)
+                whiteboard.cards.push(new Card(card))
+            }
+
+            // ゴミ箱情報連携
+            for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
+                this.stockGarbageCanCards.push(garbageCanCard)
+                garbageCan.cards.push(garbageCanCard)
+            }
+        }
     }
 
     reflectStockState(type, cardInfo) {

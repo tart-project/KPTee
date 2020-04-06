@@ -24,7 +24,6 @@ export default class User {
     takeOutCard(whiteboard, garbageCan) {
         if (garbageCan.cards.length != 0) {
             // if there is a archive card
-            // Restore target card 
             whiteboard.cards.push(new Card(garbageCan.cards.pop()))
         }
     }
