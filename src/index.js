@@ -3,6 +3,7 @@ import User from './domain/user'
 import Vue from 'vue'
 import WebsocketClient from './lib/websocket-client'
 import GarbageCan from './domain/garbage-can'
+import Synchronizer from './lib/synchronizer'
 import { runInteractjs } from './lib/interactjs'
 import { colors } from './constant'
 import 'bootstrap';
@@ -11,7 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
-const websocketClient = new WebsocketClient(whiteboard, garbageCan)
+const synchronizer = new Synchronizer
+const websocketClient = new WebsocketClient(whiteboard, garbageCan, synchronizer)
 new Vue({
     el: '#app',
     data: {
@@ -21,13 +23,13 @@ new Vue({
     }, watch: {
         cards: {
             handler: function () {
-                websocketClient.sendChangedInfo(whiteboard)
+                synchronizer.sendChangedInfoToWebsocket(whiteboard, websocketClient)
             },
             deep: true
         },
         garbageCan:{
             handler: function () {
-                websocketClient.sendChangedInfo(garbageCan)
+                synchronizer.sendChangedInfoToWebsocket(garbageCan, websocketClient)
             },
             deep: true
         }

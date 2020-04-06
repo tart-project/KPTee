@@ -20,7 +20,7 @@ export default class Whiteboard {
     readCards() {
         const returnInfo = [];
         for (const card of this.cards) {
-            returnInfo.push(card.get())
+            returnInfo.push(card.getInfo())
         }
 
         return returnInfo
