@@ -5,7 +5,7 @@ export default class WebsocketClient {
     constructor(whiteboard, garbageCan) {
         this.stockCards = []
         this.stockGarbageCanCards = []
-        this.websocket = new WebSocket('ws://127.0.0.1:5001');
+        this.websocket = new WebSocket(`ws://${window.location.hostname}:5001`);
         // 他のクライアントから受信した場合に発火
         this.websocket.addEventListener('message', (e) => {
             this.reflectReceivedInfo(e, whiteboard, garbageCan)

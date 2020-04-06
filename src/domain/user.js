@@ -28,13 +28,13 @@ export default class User {
         }
     }
 
-    changeDrag(whiteboard, targetId, changedLeft, changedTop) {
+    changeDragedInfo(whiteboard, targetId, changedLeft, changedTop) {
         const target = whiteboard.cards.find(({ id }) => id === targetId)
         target.left = changedLeft
         target.top = changedTop
     }
 
-    changeResize(whiteboard, targetId, changedWidth, changedHeight) {
+    changeResizedInfo(whiteboard, targetId, changedWidth, changedHeight) {
         const target = whiteboard.cards.find(({ id }) => id === targetId)
         target.width = changedWidth
         target.height = changedHeight

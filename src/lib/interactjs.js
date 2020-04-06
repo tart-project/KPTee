@@ -21,7 +21,7 @@ export function runInteractjs(whiteboard, user) {
             const currentTop = targetRectInfo.top + window.pageYOffset;
             const currentLeft = targetRectInfo.left + window.pageXOffset;
 
-            user.changeDrag(whiteboard, event.target.id, `${currentLeft}px`, `${currentTop}px`)
+            user.changeDragedInfo(whiteboard, event.target.id, `${currentLeft}px`, `${currentTop}px`)
 
             // 移動距離の初期化
             changedPosition.x = 0
@@ -40,8 +40,7 @@ export function runInteractjs(whiteboard, user) {
                     min: { width: 80, height: 35 }
                 })
             ]
-        })
-        .on('resizemove', (event) => {
+        }).on('resizemove', (event) => {
             // update the element's style
             if (event.edges.right && event.edges.bottom) {
                 event.target.style.width = `${event.rect.width}px`
@@ -52,9 +51,8 @@ export function runInteractjs(whiteboard, user) {
             else if (event.edges.bottom) {
                 event.target.style.height = `${event.rect.height}px`
             }
-        })
-        .on('resizeend', (event) => {
+        }).on('resizeend', (event) => {
             // update the card info
-            user.changeResize(whiteboard, event.target.parentNode.id, event.target.style.width, event.target.style.height)
+            user.changeResizedInfo(whiteboard, event.target.parentNode.id, event.target.style.width, event.target.style.height)
         })
 };
