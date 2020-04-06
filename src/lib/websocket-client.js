@@ -69,7 +69,7 @@ export default class WebsocketClient {
 
         if (cardsLength > stockCardsLength) {
             // カードが作成された場合
-            const createdCard = whiteboard.cards[cardsLength - 1]
+            const createdCard = whiteboard.cards[cardsLength - 1].get()
 
             return this.makeSendInfo("create", createdCard)
 
@@ -77,15 +77,11 @@ export default class WebsocketClient {
             // カード情報が更新された場合
             for (var i = 0; i < cardsLength; i++) {
                 const stockCard = this.stockCards[i]
-                const aaa = stockCard.get()
                 const updatedCard = whiteboard.cards[i].get()
-                const diff = _.omitBy(updatedCard, (v, k) => aaa[k] === v)
-
-                console.log(diff)
+                const diff = _.omitBy(updatedCard, (v, k) => stockCard[k] === v)
 
                 // _.omitByは差分がなければ{}を返す
                 if (JSON.stringify(diff) != "{}") {
-                    console.log(111)
                     // 差分があった場合
                     return this.makeSendInfo("update", updatedCard)
                 }
