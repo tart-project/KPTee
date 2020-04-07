@@ -13,7 +13,7 @@ const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
 const synchronizer = new Synchronizer
-const websocketClient = new WebsocketClient(whiteboard, garbageCan, synchronizer)
+const websocketClient = new WebsocketClient(whiteboard, garbageCan, function (a, b, c) { synchronizer.executeReceiveProcess(a, b, c) })
 new Vue({
     el: '#app',
     data: {
@@ -23,13 +23,14 @@ new Vue({
     }, watch: {
         cards: {
             handler: function () {
-                synchronizer.sendChangedInfoToWebsocket(whiteboard, websocketClient)
+                // execute
+                synchronizer.executeSendProcess(whiteboard, websocketClient)
             },
             deep: true
         },
-        garbageCan:{
+        garbageCan: {
             handler: function () {
-                synchronizer.sendChangedInfoToWebsocket(garbageCan, websocketClient)
+                synchronizer.executeSendProcess(garbageCan, websocketClient)
             },
             deep: true
         }

@@ -1,4 +1,5 @@
 import Card from '../domain/card'
+import _ from 'lodash'
 
 export default class Synchronizer {
     constructor() {
@@ -6,7 +7,7 @@ export default class Synchronizer {
         this.stockGarbageCanCards = []
     }
 
-    sendChangedInfoToWebsocket(targetObject, websocketClient) {
+    executeSendProcess(targetObject, websocketClient) {
         let changedInfo
 
         if (targetObject.constructor.name == "Whiteboard") {
@@ -19,6 +20,44 @@ export default class Synchronizer {
         if (changedInfo != null) {
             this.reflectStockState(changedInfo.type, changedInfo.cardInfo)
             websocketClient.sendInfo(changedInfo)
+        }
+    }
+
+    executeReceiveProcess(receivedInfo, whiteboard, garbageCan) {
+
+        // ストックに反映→正規にコピー
+        // リモート、サーバーとかcardsの名前をつける
+        this.reflectStockState(receivedInfo.type, receivedInfo.cardInfo)
+
+        if (receivedInfo.type == "create") {
+            whiteboard.cards.push(new Card(receivedInfo.cardInfo))
+
+        } else if (receivedInfo.type == "update") {
+            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+            whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
+
+        } else if (receivedInfo.type == "delete") {
+            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+            whiteboard.cards.splice(index, 1)
+
+        } else if (receivedInfo.type == "throwAway") {
+            garbageCan.cards.push(new Card(receivedInfo.cardInfo))
+
+        } else if (receivedInfo.type == "takeOut") {
+            garbageCan.cards.pop()
+
+        } else if (receivedInfo.type == "inisialLoad") {
+            // カード情報反映
+            for (const card of receivedInfo.cardsInfo) {
+                this.stockCards.push(card)
+                whiteboard.cards.push(new Card(card))
+            }
+
+            // ゴミ箱情報連携
+            for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
+                this.stockGarbageCanCards.push(garbageCanCard)
+                garbageCan.cards.push(garbageCanCard)
+            }
         }
     }
 
@@ -80,6 +119,7 @@ export default class Synchronizer {
         return null
     }
 
+    // 送るように加工する　 tosendinfoでよいのでは　共有してほしい情報
     makeChangedInfo(typeValue, cardInfoVale) {
         const sendInfo = { type: typeValue, cardInfo: cardInfoVale }
 
@@ -107,40 +147,4 @@ export default class Synchronizer {
     }
 
 
-    reflectReceivedInfo(receivedInfo, whiteboard, garbageCan) {
-
-        this.reflectStockState(receivedInfo.type, receivedInfo.cardInfo)
-
-        if (receivedInfo.type == "create") {
-            whiteboard.cards.push(new Card(receivedInfo.cardInfo))
-
-        } else if (receivedInfo.type == "update") {
-            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
-            whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
-
-        } else if (receivedInfo.type == "delete") {
-            const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
-            whiteboard.cards.splice(index, 1)
-
-        } else if (receivedInfo.type == "throwAway") {
-            garbageCan.cards.push(receivedInfo.cardInfo)
-
-        } else if (receivedInfo.type == "takeOut") {
-            garbageCan.cards.pop()
-
-        } else if (receivedInfo.type == "inisialLoad") {
-            // カード情報反映
-            for (const card of receivedInfo.cardsInfo) {
-                this.stockCards.push(card)
-                whiteboard.cards.push(new Card(card))
-            }
-
-            // ゴミ箱情報連携
-            for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
-                this.stockGarbageCanCards.push(garbageCanCard)
-                garbageCan.cards.push(garbageCanCard)
-            }
-        }
-    }
 }
-

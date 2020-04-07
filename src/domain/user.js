@@ -17,14 +17,27 @@ export default class User {
     throwAwayCard(clieckedCardId, garbageCan, whiteboard) {
         // Add a card to a garbage can
         garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
+        console.log(1)
+        console.log(garbageCan.cards[0].getInfo())
         // Delete a card from a whiteboard
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
+        console.log(2)
+
+        console.log(garbageCan.cards[0].getInfo())
+
     }
 
     takeOutCard(whiteboard, garbageCan) {
         if (garbageCan.cards.length != 0) {
+        console.log(3)
+
+            console.log(garbageCan.cards)
             // if there is a archive card
             whiteboard.cards.push(garbageCan.cards.pop())
+        console.log(4)
+
+            console.log(garbageCan.cards)
+
         }
     }
 

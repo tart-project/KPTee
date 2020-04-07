@@ -1,11 +1,9 @@
-import _ from 'lodash'
-
 export default class WebsocketClient {
-    constructor(whiteboard, garbageCan, synchronizer) {
+    constructor(whiteboard, garbageCan, fn) {
         this.websocket = new WebSocket(`ws://${window.location.hostname}:5001`);
         // 他のクライアントから受信した場合に発火
         this.websocket.addEventListener('message', (e) => {
-            synchronizer.reflectReceivedInfo(JSON.parse(e.data), whiteboard, garbageCan)
+            fn(JSON.parse(e.data), whiteboard, garbageCan)
         });
     }
 
