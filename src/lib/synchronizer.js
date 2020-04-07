@@ -145,6 +145,4 @@ export default class Synchronizer {
             this.stockGarbageCanCards.pop()
         }
     }
-
-
 }

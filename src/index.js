@@ -13,7 +13,7 @@ const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
 const synchronizer = new Synchronizer
-const websocketClient = new WebsocketClient(whiteboard, garbageCan, function (a, b, c) { synchronizer.executeReceiveProcess(a, b, c) })
+const websocketClient = new WebsocketClient(whiteboard, garbageCan, function (receivedInfo, whiteboard, garbageCan) { synchronizer.executeReceiveProcess(receivedInfo, whiteboard, garbageCan) })
 new Vue({
     el: '#app',
     data: {
@@ -61,7 +61,7 @@ function createCard() {
 function importCards(e) {
     if (e.type == "change") {
         // ファイルが読み込まれた場合
-        whiteboard.importCards(e, websocketClient)
+        whiteboard.importCards(e, synchronizer, websocketClient)
     }
 }
 

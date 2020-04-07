@@ -45,14 +45,5 @@ exports.run = () => {
                     client.send(JSON.stringify(receivedInfo));
             });
         });
-
-        // クライアントが通信を切断した場合に発火
-        ws.on('close', () => {
-
-            if (websocketServer.clients.size == 0) {
-                // 接続者が0人だった場合→初期化
-                cards.length = 0
-            }
-        });
     });
 }
