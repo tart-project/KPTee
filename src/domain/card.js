@@ -16,7 +16,7 @@ export default class Card {
         this.height = card.height
     }
 
-    get() {
+    getInfo() {
         // カード情報生成
         // TODO: ディープ参照渡しの解決
         const card = JSON.parse(JSON.stringify(defaultCard))

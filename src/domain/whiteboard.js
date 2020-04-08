@@ -20,14 +20,14 @@ export default class Whiteboard {
     readCards() {
         const returnInfo = [];
         for (const card of this.cards) {
-            returnInfo.push(card.get())
+            returnInfo.push(card.getInfo())
         }
 
         return returnInfo
     }
 
     // インポート情報→カード作成
-    importCards(e, websocketClient) {
+    importCards(e, synchronizer, websocketClient) {
         const fileReader = new FileReader();
 
         fileReader.readAsText(e.target.files[0]);
@@ -38,7 +38,7 @@ export default class Whiteboard {
             for (const card of importedCards) {
                 this.cards.push(new Card(card))
                 // import時はvueのwatchが反応しないため呼び出し
-                websocketClient.sendChangedInfo(this)
+                synchronizer.executeSendProcess(this, websocketClient)
             }
         })
     }
