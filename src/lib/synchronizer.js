@@ -24,7 +24,6 @@ export default class Synchronizer {
     }
 
     executeReceiveProcess(receivedInfo, whiteboard, garbageCan) {
-
         this.reflectRemoteState(receivedInfo.type, receivedInfo.cardInfo)
 
         const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
@@ -54,7 +53,7 @@ export default class Synchronizer {
             // ゴミ箱情報連携
             for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
                 this.remoteGarbageCanCards.push(garbageCanCard)
-                garbageCan.cards.push(garbageCanCard)
+                garbageCan.cards.push(new Card(garbageCanCard))
             }
         }
     }
