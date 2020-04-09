@@ -2,15 +2,15 @@ exports.run = () => {
 
     const server = require('ws').Server;
     const websocketServer = new server({ port: 5001 });
-    const originCards = []
-    const originGarbageCanCards = []
+    const originCardsInfo = []
+    const originGarbageCanCardsInfo = []
 
     // on()はイベントに対する処理を設定できる関数
     websocketServer.on('connection', (ws) => {
 
         // 初期ロード時最新のホワイトボード情報反映
-        if (originCards.length > 0) {
-            const sendInfo = { type: "inisialLoad", cardsInfo: originCards, garbageCanCardsInfo: originGarbageCanCards}
+        if (originCardsInfo.length > 0) {
+            const sendInfo = { type: "inisialLoad", cardsInfo: originCardsInfo, garbageCanCardsInfo: originGarbageCanCardsInfo}
 
             // 送信者に送信
             ws.send(JSON.stringify(sendInfo))
@@ -19,23 +19,23 @@ exports.run = () => {
         // クライアントからメッセージを受け取ったに発火
         ws.on('message', (message) => {
             const receivedInfo = JSON.parse(message)
-            const index = originCards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+            const index = originCardsInfo.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
 
             // cardsに最新情報を送信
             if (receivedInfo.type == "create") {
-                originCards.push(receivedInfo.cardInfo)
+                originCardsInfo.push(receivedInfo.cardInfo)
 
             } else if (receivedInfo.type == "update") {
-                originCards.splice(index, 1, receivedInfo.cardInfo)
+                originCardsInfo.splice(index, 1, receivedInfo.cardInfo)
 
             } else if (receivedInfo.type == "delete") {
-                originCards.splice(index, 1)
+                originCardsInfo.splice(index, 1)
 
             } else if (receivedInfo.type == "throwAway") {
-                originGarbageCanCards.push(receivedInfo.cardInfo)
+                originGarbageCanCardsInfo.push(receivedInfo.cardInfo)
 
             } else if (receivedInfo.type == "takeOut") {
-                originGarbageCanCards.pop()
+                originGarbageCanCardsInfo.pop()
             }
 
             // 送信者以外のクライアントにデータを送信

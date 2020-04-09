@@ -19,7 +19,7 @@ new Vue({
     data: {
         cards: whiteboard.cards,
         colors: colors,
-        garbageCan: garbageCan.cards
+        garbageCan: garbageCan.cardsInfo
     }, watch: {
         cards: {
             handler: function () {

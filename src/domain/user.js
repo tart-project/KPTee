@@ -16,16 +16,15 @@ export default class User {
 
     throwAwayCard(clieckedCardId, garbageCan, whiteboard) {
         // Add a card to a garbage can
-        garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
+        garbageCan.cardsInfo.push(whiteboard.cards.find(({ id }) => id === clieckedCardId).getInfo())
         // Delete a card from a whiteboard
         whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
-
     }
 
     takeOutCard(whiteboard, garbageCan) {
-        if (garbageCan.cards.length != 0) {
+        if (garbageCan.cardsInfo.length != 0) {
             // if there is a archive card
-            whiteboard.cards.push(garbageCan.cards.pop())
+            whiteboard.cards.push(new Card(garbageCan.cardsInfo.pop()))
         }
     }
 
