@@ -1,4 +1,4 @@
-import Card from '../domain/card'
+import Card from './card'
 import _ from 'lodash'
 
 export default class Synchronizer {

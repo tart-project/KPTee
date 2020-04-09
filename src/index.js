@@ -3,7 +3,7 @@ import User from './domain/user'
 import Vue from 'vue'
 import WebsocketClient from './lib/websocket-client'
 import GarbageCan from './domain/garbage-can'
-import Synchronizer from './lib/synchronizer'
+import Synchronizer from './domain/synchronizer'
 import { runInteractjs } from './lib/interactjs'
 import { colors } from './constant'
 import 'bootstrap';
