@@ -114,8 +114,6 @@ export default class Synchronizer {
     reflectRemoteState(type, cardInfo) {
         const index = this.remoteCardsInfo.findIndex(({ id }) => id === cardInfo.id)
 
-        console.log(cardInfo)
-
         if (type == "create") {
             this.remoteCardsInfo.push(cardInfo)
 
