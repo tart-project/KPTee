@@ -12,8 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
-const synchronizer = new Synchronizer
-const websocketClient = new WebsocketClient(whiteboard, garbageCan, function (receivedInfo, whiteboard, garbageCan) { synchronizer.executeReceiveProcess(receivedInfo, whiteboard, garbageCan) })
+const synchronizer = new Synchronizer(whiteboard, garbageCan)
+const websocketClient = new WebsocketClient(function (receivedInfo) { synchronizer.executeReceiveProcess(receivedInfo) })
 new Vue({
     el: '#app',
     data: {

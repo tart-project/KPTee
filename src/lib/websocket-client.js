@@ -1,9 +1,10 @@
 export default class WebsocketClient {
-    constructor(whiteboard, garbageCan, fn) {
+    constructor(fn) {
         this.websocket = new WebSocket(`ws://${window.location.hostname}:5001`);
         // 他のクライアントから受信した場合に発火
         this.websocket.addEventListener('message', (e) => {
-            fn(JSON.parse(e.data), whiteboard, garbageCan)
+            console.log(111)
+            fn(JSON.parse(e.data))
         });
     }
 

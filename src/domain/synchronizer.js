@@ -2,11 +2,14 @@ import Card from './card'
 import _ from 'lodash'
 
 export default class Synchronizer {
-    constructor() {
+    constructor(whiteboard, garbageCan) {
         this.remoteCardsInfo = []
         this.remoteGarbageCanCardsInfo = []
+        this.whiteboard = whiteboard
+        this.garbageCan = garbageCan
     }
 
+    // 送受信で引数が揃ってないことが違和感
     executeSendProcess(targetObject, websocketClient) {
         let changedInfo
 
@@ -23,37 +26,37 @@ export default class Synchronizer {
         }
     }
 
-    executeReceiveProcess(receivedInfo, whiteboard, garbageCan) {
+    executeReceiveProcess(receivedInfo) {
         this.reflectRemoteState(receivedInfo.type, receivedInfo.cardInfo)
 
-        const index = whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+        const index = this.whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
 
         if (receivedInfo.type == "create") {
-            whiteboard.cards.push(new Card(receivedInfo.cardInfo))
+            this.whiteboard.cards.push(new Card(receivedInfo.cardInfo))
 
         } else if (receivedInfo.type == "update") {
-            whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
+            this.whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
 
         } else if (receivedInfo.type == "delete") {
-            whiteboard.cards.splice(index, 1)
+            this.whiteboard.cards.splice(index, 1)
 
         } else if (receivedInfo.type == "throwAway") {
-            garbageCan.cardsInfo.push(receivedInfo.cardInfo)
+            this.garbageCan.cardsInfo.push(receivedInfo.cardInfo)
 
         } else if (receivedInfo.type == "takeOut") {
-            garbageCan.cardsInfo.pop()
+            this.garbageCan.cardsInfo.pop()
 
         } else if (receivedInfo.type == "inisialLoad") {
             // カード情報反映
             for (const card of receivedInfo.cardsInfo) {
                 this.remoteCardsInfo.push(card)
-                whiteboard.cards.push(new Card(card))
+                this.whiteboard.cards.push(new Card(card))
             }
 
             // ゴミ箱情報連携
             for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
                 this.remoteGarbageCanCardsInfo.push(garbageCanCard)
-                garbageCan.cardsInfo.push(garbageCanCard)
+                this. garbageCan.cardsInfo.push(garbageCanCard)
             }
         }
     }
