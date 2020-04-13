@@ -3,7 +3,6 @@ export default class WebsocketClient {
         this.websocket = new WebSocket(`ws://${window.location.hostname}:5001`);
         // 他のクライアントから受信した場合に発火
         this.websocket.addEventListener('message', (e) => {
-            console.log(111)
             fn(JSON.parse(e.data))
         });
     }
