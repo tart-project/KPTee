@@ -28,14 +28,12 @@ exports.run = () => {
             } else if (receivedInfo.type == "update") {
                 originCardsInfo.splice(index, 1, receivedInfo.cardInfo)
 
-            } else if (receivedInfo.type == "delete") {
-                originCardsInfo.splice(index, 1)
-
             } else if (receivedInfo.type == "throwAway") {
+                originCardsInfo.splice(index, 1)
                 originGarbageCanCardsInfo.push(receivedInfo.cardInfo)
 
             } else if (receivedInfo.type == "takeOut") {
-                originGarbageCanCardsInfo.pop()
+                originCardsInfo.push(originGarbageCanCardsInfo.pop())
             }
 
             // 送信者以外のクライアントにデータを送信

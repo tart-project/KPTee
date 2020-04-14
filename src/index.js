@@ -11,9 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
-// インスタンスを生成する時に知っておかないといけないかどうかで引数を渡す
 const synchronizer = new Synchronizer(whiteboard, garbageCan)
-
 new Vue({
     el: '#app',
     data: {
@@ -23,14 +21,7 @@ new Vue({
     }, watch: {
         cards: {
             handler: function () {
-                // ゴミ箱と一緒にして毎回全てを見ればよい
-                synchronizer.executeSendProcess("whiteboard")
-            },
-            deep: true
-        },
-        garbageCan: {
-            handler: function () {
-                synchronizer.executeSendProcess("garbageCan")
+                synchronizer.submit()
             },
             deep: true
         }
@@ -61,7 +52,7 @@ function createCard() {
 function importCards(e) {
     if (e.type == "change") {
         // ファイルが読み込まれた場合
-        whiteboard.importCards(e, synchronizer, websocketClient)
+        whiteboard.importCards(e, () => { synchronizer.submit()})
     }
 }
 

@@ -2,32 +2,21 @@ import Card from './card'
 import _ from 'lodash'
 import WebsocketClient from '../lib/websocket-client'
 
-
-// カードをゴミ箱から戻すのとユーザーのやつを一緒にしたい
-// ゴミ箱の増減でカードがどこから作られたかしるべき
 export default class Synchronizer {
     constructor(whiteboard, garbageCan) {
         this.remoteCardsInfo = []
         this.remoteGarbageCanCardsInfo = []
         this.whiteboard = whiteboard
         this.garbageCan = garbageCan
-        this.websocketClient = 開始メソッド   
+        this.websocketClient = this.start()
     }
 
-    // 開始メソッド　start
-    // this.websocketClient = new WebsocketClient( (receivedInfo) => { this.executeReceiveProcess(receivedInfo) })
+    start() {
+        return new WebsocketClient((receivedInfo) => { this.receive(receivedInfo) })
+    }
 
-
-    // 開始と送るが分かる transmit
-    execute(targetObjectName) {
-        let changedInfo
-
-        if (targetObjectName == "whiteboard") {
-            changedInfo = this.getChangedPointOfWhiteboard()
-
-        } else if (targetObjectName == "garbageCan") {
-            changedInfo = this.getChangedPointOfGarbageCan()
-        }
+    submit() {
+        const changedInfo = this.getChangedPoint()
 
         if (changedInfo != null) {
             this.reflectRemoteState(changedInfo.type, changedInfo.cardInfo)
@@ -35,9 +24,7 @@ export default class Synchronizer {
         }
     }
 
-
-    // receive
-    executeReceiveProcess(receivedInfo) {
+    receive(receivedInfo) {
         this.reflectRemoteState(receivedInfo.type, receivedInfo.cardInfo)
 
         const index = this.whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
@@ -48,14 +35,12 @@ export default class Synchronizer {
         } else if (receivedInfo.type == "update") {
             this.whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
 
-        } else if (receivedInfo.type == "delete") {
-            this.whiteboard.cards.splice(index, 1)
-
         } else if (receivedInfo.type == "throwAway") {
+            this.whiteboard.cards.splice(index, 1)
             this.garbageCan.cardsInfo.push(receivedInfo.cardInfo)
 
         } else if (receivedInfo.type == "takeOut") {
-            this.garbageCan.cardsInfo.pop()
+            this.whiteboard.cards.push(new Card(this.garbageCan.cardsInfo.pop()))
 
         } else if (receivedInfo.type == "inisialLoad") {
             // カード情報反映
@@ -72,11 +57,18 @@ export default class Synchronizer {
         }
     }
 
-    getChangedPointOfWhiteboard() {
+    getChangedPoint() {
         const cardsLength = this.whiteboard.cards.length
         const remoteCardsLength = this.remoteCardsInfo.length
 
         if (cardsLength > remoteCardsLength) {
+            const garbageCanCardsLength = this.garbageCan.cardsInfo.length
+            const remotegarbageCanCardsLength = this.remoteGarbageCanCardsInfo.length
+
+            if (remotegarbageCanCardsLength > garbageCanCardsLength) {
+                // カードが復元された場合
+                return this.proccessChangedPointToSendInfo("takeOut", this.remoteGarbageCanCardsInfo[remotegarbageCanCardsLength - 1])
+            }
             // カードが作成された場合
             return this.proccessChangedPointToSendInfo("create", this.whiteboard.cards[cardsLength - 1].getInfo())
 
@@ -96,26 +88,11 @@ export default class Synchronizer {
             for (var i = 0; i < remoteCardsLength; i++) {
                 if (this.whiteboard.cards.find(({ id }) => id === this.remoteCardsInfo[i].id) == undefined) {
                     // 一致するカードが無かった場合＝削除されたカード
-                    return this.proccessChangedPointToSendInfo("delete", this.remoteCardsInfo[i])
+                    return this.proccessChangedPointToSendInfo("throwAway", this.remoteCardsInfo[i])
                 }
             }
         }
         // 自身変化→別ユーザーから変化点が送られてきた場合は上記に該当しないためnullを返却
-        return null
-    }
-
-    getChangedPointOfGarbageCan() {
-        const cardsLength = this.garbageCan.cardsInfo.length
-        const remoteCardsLength = this.remoteGarbageCanCardsInfo.length
-
-        if (remoteCardsLength < cardsLength) {
-            // カードが削除された場合
-            return this.proccessChangedPointToSendInfo("throwAway", this.garbageCan.cardsInfo[cardsLength - 1])
-
-        } else if (remoteCardsLength > cardsLength) {
-            // カードが復元された場合
-            return this.proccessChangedPointToSendInfo("takeOut", this.remoteGarbageCanCardsInfo[remoteCardsLength - 1])
-        }
         return null
     }
 
@@ -134,13 +111,12 @@ export default class Synchronizer {
         } else if (type == "update") {
             this.remoteCardsInfo.splice(index, 1, cardInfo)
 
-        } else if (type == "delete") {
-            this.remoteCardsInfo.splice(index, 1)
-
         } else if (type == "throwAway") {
+            this.remoteCardsInfo.splice(index, 1)
             this.remoteGarbageCanCardsInfo.push(cardInfo)
 
         } else if (type == "takeOut") {
+            this.remoteCardsInfo.push(cardInfo)
             this.remoteGarbageCanCardsInfo.pop()
         }
     }

@@ -27,7 +27,7 @@ export default class Whiteboard {
     }
 
     // インポート情報→カード作成
-    importCards(e, synchronizer, websocketClient) {
+    importCards(e, fn) {
         const fileReader = new FileReader();
 
         fileReader.readAsText(e.target.files[0]);
@@ -38,7 +38,7 @@ export default class Whiteboard {
             for (const card of importedCards) {
                 this.cards.push(new Card(card))
                 // import時はvueのwatchが反応しないため呼び出し
-                synchronizer.executeSendProcess(this, websocketClient)
+                fn()
             }
         })
     }
