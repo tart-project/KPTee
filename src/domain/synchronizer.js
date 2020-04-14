@@ -2,16 +2,24 @@ import Card from './card'
 import _ from 'lodash'
 import WebsocketClient from '../lib/websocket-client'
 
+
+// カードをゴミ箱から戻すのとユーザーのやつを一緒にしたい
+// ゴミ箱の増減でカードがどこから作られたかしるべき
 export default class Synchronizer {
     constructor(whiteboard, garbageCan) {
         this.remoteCardsInfo = []
         this.remoteGarbageCanCardsInfo = []
         this.whiteboard = whiteboard
         this.garbageCan = garbageCan
-        this.websocketClient = new WebsocketClient( (receivedInfo) => { this.executeReceiveProcess(receivedInfo) })
+        this.websocketClient = 開始メソッド   
     }
 
-    executeSendProcess(targetObjectName) {
+    // 開始メソッド　start
+    // this.websocketClient = new WebsocketClient( (receivedInfo) => { this.executeReceiveProcess(receivedInfo) })
+
+
+    // 開始と送るが分かる transmit
+    execute(targetObjectName) {
         let changedInfo
 
         if (targetObjectName == "whiteboard") {
@@ -27,6 +35,8 @@ export default class Synchronizer {
         }
     }
 
+
+    // receive
     executeReceiveProcess(receivedInfo) {
         this.reflectRemoteState(receivedInfo.type, receivedInfo.cardInfo)
 

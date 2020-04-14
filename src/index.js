@@ -11,7 +11,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
+// インスタンスを生成する時に知っておかないといけないかどうかで引数を渡す
 const synchronizer = new Synchronizer(whiteboard, garbageCan)
+
 new Vue({
     el: '#app',
     data: {
@@ -21,7 +23,7 @@ new Vue({
     }, watch: {
         cards: {
             handler: function () {
-                // execute
+                // ゴミ箱と一緒にして毎回全てを見ればよい
                 synchronizer.executeSendProcess("whiteboard")
             },
             deep: true
