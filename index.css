@@ -96,7 +96,7 @@ img {
 }
 
 .changeColorButton:hover {
-    background-color: rgb(245, 240, 240)! important;
+    background-color: rgb(245, 240, 240);
 }
 
 .throwAwayCardButton{
