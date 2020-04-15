@@ -8,11 +8,12 @@ export default class Synchronizer {
         this.remoteGarbageCanCardsInfo = []
         this.whiteboard = whiteboard
         this.garbageCan = garbageCan
-        this.websocketClient = this.start()
+        this.websocketClient 
     }
 
+    // indexですたーした
     start() {
-        return new WebsocketClient((receivedInfo) => { this.receive(receivedInfo) })
+        this. new WebsocketClient((receivedInfo) => { this.receive(receivedInfo) })
     }
 
     submit() {
@@ -29,6 +30,11 @@ export default class Synchronizer {
 
         const index = this.whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
 
+
+        // 外だし
+
+
+        
         if (receivedInfo.type == "create") {
             this.whiteboard.cards.push(new Card(receivedInfo.cardInfo))
 
@@ -102,6 +108,7 @@ export default class Synchronizer {
         return sendInfo
     }
 
+    // 名前が変
     reflectRemoteState(type, cardInfo) {
         const index = this.remoteCardsInfo.findIndex(({ id }) => id === cardInfo.id)
 

@@ -12,6 +12,9 @@ const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
 const synchronizer = new Synchronizer(whiteboard, garbageCan)
+
+// synchronizer.start()
+
 new Vue({
     el: '#app',
     data: {
