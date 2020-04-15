@@ -11,56 +11,22 @@ export default class Synchronizer {
         this.websocketClient 
     }
 
-    // indexですたーした
     start() {
-        this. new WebsocketClient((receivedInfo) => { this.receive(receivedInfo) })
+        this.websocketClient = new WebsocketClient((receivedInfo) => { this.receive(receivedInfo) })
     }
 
     submit() {
         const changedInfo = this.getChangedPoint()
 
         if (changedInfo != null) {
-            this.reflectRemoteState(changedInfo.type, changedInfo.cardInfo)
+            this.reflectDomainInfo(changedInfo.type, changedInfo.cardInfo)
             this.websocketClient.sendInfo(changedInfo)
         }
     }
 
     receive(receivedInfo) {
-        this.reflectRemoteState(receivedInfo.type, receivedInfo.cardInfo)
-
-        const index = this.whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
-
-
-        // 外だし
-
-
-        
-        if (receivedInfo.type == "create") {
-            this.whiteboard.cards.push(new Card(receivedInfo.cardInfo))
-
-        } else if (receivedInfo.type == "update") {
-            this.whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
-
-        } else if (receivedInfo.type == "throwAway") {
-            this.whiteboard.cards.splice(index, 1)
-            this.garbageCan.cardsInfo.push(receivedInfo.cardInfo)
-
-        } else if (receivedInfo.type == "takeOut") {
-            this.whiteboard.cards.push(new Card(this.garbageCan.cardsInfo.pop()))
-
-        } else if (receivedInfo.type == "inisialLoad") {
-            // カード情報反映
-            for (const card of receivedInfo.cardsInfo) {
-                this.remoteCardsInfo.push(card)
-                this.whiteboard.cards.push(new Card(card))
-            }
-
-            // ゴミ箱情報連携
-            for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
-                this.remoteGarbageCanCardsInfo.push(garbageCanCard)
-                this.garbageCan.cardsInfo.push(garbageCanCard)
-            }
-        }
+        this.reflectDomainInfo(receivedInfo.type, receivedInfo.cardInfo)
+        this.reflectOtherDomainInfo(receivedInfo)
     }
 
     getChangedPoint() {
@@ -108,8 +74,7 @@ export default class Synchronizer {
         return sendInfo
     }
 
-    // 名前が変
-    reflectRemoteState(type, cardInfo) {
+    reflectDomainInfo(type, cardInfo) {
         const index = this.remoteCardsInfo.findIndex(({ id }) => id === cardInfo.id)
 
         if (type == "create") {
@@ -125,6 +90,37 @@ export default class Synchronizer {
         } else if (type == "takeOut") {
             this.remoteCardsInfo.push(cardInfo)
             this.remoteGarbageCanCardsInfo.pop()
+        }
+    }
+
+    reflectOtherDomainInfo(receivedInfo){
+        const index = this.whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
+        
+        if (receivedInfo.type == "create") {
+            this.whiteboard.cards.push(new Card(receivedInfo.cardInfo))
+
+        } else if (receivedInfo.type == "update") {
+            this.whiteboard.cards.splice(index, 1, new Card(receivedInfo.cardInfo))
+
+        } else if (receivedInfo.type == "throwAway") {
+            this.whiteboard.cards.splice(index, 1)
+            this.garbageCan.cardsInfo.push(receivedInfo.cardInfo)
+
+        } else if (receivedInfo.type == "takeOut") {
+            this.whiteboard.cards.push(new Card(this.garbageCan.cardsInfo.pop()))
+
+        } else if (receivedInfo.type == "inisialLoad") {
+            // カード情報反映
+            for (const card of receivedInfo.cardsInfo) {
+                this.remoteCardsInfo.push(card)
+                this.whiteboard.cards.push(new Card(card))
+            }
+
+            // ゴミ箱情報連携
+            for (const garbageCanCard of receivedInfo.garbageCanCardsInfo) {
+                this.remoteGarbageCanCardsInfo.push(garbageCanCard)
+                this.garbageCan.cardsInfo.push(garbageCanCard)
+            }
         }
     }
 }

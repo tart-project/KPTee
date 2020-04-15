@@ -13,8 +13,6 @@ const user = new User()
 const garbageCan = new GarbageCan()
 const synchronizer = new Synchronizer(whiteboard, garbageCan)
 
-// synchronizer.start()
-
 new Vue({
     el: '#app',
     data: {
@@ -47,6 +45,8 @@ window.addEventListener('mousedown', checkClickedPoint, false);
 document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false);
 
 runInteractjs(whiteboard, user);
+synchronizer.start()
+
 
 function createCard() {
     user.createCard(whiteboard)
