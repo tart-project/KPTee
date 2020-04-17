@@ -59,12 +59,12 @@ function importCards(e) {
     }
 }
 
-function exportCards(clieckedButton) {
-    whiteboard.downloadFile(clieckedButton)
+function exportCards(clickedButton) {
+    whiteboard.downloadFile(clickedButton)
 }
 
-function throwAwayCard(clieckedButton) {
-    user.throwAwayCard(clieckedButton.parentNode.id, garbageCan, whiteboard)
+function throwAwayCard(clickedButton) {
+    user.throwAwayCard(clickedButton.parentNode.id, garbageCan, whiteboard)
 }
 
 function takeOutCard() {

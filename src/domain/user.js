@@ -14,11 +14,11 @@ export default class User {
         whiteboard.cards.find(({ id }) => id === cardId).backgroundColor = CardBackgroundColor
     }
 
-    throwAwayCard(clieckedCardId, garbageCan, whiteboard) {
+    throwAwayCard(clickedCardId, garbageCan, whiteboard) {
         // Add a card to a garbage can
-        garbageCan.cardsInfo.push(whiteboard.cards.find(({ id }) => id === clieckedCardId).getInfo())
+        garbageCan.cardsInfo.push(whiteboard.cards.find(({ id }) => id === clickedCardId).getInfo())
         // Delete a card from a whiteboard
-        whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
+        whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clickedCardId), 1)
     }
 
     takeOutCard(whiteboard, garbageCan) {

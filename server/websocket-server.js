@@ -10,7 +10,7 @@ exports.run = () => {
 
         // 初期ロード時最新のホワイトボード情報反映
         if (originCardsInfo.length > 0) {
-            const sendInfo = { type: "inisialLoad", cardsInfo: originCardsInfo, garbageCanCardsInfo: originGarbageCanCardsInfo}
+            const sendInfo = { type: "initialLoad", cardsInfo: originCardsInfo, garbageCanCardsInfo: originGarbageCanCardsInfo}
 
             // 送信者に送信
             ws.send(JSON.stringify(sendInfo))

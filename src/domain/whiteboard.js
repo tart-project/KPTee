@@ -6,10 +6,10 @@ export default class Whiteboard {
     }
 
     // エクスポートファイルをダウンロード
-    downloadFile(clieckedButton) {
+    downloadFile(clickedButton) {
         const cardsInfo = this.getCardsInfo()
         const fileTitle = "kptee-cards.json";
-        const exportCardsButton = clieckedButton;
+        const exportCardsButton = clickedButton;
         const blobObject = new Blob([JSON.stringify(cardsInfo)], { type: "text/plain" });
         const downloadUrl = window.URL.createObjectURL(blobObject);
 
