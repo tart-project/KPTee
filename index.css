@@ -14,13 +14,23 @@
     border: none;
 }
 
-.imgOnCard{
+.colorPickerImg{
     display: block;
     width: 15px;
     height: auto;
     }
 
-.imgOnCard:hover {
+.colorPickerImg:hover {
+    background-color: rgb(245, 240, 240);
+}
+
+.throwAwayCardImg{
+    display: block;
+    width: 15px;
+    height: auto;
+    }
+
+.throwAwayCardImg:hover {
     background-color: rgb(245, 240, 240);
 }
 
@@ -85,6 +95,10 @@ img {
     background: transparent;
 }
 
+.changeColorButton:hover {
+    background-color: rgb(245, 240, 240);
+}
+
 .throwAwayCardButton{
     width: 17px;
     height: 17px;
@@ -95,12 +109,13 @@ img {
     border: none;
     background: transparent;
 }
+
 /*ヘッダコンテナ*/
 .headerContainer {
     background-color: rgb(114, 113, 113);
     display: block;
-    width: 1475px;/*1465*/
-    height: 50px;/*735*/
+    width: 1475px;
+    height: 50px;
 }
 
 /*ロゴ画像*/
@@ -126,8 +141,8 @@ img {
 /*KPTエリアコンテナ*/
 .kpteeContainer {
     display: block;
-    width: 1475px;/*1465*/
-    height: 635px;/*735*/
+    width: 1475px;
+    height: 635px;
     font-size: 0;
 }
 
@@ -214,6 +229,7 @@ img {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 /*Problemエリア*/
 .problemAreaBox {
     display: block;
@@ -248,12 +264,7 @@ img {
     background-color:rgb(40, 167, 69);
 }
 
-/*中央エリア*/
-.centerBox {
-    display: block;
-}
-
 /*vueがコンパイルされるまでhtmlを非表示*/
 [v-cloak] {
     display: none;
-  }
+}

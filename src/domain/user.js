@@ -14,18 +14,29 @@ export default class User {
         whiteboard.cards.find(({ id }) => id === cardId).backgroundColor = CardBackgroundColor
     }
 
-    throwAwayCard(clieckedCardId, garbageCan, whiteboard) {
+    throwAwayCard(clickedCardId, garbageCan, whiteboard) {
         // Add a card to a garbage can
-        garbageCan.cards.push(whiteboard.cards.find(({ id }) => id === clieckedCardId))
+        garbageCan.cardsInfo.push(whiteboard.cards.find(({ id }) => id === clickedCardId).getInfo())
         // Delete a card from a whiteboard
-        whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clieckedCardId), 1)
+        whiteboard.cards.splice(whiteboard.cards.findIndex(({ id }) => id === clickedCardId), 1)
     }
 
     takeOutCard(whiteboard, garbageCan) {
-        if (garbageCan.cards.length != 0) {
+        if (garbageCan.cardsInfo.length != 0) {
             // if there is a archive card
-            // Restore target card 
-            whiteboard.cards.push(garbageCan.cards.pop())
+            whiteboard.cards.push(new Card(garbageCan.cardsInfo.pop()))
         }
+    }
+
+    changeDragedInfo(whiteboard, targetId, changedLeft, changedTop) {
+        const target = whiteboard.cards.find(({ id }) => id === targetId)
+        target.left = changedLeft
+        target.top = changedTop
+    }
+
+    changeResizedInfo(whiteboard, targetId, changedWidth, changedHeight) {
+        const target = whiteboard.cards.find(({ id }) => id === targetId)
+        target.width = changedWidth
+        target.height = changedHeight
     }
 }

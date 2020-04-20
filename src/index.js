@@ -2,6 +2,7 @@ import Whiteboard from './domain/whiteboard'
 import User from './domain/user'
 import Vue from 'vue'
 import GarbageCan from './domain/garbage-can'
+import Synchronizer from './domain/synchronizer'
 import { runInteractjs } from './lib/interactjs'
 import { colors } from './constant'
 import 'bootstrap';
@@ -10,15 +11,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const whiteboard = new Whiteboard()
 const user = new User()
 const garbageCan = new GarbageCan()
+const synchronizer = new Synchronizer(whiteboard, garbageCan)
+
 new Vue({
     el: '#app',
     data: {
         cards: whiteboard.cards,
-        colors: colors
+        colors: colors,
+    },
+    watch: {
+        cards: {
+            handler: function () {
+                synchronizer.submit()
+            },
+            deep: true
+        }
     }
 })
-
-let showingCororPickerId = ""
+let showingColorPickerId = ""
 
 window.createCard = createCard
 window.importCards = importCards
@@ -29,31 +39,32 @@ window.throwAwayCard = throwAwayCard
 window.takeOutCard = takeOutCard
 // 画面遷移前に確認ダイアログを表示
 window.onbeforeunload = () => { return "" };
-// カラーピッカー 以外をクリックした場合にカラーピッカー表示をOFFにする
+// カラーピッカー以外をクリックした場合にカラーピッカー表示をOFFにする
 window.addEventListener('mousedown', checkClickedPoint, false);
-// インポートボタンにイベントをセット→ファイルが読み込まれたら発火
+// ファイルが読み込まれたら発火
 document.forms.formTagForImport.importFileButton.addEventListener("change", importCards, false);
 
-// interactjsを起動
-runInteractjs(whiteboard);
+runInteractjs(whiteboard, user);
+synchronizer.start()
+
 
 function createCard() {
     user.createCard(whiteboard)
 }
 
 function importCards(e) {
-    if (e.target) {
+    if (e.type == "change") {
         // ファイルが読み込まれた場合
-        whiteboard.importCards(e)
+        whiteboard.importCards(e, () => { synchronizer.submit()})
     }
 }
 
-function exportCards(clieckedButton) {
-    whiteboard.downloadFile(clieckedButton)
+function exportCards(clickedButton) {
+    whiteboard.downloadFile(clickedButton)
 }
 
-function throwAwayCard(clieckedButton) {
-    user.throwAwayCard(clieckedButton.parentNode.id, garbageCan, whiteboard)
+function throwAwayCard(clickedButton) {
+    user.throwAwayCard(clickedButton.parentNode.id, garbageCan, whiteboard)
 }
 
 function takeOutCard() {
@@ -70,16 +81,15 @@ function toggleColorPicker(targetCardId) {
 }
 
 function checkClickedPoint(e) {
-    // カラーピッカー表示ボタン、カラーピッカー、カラーズが押された場合はリターン
-    if (e.target.className == "imgOnCard" || e.target.className == "colorPicker" || e.target.className == "colors") { return }
+    // カラーピッカー表示ボタン、カラーピッカー内場合はリターン
+    if (e.target.className.match(/colorPicker/) || e.target.className == "colors") { return }
 
-    if (showingCororPickerId != "") {
-        toggleColorPicker(showingCororPickerId)
+    if (showingColorPickerId != "") {
+        toggleColorPicker(showingColorPickerId)
     }
 }
 
 function changeColorPickerState(targetId) {
-
     const targetPicker = document.getElementById(targetId).lastElementChild
 
     if (targetPicker.style.display == "none") {
@@ -91,17 +101,17 @@ function changeColorPickerState(targetId) {
 }
 
 function changePickerId(targetCardId) {
-    if (showingCororPickerId == "") {
+    if (showingColorPickerId == "") {
         // ピッカー表示中カードない場合
-        showingCororPickerId = targetCardId
+        showingColorPickerId = targetCardId
 
-    } else if (showingCororPickerId != targetCardId) {
+    } else if (showingColorPickerId != targetCardId) {
         // クリックされたボタンがピッカー表示中カードではない場合
-        changeColorPickerState(showingCororPickerId)
-        showingCororPickerId = targetCardId
+        changeColorPickerState(showingColorPickerId)
+        showingColorPickerId = targetCardId
 
     } else {
         // クリックされたボタンがピッカー表示中カードだった場合
-        showingCororPickerId = ""
+        showingColorPickerId = ""
     }
 }

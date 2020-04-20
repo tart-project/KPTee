@@ -1,5 +1,5 @@
 export default class GarbageCan {
     constructor() {
-        this.cards = []
+        this.cardsInfo = []
     }
 }

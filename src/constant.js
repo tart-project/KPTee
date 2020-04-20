@@ -29,7 +29,6 @@ export const colors = [
         "color": "rgb(232, 23, 173)"
     },]
 
-
     export const defaultCard = {
         "id": "",
         "top": "360px",
