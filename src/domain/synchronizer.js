@@ -26,7 +26,7 @@ export default class Synchronizer {
 
     receive(receivedInfo) {
         this.reflectDomainInfo(receivedInfo.type, receivedInfo.cardInfo)
-        this.reflectOtherDomainInfo(receivedInfo)
+        this.reflectRemoteDomainInfo(receivedInfo)
     }
 
     getChangedPoint() {
@@ -39,10 +39,10 @@ export default class Synchronizer {
 
             if (remoteGarbageCanCardsLength > garbageCanCardsLength) {
                 // カードが復元された場合
-                return this.processChangedPointToSendInfo("takeOut", this.remoteGarbageCanCardsInfo[remoteGarbageCanCardsLength - 1])
+                return this.toSendInfo("takeOut", this.remoteGarbageCanCardsInfo[remoteGarbageCanCardsLength - 1])
             }
             // カードが作成された場合
-            return this.processChangedPointToSendInfo("create", this.whiteboard.cards[cardsLength - 1].getInfo())
+            return this.toSendInfo("create", this.whiteboard.cards[cardsLength - 1].getInfo())
 
         } else if (cardsLength == remoteCardsLength) {
             // カード情報が更新された場合
@@ -51,7 +51,7 @@ export default class Synchronizer {
                 // _.omitByは差分がなければ{}を返す
                 if (JSON.stringify(diff) != "{}") {
                     // 差分があった場合
-                    return this.processChangedPointToSendInfo("update", this.whiteboard.cards[i].getInfo())
+                    return this.toSendInfo("update", this.whiteboard.cards[i].getInfo())
                 }
             }
 
@@ -60,7 +60,7 @@ export default class Synchronizer {
             for (var i = 0; i < remoteCardsLength; i++) {
                 if (this.whiteboard.cards.find(({ id }) => id === this.remoteCardsInfo[i].id) == undefined) {
                     // 一致するカードが無かった場合＝削除されたカード
-                    return this.processChangedPointToSendInfo("throwAway", this.remoteCardsInfo[i])
+                    return this.toSendInfo("throwAway", this.remoteCardsInfo[i])
                 }
             }
         }
@@ -68,7 +68,7 @@ export default class Synchronizer {
         return null
     }
 
-    processChangedPointToSendInfo(typeValue, cardInfoVale) {
+    toSendInfo(typeValue, cardInfoVale) {
         const sendInfo = { type: typeValue, cardInfo: cardInfoVale }
 
         return sendInfo
@@ -93,7 +93,7 @@ export default class Synchronizer {
         }
     }
 
-    reflectOtherDomainInfo(receivedInfo){
+    reflectRemoteDomainInfo(receivedInfo){
         const index = this.whiteboard.cards.findIndex(({ id }) => id === receivedInfo.cardInfo.id)
 
         if (receivedInfo.type == "create") {

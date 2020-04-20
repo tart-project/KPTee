@@ -18,8 +18,8 @@ new Vue({
     data: {
         cards: whiteboard.cards,
         colors: colors,
-        garbageCan: garbageCan.cardsInfo
-    }, watch: {
+    },
+    watch: {
         cards: {
             handler: function () {
                 synchronizer.submit()
