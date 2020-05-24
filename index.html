@@ -9,36 +9,47 @@
 </head>
 
 <body>
-  
-  <div class="kpteeContainer" >
-
+  <div class="kpteeContainer">
     <div id="app" v-cloak>
       <!-- カード生成場所 -->
       <div class="cardDiv" v-for="card in cards" :key="card.id" v-bind:id="card.id"
         v-bind:style="{top: card.top, left: card.left}">
         <textarea v-bind:style="{backgroundColor: card.backgroundColor, width: card.width, height: card.height}"
-          class="textarea" v-model="card.text">{{card.text}}</textarea>
+          class="textarea" v-model="card.text">{{ card.text }}</textarea>
         <br>
-        <button class="changeColorButton" onclick="changeCardColor(this)"
-          v-bind:style="{backgroundColor: card.changeColorButtonBackgroundColor}"></button>
-        <button class="deleteCardButton" onclick="deleteCard(this)">×</button>
+        <button class="colorPickerButton" onclick="toggleColorPicker(this.parentNode.id)">
+          <img src="images/changeColor.png" class="colorPickerImg" title="Change Color">
+        </button>
+        <button class="throwAwayCardButton" onclick="throwAwayCard(this)">
+          <img src="images/delete.png" class="throwAwayCardImg" title="Delete Color">
+        </button>
+        <br>
+        <div class="colorPicker" style="display: none;">
+          <button v-for="color in colors" :key="color.id" class="colors" v-bind:style="{backgroundColor: color.color}"
+            onclick="changeColor(event)">
+          </button>
+        </div>
       </div>
     </div>
 
     <div class="toolsBox">
       <!-- インポートボタン -->
       <label for="importFileButton">
-        <img src="import-icon.png" class="toolIcon" title="Import" />
+        <img src="images/import-icon.png" class="toolIcon" title="Import" />
       </label>
-
       <form id="formTagForImport">
-        <input id="importFileButton" type="file" onclick="importCards(this)">
+        <input id="importFileButton" type="file" onclick="importCards(event)">
       </form>
 
       <!-- エクスポートボタン -->
       <a id="exportCardsButton" type="button" onclick="exportCards(this)">
-        <image src="export-icon.png" class="toolIcon" title="Export">
+        <image src="images/export-icon.png" class="toolIcon" title="Export">
       </a>
+
+      <!-- リストアボタン -->
+      <button type="button" onclick="takeOutCard()" id="takeOutCardButton">
+        <img src="images/restore.png" class="takeOutCardButtonImg" title="Take Out">
+      </button>
     </div>
 
     <div class="leftBox">
@@ -53,13 +64,15 @@
         </div>
       </div>
     </div>
+
     <div class="centerLineBox">
       <div class="centerBox">
-        <button type="button" onclick="createCard()" id="cardCreationButton">
-          <img src="create-card-icon.png" class="cardCreationButtonImg">
+        <button type="button" onclick="createCard()" id="cardCreationButton" title="Create Card">
+          <img src="images/create-card-icon.png" class="cardCreationButtonImg">
         </button>
       </div>
     </div>
+
     <div class="rightBox">
       <div class="tryAreaBox alert-success">
         <div class="titleAreaBox" id="tryTitle">
@@ -68,8 +81,9 @@
       </div>
     </div>
   </div>
-  <img src="logo.png" class="logo">
+  <img src="images/logo.png" class="logo">
 
+  </div>
   <script src="main.js"></script>
 
 </body>
